@@ -6,7 +6,6 @@ using Quick.EntityFrameworkCore.Plus;
 using QuickNV.Driver.Protocol.QpModels;
 using QuickNV.Model;
 using QuickNV.Driver.Protocol.QpNotices;
-using Quick.Protocol.Utils;
 using Quick.Utils;
 
 namespace QuickNV.Interfaces.Driver

@@ -1,11 +1,6 @@
-﻿using Quick.Protocol.Utils;
+﻿using Quick.Utils;
 using QuickNV.YS7;
 using QuickNV.YS7.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YiQiDong.Agent;
 
 namespace QuickNV.Driver.Ys7

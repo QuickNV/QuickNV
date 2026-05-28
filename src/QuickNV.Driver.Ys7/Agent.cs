@@ -8,6 +8,7 @@ using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
 using QuickNV.Driver.Protocol.QpCommands.CreateChannelPlaybackStream;
 using QuickNV.Driver.Protocol.QpModels;
+using Quick.Utils;
 
 namespace QuickNV.Driver.Ys7
 {
@@ -43,7 +44,7 @@ namespace QuickNV.Driver.Ys7
         {
             base.Init();
             AddFunction(new Functions.Config());
-            AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client), true);
+            AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
         private void Ys7Context_DeviceOffline(object sender, QuickNV.YS7.Model.DeviceInfo e)

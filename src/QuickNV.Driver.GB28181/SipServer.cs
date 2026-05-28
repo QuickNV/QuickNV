@@ -1,5 +1,4 @@
-﻿using Quick.Protocol.Utils;
-using SIPSorcery.SIP;
+﻿using SIPSorcery.SIP;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Text;
@@ -7,6 +6,7 @@ using YiQiDong.Agent;
 using QuickNV.Driver.Agent;
 using QuickNV.Driver.GB28181.Command;
 using QuickNV.Driver.GB28181.Utils;
+using Quick.Utils;
 
 namespace QuickNV.Driver.GB28181
 {

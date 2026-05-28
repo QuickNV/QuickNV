@@ -12,6 +12,7 @@ using QuickNV.Driver.Protocol.QpModels;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System.Text.Json.Serialization;
+using Quick.Utils;
 
 namespace QuickNV.Driver.Agent
 {
@@ -51,7 +52,10 @@ namespace QuickNV.Driver.Agent
 
         public AbstractDriverAgent()
         {
-            QpAllClients.RegisterUriSchema();
+            Quick.Protocol.Pipeline.QpPipelineClientOptions.RegisterUriSchema();
+            Quick.Protocol.Tcp.QpTcpClientOptions.RegisterUriSchema();
+            Quick.Protocol.WebSocket.Client.QpWebSocketClientOptions.RegisterUriSchema();
+
             commandExecuterManager = new CommandExecuterManager();
             commandExecuterManager.Register(new Protocol.QpCommands.ImportDevices.Request(), ImportDevices);
             commandExecuterManager.Register(new Protocol.QpCommands.GetDeviceConfig.Request(), GetDeviceConfig);

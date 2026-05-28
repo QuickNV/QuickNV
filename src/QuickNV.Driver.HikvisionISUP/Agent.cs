@@ -9,6 +9,7 @@ using QuickNV.Driver.Agent;
 using QuickNV.Driver.Protocol.QpModels;
 using QuickNV.Driver.Protocol.QpCommands.CreateChannelPlaybackStream;
 using System.Text.Json.Serialization;
+using Quick.Utils;
 
 namespace QuickNV.Driver.HikvisionISUP
 {
@@ -52,7 +53,7 @@ namespace QuickNV.Driver.HikvisionISUP
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             base.Init();
             AddFunction(new Functions.Config());
-            AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client), true);
+            AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
         public override void Start()

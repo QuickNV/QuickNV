@@ -2,11 +2,11 @@
 using System.Text.Json;
 using Quick.Fields;
 using Quick.Protocol;
-using Quick.Protocol.Utils;
 using System.Text;
 using YiQiDong.Protocol.V1.Model;
 using QuickNV.Driver.Protocol.QpCommands.ImportDevices;
 using QuickNV.Driver.Protocol.QpModels;
+using Quick.Utils;
 
 namespace QuickNV.Driver.HikvisionDeviceNetwork.Functions
 {

@@ -43,7 +43,7 @@ public class Agent : AbstractDriverAgent<ConfigModel, DeviceConfig, ChannelConfi
 
         base.Init();
         AddFunction(new Functions.Config());
-        AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client), true);
+        AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
     }
 
     public override void Stop()

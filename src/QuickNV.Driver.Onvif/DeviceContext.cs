@@ -2,6 +2,7 @@
 using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
 using QuickNV.Driver.Protocol.QpModels;
+using Quick.Utils;
 
 namespace QuickNV.Driver.Onvif
 {

@@ -5,6 +5,7 @@ using YiQiDong.Agent;
 using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
 using QuickNV.Driver.Protocol.QpModels;
+using Quick.Utils;
 
 namespace QuickNV.Driver.GB28181
 {
@@ -28,7 +29,7 @@ namespace QuickNV.Driver.GB28181
 
             base.Init();
             AddFunction(new Functions.Config());
-            AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client), true);
+            AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
         public override void Start()
