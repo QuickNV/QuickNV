@@ -42,7 +42,6 @@ public class Config : YiQiDong.Core.Functions.ModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "WebService",
             Type = FieldType.ContainerGroup,
             Name = "Web服务",
             Children =
@@ -129,7 +128,6 @@ public class Config : YiQiDong.Core.Functions.ModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "DriverInterface",
             Type = FieldType.ContainerGroup,
             Name = "驱动服务",
             Children =
@@ -255,7 +253,6 @@ public class Config : YiQiDong.Core.Functions.ModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "NorthInterface",
             Type = FieldType.ContainerGroup,
             Name = "北向服务",
             Children =
@@ -381,7 +378,6 @@ public class Config : YiQiDong.Core.Functions.ModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "YiRenZhengInterface",
             Type = FieldType.ContainerGroup,
             Name = "易认证连接",
             Children =
