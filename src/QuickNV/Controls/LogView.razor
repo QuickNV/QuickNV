@@ -1,0 +1,19 @@
+﻿@using Quick.Blazor.Bootstrap
+
+<div class="row">
+    <div class="col-12">
+        <div class="btn-toolbar">
+            <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">显示行数</div>
+                </div>
+                <input type="number" class="form-control" min="1" @bind-value="LogRows">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <LogViewControl @ref="control" Rows="LogRows" MaxLines="Context.MaxLogLines"></LogViewControl>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿<div class="row">
+    <div class="col-12">
+        <EditForm Model="this">
+            <DataAnnotationsValidator />
+            @if (driverContext == null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    设备未配置驱动！
+                </div>
+            }
+            else
+            {
+                @if (fieldForGetArray != null)
+                {
+                    @foreach (var field in fieldForGetArray)
+                    {
+                        <Quick.Blazor.Bootstrap.QuickFields.Control Field="field"></Quick.Blazor.Bootstrap.QuickFields.Control>
+                    }
+                }
+            }
+        </EditForm>
+    </div>
+</div>
+
+<ModalLoading @ref="modalLoading"></ModalLoading>
+<ModalAlert @ref="modalAlert"></ModalAlert>
+<ToastStack @ref="toastStack" AutoClose="true" />

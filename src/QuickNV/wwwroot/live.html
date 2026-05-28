@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <script src="./js/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <script src="./js/EasyPlayer.js/EasyPlayer-pro.js"></script>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            place-content: center;
+            position: absolute;
+            inset: 0px;
+            background: rgba(13, 14, 27, 0.7);
+            background-size: 100% 100%;
+            background-attachment: fixed;
+        }
+
+        #message {
+            color: #e6e6e6;
+            background-color: #00000080;
+            padding: 0.2rem;
+            width: 100%;
+            border-radius: 0.2rem;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            overflow: hidden;
+        }
+
+        #loading {
+            color: #e6e6e6;
+            position: fixed;
+            width: 1.4rem;
+            height: 1.4rem;
+            right: 0px;
+            bottom: 0px;
+            overflow: hidden;
+            background-image: url(images/loading.svg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            animation: loading 2s linear infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            20% {
+                transform: rotate(72deg);
+            }
+
+            40% {
+                transform: rotate(144deg);
+            }
+
+            60% {
+                transform: rotate(216deg);
+            }
+
+            80% {
+                transform: rotate(288deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="message" style="display:none"></div>
+    <div id="loading" style="display:none"></div>
+</body>
+</html>
+
+<script>
+    var searchObject = new URLSearchParams(window.location.search);
+    var getSearchparam = function (key, defaultValue) {
+        if (!searchObject.has(key))
+            return defaultValue;
+        return searchObject.get(key);
+    };
+    searchObject.toString()
+    var player = null;
+    var playerConfig = {
+        errorCount: 0,
+        fps: 0,
+        zeroFpsCount: 0,
+        deviceId: getSearchparam('DeviceId', null),
+        channelId: getSearchparam('ChannelId', null)
+    };
+    document.title = 'C:' + playerConfig.channelId + ',D:' + playerConfig.deviceId;
+
+    //接收到消息时
+    var receiveMessage = function (event) {
+        //事件数据
+        var eventData = event.data;
+        //动作
+        var action = eventData.action;
+        //动作数据
+        var data = eventData.data;
+        //如果是截图指令
+        if (action == 'screenshot') {
+            try {
+                var ret = player.screenshot(
+                    data.filename,
+                    data.format,
+                    data.quality,
+                    data.type
+                );
+                //截图成功，返回结果
+                parent.postMessage({
+                    action: action,
+                    code: 0,
+                    data: ret
+                }, '*');
+            } catch (error) {
+                //截图失败，返回错误
+                parent.postMessage({
+                    action: action,
+                    code: -1,
+                    message: error
+                }, '*');
+            }
+        }
+    };
+    window.addEventListener("message", receiveMessage);
+
+    function pushLog(message) {
+        console.log(new Date().toLocaleString() + ': ' + message);
+    }
+
+    function showMessage(message) {
+        pushLog(message);
+        $('#container').hide();
+        $('#message').text(new Date().toLocaleString() + ': ' + message);
+        $('#message').show();
+    }
+
+    function showPlayer() {
+        $('#message').hide();
+        $('#container').show();
+    }
+
+    function onError(error) {
+        if (player != null) {
+            var screenShot = player.screenshot("test", "png", 1, 'base64')
+            if (screenShot != 'data:,')
+                document.body.style.backgroundImage = 'url(' + screenShot + ')';
+                player.destroy();
+                player = null;
+        }
+        playerConfig.errorCount++;
+        retry('错误:' + error);
+    }
+
+    function create() {
+        player = new EasyPlayerPro(document.getElementById('container'), {
+            hasAudio: true,
+            stretch: !playerConfig.conf.stretch, 
+            supportDblclickFullscreen: playerConfig.conf.supportDblclickFullscreen,
+            showBandwidth: playerConfig.conf.showBandwidth,
+            showPerformance: playerConfig.conf.showPerformance,
+            operateBtns:{
+                fullscreen:playerConfig.conf.showFullScreenBtn,
+                screenshot:playerConfig.conf.showScreenShotBtn,
+                stretch:playerConfig.conf.showStretchBtn,
+                play:false,
+                audio: playerConfig.conf.showAudioBtn,
+                record:playerConfig.conf.showRecordBtn,
+                ptz:false,
+                quality:false,
+                zoom:playerConfig.conf.showZoomBtn
+            }
+        });
+        player.on('error', onError);
+    }
+
+    function retry(error) {
+        var interval = 1000;
+        if (playerConfig.errorCount > playerConfig.conf.fastRetryTimes) {
+            showMessage(error);
+            interval = playerConfig.conf.slowRetryInterval;
+        } else {
+            pushLog(error);
+            interval = playerConfig.conf.fastRetryInterval;
+        }
+
+        setTimeout(function () {
+            connect();
+        }, interval);
+    }
+
+    function connect() {
+        pushLog("连接中...");
+        $('#loading').show();
+        var url = 'api/player/live';
+        $.get(url,{
+            deviceId: playerConfig.deviceId,
+            channelId: playerConfig.channelId,
+            useProxy: playerConfig.conf.useProxy
+        }, function (ret) {
+            $('#loading').hide();
+            playerConfig.errorCount = 0;
+            playerConfig.live = ret;
+            document.title = ret.channelName + ' - ' + ret.deviceName;
+
+            create();
+            setTimeout(function () {
+                showPlayer();
+                pushLog("开始播放...");
+                var url = ret.url;
+                if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
+                    var urlObj = new URL(url, window.location.href);
+                    switch (urlObj.protocol) {
+                        case 'http:':
+                            urlObj.protocol = 'ws:';
+                            break;
+                        case 'https:':
+                            urlObj.protocol = 'wss:';
+                            break;
+                    }
+                    url = urlObj.href;
+                }
+                player.play(url);                
+            }, 100);
+        }).fail(function (response) {
+            $('#loading').hide();
+            var ret = '网络错误';
+            if (response.responseText != undefined)
+                ret = response.responseText;
+            try {
+                var obj = JSON.parse(ret);
+                ret = obj.instance + ',' + obj.title + ',' + obj.detail
+            } catch {
+            }
+            onError(ret);
+        });
+    }
+    //获取配置
+    $.get('api/player/conf', function (ret) {
+        playerConfig.conf = ret;
+        connect();
+    });
+</script>

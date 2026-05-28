@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>1.1.2</Version>
+		<Description>QuickNV北向协议</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Quick.Protocol" Version="2.6.6" />
+	</ItemGroup>
+
+</Project>

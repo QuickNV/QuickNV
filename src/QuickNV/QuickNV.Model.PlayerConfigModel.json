@@ -1,0 +1,1 @@
+﻿{"PushStreamProtocol":0,"ApiKey":"123456","ChannelMinCreateStreamSeconds":5,"WaitFrameChangeSeconds":60,"FastRetryTimes":3,"FastRetryInterval":1000,"SlowRetryInterval":5000,"VideoBuffer":0,"IsResize":false,"ShowBandwidth":false,"SupportDblclickFullscreen":true,"ShowFullScreenBtn":true,"ShowScreenShotBtn":true,"ShowAudioBtn":true,"ShowRecordBtn":true,"ControlAutoHide":true}

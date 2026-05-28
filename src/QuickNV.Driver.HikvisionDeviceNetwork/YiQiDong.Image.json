@@ -1,0 +1,10 @@
+﻿{
+  "DefaultId": "QuickNV.Driver.HikvisionDeviceNetwork",
+  "Name": "QuickNV驱动_海康设备网络",
+  "Version": "3.7.x.x",
+  "Tags": [ "视频监控" ],
+  "Description": "[QuickNV驱动_海康设备网络]是连接为QuickNV提供海康设备网络驱动的程序。",
+  "Platform": [ "win-x64", "linux-x64", "linux-arm64" ],
+  "Runtime": [ "dotnet-8.0" ],
+  "AgentStartup": "QuickNV.Driver.HikvisionDeviceNetwork.dll"
+}

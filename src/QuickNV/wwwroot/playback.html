@@ -1,0 +1,780 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <script src="./js/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <script src="./js/EasyPlayer.js/EasyPlayer-pro.js"></script>
+    <script src="./js/timeSlider/main.js"></script>
+    <style>
+        .playback {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding: 10px;
+            box-sizing: border-box;
+            background-image: url('./BG.png');
+        }
+
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            place-content: center;
+            position: absolute;
+            inset: 0px;
+            background: rgba(13, 14, 27, 0.7);
+            background-size: 100% 100%;
+            background-attachment: fixed;
+        }
+
+        #timeSlider {
+            /* background-color: transparent; */
+        }
+
+        .container {
+            height: calc(100% - 100px);
+            width: 100%;
+            border: 1px solid #00a9e9;
+            box-shadow: 0 0 4px #00a9e9 inset, 0 0 4px #00a9e9;
+        }
+
+        .time_group {}
+
+        #timeSliderContainer {
+            /* color: #e6e6e6;
+            background-color: #00000080;
+            padding: 0.2rem;
+            width: 100%;
+            border-radius: 0.2rem;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            overflow: hidden; */
+        }
+
+        .time_group {
+            color: #e6e6e6;
+            background-color: #00000080;
+            padding: 0.2rem;
+            width: 100%;
+            border-radius: 0.2rem;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            overflow: hidden;
+        }
+
+        #message {
+            color: #e6e6e6;
+            background-color: #00000080;
+            padding: 0.2rem;
+            width: 100%;
+            border-radius: 0.2rem;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            overflow: hidden;
+        }
+
+        #loading {
+            color: #e6e6e6;
+            position: fixed;
+            width: 1.4rem;
+            height: 1.4rem;
+            right: 0px;
+            bottom: 0px;
+            overflow: hidden;
+            background-image: url(images/loading.svg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            animation: loading 2s linear infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            20% {
+                transform: rotate(72deg);
+            }
+
+            40% {
+                transform: rotate(144deg);
+            }
+
+            60% {
+                transform: rotate(216deg);
+            }
+
+            80% {
+                transform: rotate(288deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .yl_btn_group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            /* display: inline-block;
+            margin-top: 10px;
+            gap: 10px;
+            height: 40px; */
+        }
+
+        .yl_btn_group * {
+            cursor: pointer;
+        }
+
+        .yl_btn {
+            -webkit-appearance: none;
+            background: #2a86ff;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1;
+            margin: 0;
+            outline: 0;
+            padding: 12px 20px;
+            text-align: center;
+            transition: .1s;
+            white-space: nowrap;
+        }
+
+        .yl_input {
+            -webkit-appearance: none;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            box-sizing: border-box;
+            color: #606266;
+            display: inline-block;
+            font-size: inherit;
+            line-height: 38px;
+            outline: none;
+            padding: 0 15px;
+            transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+            width: 100%;
+            width: 150px;
+            height: 38px;
+        }
+        .easyplayer-pause{
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="playback">
+        <div id="container" class="container"></div>
+        <div class="time_group">
+            <div class="yl_btn_group">
+                <span onclick="preDay()">
+                    <svg t="1742898360428" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="8104" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="32" height="32">
+                        <path
+                            d="M56.889 512c0 251.36400001 203.747 455.111 455.111 455.111S967.111 763.364 967.111 512 763.364 56.889 512 56.889 56.889 260.636 56.889 512z m532.11-179l-179 179 179 179a28.444 28.444 0 0 1-40.22 40.221l-199.111-199.11a28.444 28.444 0 0 1 1e-8-40.221l199.10999999-199.111A28.444 28.444 0 0 1 589 332.999z"
+                            p-id="8105" fill="#cdcdcd"></path>
+                    </svg>
+                </span>
+                <input id="date" type="date" class="yl_input">
+                <span onclick="nextDay()">
+                    <svg t="1742898014686" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="6950" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="32" height="32">
+                        <path
+                            d="M967.111111 512c0-251.363556-203.747556-455.111111-455.111111-455.111111s-455.111111 203.747556-455.111111 455.111111S260.636444 967.111111 512 967.111111 967.111111 763.363556 967.111111 512z m-532.110222 179.000889L614.001778 512l-179.000889-179.000889a28.444444 28.444444 0 0 1 40.22044401-40.220444l199.11111099 199.111111a28.444444 28.444444 0 0 1 0 40.220444l-199.11111099 199.111111a28.444444 28.444444 0 0 1-40.22044401-40.220444z"
+                            p-id="6951" fill="#cdcdcd"></path>
+                    </svg>
+                </span>
+                <span onclick="refresh()">
+                    <svg t="1742898685750" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="1498" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="32" height="32">
+                        <path
+                            d="M148.4 495.5c1.9-43.2 11.4-85.1 28.1-124.7 18.3-43.3 44.5-82.1 77.9-115.5 33.4-33.4 72.2-59.6 115.5-77.9 44.8-18.9 92.3-28.5 141.4-28.5 49.1 0 96.6 9.6 141.4 28.5 43.3 18.3 82.1 44.5 115.5 77.9 6.2 6.2 12.1 12.5 17.8 19.1l50.4-17.5c-75.7-96.2-193.2-158-325.1-158C283.1 98.9 98 283.9 98 512.2v0.8l50.4-17.5zM874.2 531.3c-2.2 42.3-11.6 83.4-28 122.3-18.3 43.3-44.5 82.1-77.9 115.5-33.4 33.4-72.2 59.6-115.5 77.9-44.8 18.9-92.3 28.5-141.4 28.5-49.1 0-96.6-9.6-141.4-28.5-43.3-18.3-82.1-44.5-115.5-77.9-6.1-6.1-12-12.4-17.6-18.9l-50.5 17.3c75.7 96.2 193.1 158 325 158 227.7 0 412.4-184.1 413.3-411.6l-50.5 17.4z"
+                            fill="#cdcdcd" p-id="1499"></path>
+                        <path d="M818 564l78.2-100 78.1 100zM49.2 464L128 564l79-100z" fill="#cdcdcd" p-id="1500">
+                        </path>
+                    </svg>
+                </span>
+                <span onclick="play()">
+                    <svg t="1742898779142" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2594" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="32" height="32">
+                        <path
+                            d="M692.224 495.616 692.224 495.616 692.224 495.616c-4.096-4.096-4.096-4.096-4.096-4.096l-258.048-147.456 0 0c-4.096-4.096-8.192-4.096-12.288-4.096-12.288 0-20.48 8.192-20.48 20.48l0 303.104c0 12.288 8.192 20.48 20.48 20.48 4.096 0 8.192 0 12.288-4.096l0 0 258.048-147.456c0 0 0 0 0 0l4.096 0 0 0c4.096-4.096 8.192-8.192 8.192-16.384S696.32 499.712 692.224 495.616zM438.272 630.784 438.272 393.216l208.896 118.784L438.272 630.784z"
+                            p-id="2595" fill="#cdcdcd"></path>
+                        <path
+                            d="M512 98.304C282.624 98.304 98.304 282.624 98.304 512s184.32 413.696 413.696 413.696c229.376 0 413.696-184.32 413.696-413.696S741.376 98.304 512 98.304zM512 888.832c-208.896 0-376.832-167.936-376.832-376.832 0-208.896 167.936-376.832 376.832-376.832 208.896 0 376.832 167.936 376.832 376.832C888.832 720.896 720.896 888.832 512 888.832z"
+                            p-id="2596" fill="#cdcdcd"></path>
+                    </svg>
+                </span>
+                <span disabled onclick="stop()">
+                    <svg t="1742898850391" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="3670" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="32" height="32">
+                        <path
+                            d="M425.1 648.5c-11.6 0-21-9.5-21-21v-231c0-11.6 9.4-21 21-21 11.5 0 21 9.4 21 21v231c0 11.5-9.4 21-21 21z m168 0c-11.6 0-21-9.5-21-21v-231c0-11.6 9.4-21 21-21 11.5 0 21 9.4 21 21v231c0 11.5-9.4 21-21 21z"
+                            p-id="3671" fill="#cdcdcd"></path>
+                        <path
+                            d="M512 113c220 0 399 179 399 399S732 911 512 911 113 732 113 512s179-399 399-399m0-42C268.4 71 71 268.4 71 512s197.4 441 441 441 441-197.4 441-441S755.6 71 512 71z"
+                            p-id="3672" fill="#cdcdcd"></path>
+                    </svg>
+                </span>
+            </div>
+            <div id="timeSliderContainer" style="display:block">
+                <div id="timeSlider"></div>
+            </div>
+        </div>
+        <div id="message" style="display:none"></div>
+        <div id="loading" style="display:none"></div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var searchObject = new URLSearchParams(window.location.search);
+    var getSearchparam = function (key, defaultValue) {
+        if (!searchObject.has(key))
+            return defaultValue;
+        return searchObject.get(key);
+    };
+    var player = null;
+    var playerConfig = {
+        errorCount: 0,
+        fps: 0,
+        zeroFpsCount: 0,
+        deviceId: getSearchparam('DeviceId', null),
+        channelId: getSearchparam('ChannelId', null),
+        timeline: {}
+    };
+
+    document.title = 'C:' + playerConfig.channelId + ',D:' + playerConfig.deviceId;
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date = new Date()) {
+        return [
+            date.getFullYear(),
+            padTo2Digits(date.getMonth() + 1),
+            padTo2Digits(date.getDate()),
+        ].join('-');
+    }
+    var dateControl = document.getElementById('date');
+    dateControl.value = formatDate(new Date());
+
+    var preDay = function () {
+        var date = new Date(dateControl.value);
+        date.setDate(date.getDate() - 1);
+        dateControl.value = formatDate(date);
+        refresh()
+        // 连接视频
+        // connect()
+
+    }
+    // 下一天
+    var nextDay = function () {
+        var date = new Date(dateControl.value);
+        date.setDate(date.getDate() + 1);
+        dateControl.value = formatDate(date);
+        refresh()
+        // 连接视频
+        // connect()
+    }
+
+    //接收到消息时
+    var receiveMessage = function (event) {
+        //事件数据
+        var eventData = event.data;
+        //动作
+        var action = eventData.action;
+        //动作数据
+        var data = eventData.data;
+        //如果是截图指令
+        if (action == 'screenshot') {
+            try {
+                var ret = player.screenshot(
+                    data.filename,
+                    data.format,
+                    data.quality,
+                    data.type
+                );
+                //截图成功，返回结果
+                parent.postMessage({
+                    action: action,
+                    code: 0,
+                    data: ret
+                }, '*');
+            } catch (error) {
+                //截图失败，返回错误
+                parent.postMessage({
+                    action: action,
+                    code: -1,
+                    message: error
+                }, '*');
+            }
+        }
+    };
+    window.addEventListener("message", receiveMessage);
+    // 写入日志
+    function pushLog(message) {
+        console.log(new Date().toLocaleString() + ': ' + message);
+    }
+    // 展示信息提示
+    function showMessage(message) {
+        pushLog(message);
+        $('#container').hide();
+        $('#message').text(new Date().toLocaleString() + ': ' + message);
+        $('#message').show();
+    }
+    // 展示播放
+    function showPlayer() {
+        $('#message').hide();
+        $('#container').show();
+    }
+    // 错误信息
+    function onError(error) {
+        if (player != null) {
+            var screenShot = player.screenshot("test", "png", 1, 'base64')
+            if (screenShot != 'data:,')
+                document.body.style.backgroundImage = 'url(' + screenShot + ')';
+            player.destroy();
+            player = null;
+        }
+        if (isPlaying) {
+            playerConfig.errorCount++;
+            retry('错误:' + error);
+        }
+    }
+    // 创建播放器
+    function create() {
+        const playerDom = document.getElementById('container')
+        console.log(playerDom,'playlerDom')
+        player = new EasyPlayerPro(document.getElementById('container'), {
+            hasAudio: true,
+            stretch: !playerConfig.conf.stretch,
+            supportDblclickFullscreen: playerConfig.conf.supportDblclickFullscreen,
+            showBandwidth: playerConfig.conf.showBandwidth,
+            showPerformance: playerConfig.conf.showPerformance,
+            video: {
+                codec: 'hevc',  // 明确指定H265编码
+                decodeType: 'wasm'  // 推荐使用WASM解码
+            },
+            operateBtns: {
+                fullscreen: playerConfig.conf.showFullScreenBtn,
+                screenshot: playerConfig.conf.showScreenShotBtn,
+                stretch: playerConfig.conf.showStretchBtn,
+                play: false,
+                pause: false,
+                audio: playerConfig.conf.showAudioBtn,
+                record: playerConfig.conf.showRecordBtn,
+                ptz: false,
+                quality: false,
+                zoom: playerConfig.conf.showZoomBtn
+            }
+        });
+        player.on('error', onError);
+        player.on('play', () => {
+            playerConfig.timeline.instance.setTimeLineLeft();
+            playerConfig.timeline.instance.timeLinePlay();
+        })
+        player.on('pause', () => {
+            playerConfig.timeline.instance.timeLineStop();
+        })
+        player.on('error', () => {
+            playerConfig.timeline.instance.timeLineStop();
+        })
+    }
+    // 写入日志
+    function retry(error) {
+        var interval = 1000;
+        if (playerConfig.errorCount > playerConfig.conf.fastRetryTimes) {
+            showMessage(error);
+            interval = playerConfig.conf.slowRetryInterval;
+        } else {
+            pushLog(error);
+            interval = playerConfig.conf.fastRetryInterval;
+        }
+
+        setTimeout(function () {
+            connect();
+        }, interval);
+    }
+
+    function connect_old() {
+        pushLog("连接中...");
+        $('#loading').show();
+        var url = 'api/player/playback';
+        $.get(url, {
+            deviceId: playerConfig.deviceId,
+            channelId: playerConfig.channelId,
+            startTime: playerConfig.startTime,
+            endTime: playerConfig.endTime,
+            useProxy: playerConfig.conf.useProxy
+        }, function (ret) {
+            $('#loading').hide();
+            playerConfig.errorCount = 0;
+            playerConfig.live = ret;
+            document.title = ret.channelName + ' - ' + ret.deviceName;
+
+            create();
+            setTimeout(function () {
+                playerConfig.timeline.instance.presentSeconds = playerConfig.timeline.value || 1;
+                console.log(playerConfig, 'PLAYERcONFIG123')
+                playerConfig.timeline.instance.setTimeLineLeft();
+                playerConfig.timeline.instance.timeLinePlay();
+
+                showPlayer();
+                pushLog("开始播放...");
+                var url = ret.url;
+                if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
+                    var urlObj = new URL(url, window.location.href);
+                    switch (urlObj.protocol) {
+                        case 'http:':
+                            urlObj.protocol = 'ws:';
+                            break;
+                        case 'https:':
+                            urlObj.protocol = 'wss:';
+                            break;
+                    }
+                    url = urlObj.href;
+                }
+                player.play(url);
+            }, 1000);
+        }).fail(function (response) {
+            playerConfig.timeline.instance.presentSeconds = playerConfig.timeline.value || 1;
+            playerConfig.timeline.instance.setTimeLineLeft();
+            $('#loading').hide();
+            var ret = '网络错误';
+            if (response.responseText != undefined)
+                ret = response.responseText;
+            try {
+                var obj = JSON.parse(ret);
+                ret = obj.instance + ',' + obj.title + ',' + obj.detail
+            } catch {
+            }
+            onError(ret);
+        });
+    }
+    var getDateTimeHmsStr = function (dt) {
+        return dt.getHours().toString().padStart(2, "0") + dt.getMinutes().toString().padStart(2, "0") + dt.getSeconds().toString().padStart(2, "0");
+    }
+    const formatterCN = new Intl.DateTimeFormat("zh-CN", {
+        timeZone: "Asia/Shanghai",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    });
+    var getDateTimeStr = function (dt) {
+        return formatterCN.format(dt);
+    };
+
+    var refresh_old = function () {
+        $('#loading').show();
+
+        playerConfig.date = dateControl.value;
+        playerConfig.startTime = getDateTimeStr(new Date(playerConfig.date + ' 00:00:00'));
+        playerConfig.endTime = getDateTimeStr(new Date(playerConfig.date + ' 23:59:59'));
+
+        //清空时间轴元素
+        $('#timeSlider').remove();
+        var timeSliderDiv = document.createElement("div");
+        timeSliderDiv.id = 'timeSlider';
+        $("#timeSliderContainer").append(timeSliderDiv);
+        //查询当日时间轴
+        $.get('api/player/playback/timeline', {
+            deviceId: playerConfig.deviceId,
+            channelId: playerConfig.channelId,
+            startTime: playerConfig.startTime,
+            endTime: playerConfig.endTime
+        }, function (ret) {
+            $('#message').hide();
+            if (ret == null || ret.length == 0) {
+                showMessage('在[' + playerConfig.date + ']未找到回放录像。');
+                return;
+            }
+            $('#btnPlay').attr("disabled", true);
+            $('#btnStop').attr("disabled", true);
+
+            $('#timeSliderContainer').show();
+            let curDaytimeChunkArray = [];
+            for (var i = 0; i < ret.length; i++) {
+                var item = ret[i];
+                var startTime = new Date(item.startTime);
+                var endTime = new Date(item.endTime);
+                curDaytimeChunkArray.push(getDateTimeHmsStr(startTime) + '-' + getDateTimeHmsStr(endTime) + '-A');
+            }
+            playerConfig.timeline.instance = initTimeSlider('#timeSlider', {
+                curDaytimeChunkArray: curDaytimeChunkArray,
+                //presentSeconds: 20,
+                timeChunkType: {
+                    A: 'green'
+                },
+                speed: 1,
+                isInitialPlay: false,
+                onClick: function (oldValue, newValue) {
+                    playerConfig.timeline.value = newValue;
+                    if (player != null) {
+                        player.destroy();
+                        $('#container').hide();
+                    }
+                    var startTime = new Date(playerConfig.date + ' 00:00:00');
+                    startTime.setSeconds(startTime.getSeconds() + newValue);
+                    playerConfig.startTime = getDateTimeStr(startTime);
+
+                    if (isPlaying) {
+                        // stop();
+                        play();
+                    } else {
+                        $('#btnPlay').attr("disabled", false);
+                        $('#btnStop').attr("disabled", true);
+                    }
+                }
+            });
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            var message = null;
+            if (textStatus === "timeout") {
+                message = "请求超时 ";
+            } else if (textStatus === "error") {
+                message = jqXHR.responseText;
+                if (message == null)
+                    message = "请求错误：" + errorThrown;
+            } else if (textStatus === "abort") {
+                message = "请求中止";
+            }
+            showMessage("刷新时间轴时出错！" + message);
+        }).done(function () {
+            $('#loading').hide();
+        });
+    };
+
+    var isPlaying = false;
+    let firstPlay = false
+    var play = function () {
+        isPlaying = true;
+        $('#btnRefresh').attr("disabled", false);
+        $('#btnPlay').attr("disabled", false);
+        $('#btnStop').attr("disabled", false);
+        if(player){
+            // player.play(connetUrl);
+            connect(true)
+        }else{
+
+        }
+
+    }
+
+    var stop = function () {
+        isPlaying = false;
+        $('#btnRefresh').attr("disabled", false);
+        $('#btnPlay').attr("disabled", false);
+        $('#btnStop').attr("disabled", false);
+        if (player != null) {
+            player.pause()
+            const time = playerConfig.timeline.instance.timeNow
+            console.log(playerConfig.date + ` ${time}`,'time123')
+            const startTime = new Date(playerConfig.date + ` ${time}`)
+            console.log(playerConfig.date,'startTimem')
+            playerConfig.startTime = getDateTimeStr(startTime);
+            
+            // player.destroy();
+            // $('#container').hide();
+        }
+        // var startTime = new Date(playerConfig.date + ' 00:00:00');
+        // startTime.setSeconds(startTime.getSeconds() + newValue);
+        // playerConfig.startTime = getDateTimeStr(startTime);
+    }
+
+    const refresh = () => {
+        $('#loading').show();
+        playerConfig.date = dateControl.value;
+        playerConfig.startTime = getDateTimeStr(new Date(playerConfig.date + ' 00:00:00'));
+        playerConfig.endTime = getDateTimeStr(new Date(playerConfig.date + ' 23:59:59'));
+        if (player) {
+            player.pause();
+        }
+        //清空时间轴元素
+        $('#timeSlider').remove();
+        var timeSliderDiv = document.createElement("div");
+        timeSliderDiv.id = 'timeSlider';
+        $("#timeSliderContainer").append(timeSliderDiv);
+        //查询当日时间轴
+        $.get('api/player/playback/timeline', {
+            deviceId: playerConfig.deviceId,
+            channelId: playerConfig.channelId,
+            startTime: playerConfig.startTime,
+            endTime: playerConfig.endTime
+        }, function (ret) {
+            $('#message').hide();
+            if (ret == null || ret.length == 0) {
+                showMessage('在[' + playerConfig.date + ']未找到回放录像。');
+                return;
+            }
+            $('#btnPlay').attr("disabled", true);
+            $('#btnStop').attr("disabled", true);
+
+            $('#timeSliderContainer').show();
+            let curDaytimeChunkArray = [];
+            for (var i = 0; i < ret.length; i++) {
+                var item = ret[i];
+                var startTime = new Date(item.startTime);
+                var endTime = new Date(item.endTime);
+                curDaytimeChunkArray.push(getDateTimeHmsStr(startTime) + '-' + getDateTimeHmsStr(endTime) + '-A');
+            }
+            const nowendTime = startTime.getTime()
+            const nowstartTime =new Date(playerConfig.date + ' 00:00:00').getTime()
+            const differenceTime = nowendTime - nowstartTime
+            console.log(differenceTime,'asdasd')
+            playerConfig.timeline.value = Math.floor(differenceTime / 1000) 
+            console.log(playerConfig.timeline.value,'curDaytime123132')
+            playerConfig.timeline.instance = initTimeSlider('#timeSlider', {
+                curDaytimeChunkArray: curDaytimeChunkArray,
+                //presentSeconds: 20,
+                timeChunkType: {
+                    A: 'green'
+                },
+                speed: 1,
+                isInitialPlay: false,
+                isClickPlay: true,
+                onClick: function (oldValue, newValue) {
+                    playerConfig.timeline.value = newValue;
+                    // if (player != null) {
+                    //     player.destroy();
+                    //     $('#container').hide();
+                    // }
+                    var startTime = new Date(playerConfig.date + ' 00:00:00');
+                    startTime.setSeconds(startTime.getSeconds() + newValue);
+                    playerConfig.startTime = getDateTimeStr(startTime);
+
+                    if (isPlaying) {
+                        // stop();
+                        // play();
+                        connect(true)
+                        // player.play(connetUrl)
+                    } else {
+                        $('#btnPlay').attr("disabled", false);
+                        $('#btnStop').attr("disabled", true);
+                        setTimeout(function () {
+                            playerConfig.timeline.instance.timeLineStop();
+                        }, 2500);
+                    }
+                }
+            });
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            var message = null;
+            if (textStatus === "timeout") {
+                message = "请求超时 ";
+            } else if (textStatus === "error") {
+                message = jqXHR.responseText;
+                if (message == null)
+                    message = "请求错误：" + errorThrown;
+            } else if (textStatus === "abort") {
+                message = "请求中止";
+            }
+            showMessage("刷新时间轴时出错！" + message);
+        }).done(function () {
+            $('#loading').hide();
+        });
+    }
+
+    let connetUrl = ''
+
+    const connect = (isAutoPlay = false) => {
+        pushLog("连接中...");
+        $('#loading').show();
+        var url = 'api/player/playback';
+        $.get(url, {
+            deviceId: playerConfig.deviceId,
+            channelId: playerConfig.channelId,
+            startTime: playerConfig.startTime,
+            endTime: playerConfig.endTime,
+            useProxy: playerConfig.conf.useProxy
+        }, function (ret) {
+            $('#loading').hide();
+            playerConfig.errorCount = 0;
+            playerConfig.live = ret;
+            document.title = ret.channelName + ' - ' + ret.deviceName;
+
+            
+            setTimeout(function () {
+                playerConfig.timeline.instance.presentSeconds = Number(playerConfig.timeline.value )|| 1;
+                playerConfig.timeline.instance.setTimeLineLeft();
+                showPlayer();
+                pushLog("开始播放...");
+                var url = ret.url;
+                if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
+                    var urlObj = new URL(url, window.location.href);
+                    switch (urlObj.protocol) {
+                        case 'http:':
+                            urlObj.protocol = 'ws:';
+                            break;
+                        case 'https:':
+                            urlObj.protocol = 'wss:';
+                            break;
+                    }
+                    connetUrl = urlObj.href;
+                }
+                if(isAutoPlay){
+                    player.play(connetUrl);
+                }
+            }, 100);
+        }).fail(function (response) {
+            playerConfig.timeline.instance.presentSeconds = playerConfig.timeline.value || 1;
+            playerConfig.timeline.instance.setTimeLineLeft();
+            $('#loading').hide();
+            var ret = '网络错误';
+            if (response.responseText != undefined)
+                ret = response.responseText;
+            try {
+                var obj = JSON.parse(ret);
+                ret = obj.instance + ',' + obj.title + ',' + obj.detail
+            } catch {
+            }
+            onError(ret);
+        });
+    }
+
+    //获取配置
+    $.get('api/player/conf', function (ret) {
+        playerConfig.conf = ret;
+        // 重置时间轴
+        refresh()
+        // 连接视频
+        // connect()
+        create();
+
+    });
+
+    // 1.第一次进入进行初始化，进行时间轴初始化,视频流的连接
+
+    // 2.下一步和上一步 进行时间轴的初始化和视频流的初始化
+
+    // 3.暂停 通过时间轴的暂停操控视频的暂停
+
+    // 4.播放 通过时间轴进行播放
+
+
+</script>

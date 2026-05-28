@@ -1,0 +1,46 @@
+﻿<div class="row">
+    <div class="col-12">
+        <EditForm Model="@createModel" OnValidSubmit="Ok">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>编号</label>
+                @if (Model == null)
+                {
+                    <InputText class="form-control" @bind-Value="createModel.Id" />
+                }
+                else
+                {
+                    <InputText class="form-control" @bind-Value="createModel.Id" readonly />
+                }
+                <ValidationMessage For="@(() => createModel.Id)" />
+            </div>
+            <div class="form-group">
+                <label>名称</label>
+                <InputText class="form-control" @bind-Value="createModel.Name" />
+                <ValidationMessage For="@(() => createModel.Name)" />
+            </div>
+            <div class="form-group">
+                <label>API地址</label>
+                <InputText class="form-control" @bind-Value="createModel.ApiUrl" />
+                <ValidationMessage For="@(() => createModel.ApiUrl)" />
+            </div>
+            <div class="form-group">
+                <label>API密码</label>
+                <InputText class="form-control" @bind-Value="createModel.ApiSecret" />
+                <ValidationMessage For="@(() => createModel.ApiSecret)" />
+            </div>
+            <div class="form-group">
+                <label>公开访问IP地址</label>
+                <InputText class="form-control" @bind-Value="createModel.PublicIpAddress" />
+                <ValidationMessage For="@(() => createModel.PublicIpAddress)" />
+            </div>
+            <div class="form-group">
+                <label>公开访问URL</label>
+                <InputText class="form-control" @bind-Value="createModel.PublicUrl" />
+                <small>一般不需要配置，只有当http服务的IP地址或端口被代理的情况需要设置</small>
+                <ValidationMessage For="@(() => createModel.PublicUrl)" />
+            </div>
+            <button type="submit" class="btn btn-primary col-sm-5 col-md-4 col-lg-2">确定</button>
+        </EditForm>
+    </div>
+</div>

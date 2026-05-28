@@ -1,0 +1,10 @@
+﻿{
+  "DefaultId": "QuickNV.Driver.RTSP",
+  "Name": "QuickNV驱动_RTSP",
+  "Version": "3.7.x.x",
+  "Tags": [ "视频监控" ],
+  "Description": "[QuickNV驱动_RTSP]是连接为QuickNV提供RTSP驱动的程序。",
+  "Platform": [ "any" ],
+  "Runtime": [ "dotnet-8.0" ],
+  "AgentStartup": "QuickNV.Driver.RTSP.dll"
+}

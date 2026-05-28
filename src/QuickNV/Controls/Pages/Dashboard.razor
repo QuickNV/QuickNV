@@ -1,0 +1,94 @@
+﻿<div class="row">
+    <div class="col-xl-3 col-xxl-6 col-sm-6 mb-3">
+        <div class="card bg-success">
+            <div class="card-body d-flex">
+                <div class="w-100">
+                    <h2 class="text-white">
+                        @Core.MediaServerManager.Instance.GetConnectedMediaServersCount()
+                        /
+                        @Core.MediaServerManager.Instance.GetMediaServerCount()
+                    </h2>
+                    <span class="text-white fs-18">媒体服务器</span>
+                </div>
+                <div class="display-4">
+                    <i class="text-white fa fa-server" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-sm-6 mb-3">
+        <div class="card bg-primary">
+            <div class="card-body d-flex">
+                <div class="w-100">
+                    <h2 class="text-white">
+                        @Core.MediaServerManager.Instance.GetMediaCount()
+                    </h2>
+                    <span class="text-white fs-18">媒体流</span>
+                </div>
+                <div class="display-4">
+                    <i class="text-white fa fa-file-video-o" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-sm-6 mb-3">
+        <div class="card bg-warning">
+            <div class="card-body d-flex">
+                <div class="w-100">
+                    <h2 class="text-white">
+                        @OnlineDeviceCount
+                        /
+                        @AllDeviceCount
+                    </h2>
+                    <span class="text-white fs-18">设备</span>
+                </div>
+                <div class="display-4">
+                    <i class="text-white fa fa-cubes" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-sm-6 mb-3">
+        <div class="card bg-info">
+            <div class="card-body d-flex">
+                <div class="w-100">
+                    <h2 class="text-white">@AllChannelCount</h2>
+                    <span class="text-white fs-18">通道</span>
+                </div>
+                <div class="display-4">
+                    <i class="text-white fa fa-video-camera" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-sm-6 mb-3">
+        <a href="View" target="_blank" style="text-decoration: none;">
+            <div class="card bg-primary">
+                <div class="card-body d-flex">
+                    <div class="w-100">
+                        <h2 class="text-white">实时</h2>
+                        <span class="text-white fs-18">大屏</span>
+                    </div>
+                    <div class="display-4">
+                        <i class="text-white fa fa-tv" />
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-sm-6 mb-3">
+        <a href="ViewPlayback" target="_blank" style="text-decoration: none;">
+            <div class="card bg-warning">
+                <div class="card-body d-flex">
+                    <div class="w-100">
+                        <h2 class="text-white">回放</h2>
+                        <span class="text-white fs-18">大屏</span>
+                    </div>
+                    <div class="display-4">
+                        <i class="text-white fa fa-desktop" />
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

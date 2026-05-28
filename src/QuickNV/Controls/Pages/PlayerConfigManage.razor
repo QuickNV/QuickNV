@@ -1,0 +1,130 @@
+﻿@inherits SettingComponentBaseWithModalAlert<Model.PlayerConfigModel>
+<ModalAlert @ref="modalAlert" />
+<EditForm Model="@Config">
+    <DataAnnotationsValidator />
+    <Tabs>
+        <TabPane Key="Times">
+            <Tab>时间相关</Tab>
+            <ChildContent>
+                <div class="card" style="border-top: none;border-top-left-radius: 0;border-top-right-radius: 0;">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>等待画面变化超时(单位:秒)</label>
+                            <InputNumber class="form-control" @bind-Value="Config.WaitFrameChangeSeconds" />
+                            <ValidationMessage For="@(() => Config.WaitFrameChangeSeconds)" />
+                        </div>
+                        <div class="form-group">
+                            <label>快速重试次数</label>
+                            <InputNumber class="form-control" @bind-Value="Config.FastRetryTimes" />
+                            <ValidationMessage For="@(() => Config.FastRetryTimes)" />
+                        </div>
+                        <div class="form-group">
+                            <label>快速重试间隔(单位:毫秒)</label>
+                            <InputNumber class="form-control" @bind-Value="Config.FastRetryInterval" />
+                            <ValidationMessage For="@(() => Config.FastRetryInterval)" />
+                        </div>
+                        <div class="form-group">
+                            <label>慢速重试间隔(单位:毫秒)</label>
+                            <InputNumber class="form-control" @bind-Value="Config.SlowRetryInterval" />
+                            <ValidationMessage For="@(() => Config.SlowRetryInterval)" />
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </TabPane>
+        <TabPane Key="Player">
+            <Tab>播放器</Tab>
+            <ChildContent>
+                <div class="card" style="border-top: none;border-top-left-radius: 0;border-top-right-radius: 0;">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="UseProxy" class="custom-control-input"
+                                    @bind-Value="Config.UseProxy" />
+                                <label class="custom-control-label" for="UseProxy">代理媒体流</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.UseProxy)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="Stretch" class="custom-control-input" @bind-Value="Config.Stretch" />
+                                <label class="custom-control-label" for="Stretch">视频拉伸</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.Stretch)" />
+                        </div>
+                        <!--
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="SupportDblclickFullscreen" class="custom-control-input"
+                                    @bind-Value="Config.SupportDblclickFullscreen" />
+                                <label class="custom-control-label" for="SupportDblclickFullscreen">双击画面全屏</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.SupportDblclickFullscreen)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowFullScreenBtn" class="custom-control-input" @bind-Value="Config.ShowFullScreenBtn" />
+                                <label class="custom-control-label" for="ShowFullScreenBtn">显示全屏按钮</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowFullScreenBtn)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowStretchBtn" class="custom-control-input" @bind-Value="Config.ShowStretchBtn" />
+                                <label class="custom-control-label" for="ShowStretchBtn">显示拉伸按钮</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowStretchBtn)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowZoomBtn" class="custom-control-input" @bind-Value="Config.ShowZoomBtn" />
+                                <label class="custom-control-label" for="ShowZoomBtn">显示电子放大按钮</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowZoomBtn)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowScreenShotBtn" class="custom-control-input" @bind-Value="Config.ShowScreenShotBtn" />
+                                <label class="custom-control-label" for="ShowScreenShotBtn">显示截图按钮</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowScreenShotBtn)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowAudioBtn" class="custom-control-input" @bind-Value="Config.ShowAudioBtn" />
+                                <label class="custom-control-label" for="ShowAudioBtn">显示音量按钮</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowAudioBtn)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowRecordBtn" class="custom-control-input" @bind-Value="Config.ShowRecordBtn" />
+                                <label class="custom-control-label" for="ShowRecordBtn">显示录像按钮</label>
+
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowRecordBtn)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowBandwidth" class="custom-control-input"
+                                    @bind-Value="Config.ShowBandwidth" />
+                                <label class="custom-control-label" for="ShowBandwidth">显示网速</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowBandwidth)" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <InputCheckbox id="ShowPerformance" class="custom-control-input"
+                                    @bind-Value="Config.ShowPerformance" />
+                                <label class="custom-control-label" for="ShowPerformance">显示性能</label>
+                            </div>
+                            <ValidationMessage For="@(() => Config.ShowPerformance)" />
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </ChildContent>
+        </TabPane>
+    </Tabs>
+    <button type="button" class="btn btn-primary col-sm-5 col-md-4 col-lg-2 mt-2" @onclick="save">保存</button>
+</EditForm>

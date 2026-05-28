@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="QuickNV.Driver.Agent/QuickNV.Driver.Agent.csproj" />
+    <Project Path="QuickNV.Driver.Protocol/QuickNV.Driver.Protocol.csproj" />
+    <Project Path="QuickNV.North.Agent/QuickNV.North.Agent.csproj" />
+    <Project Path="QuickNV.North.Protocol/QuickNV.North.Protocol.csproj" />
+  </Folder>
+  <Folder Name="/Drivers/">
+    <Project Path="QuickNV.Driver.DahuaDeviceNetwork/QuickNV.Driver.DahuaDeviceNetwork.csproj" />
+    <Project Path="QuickNV.Driver.GB28181/QuickNV.Driver.GB28181.csproj" />
+    <Project Path="QuickNV.Driver.HikvisionDeviceNetwork/QuickNV.Driver.HikvisionDeviceNetwork.csproj" />
+    <Project Path="QuickNV.Driver.HikvisionISUP/QuickNV.Driver.HikvisionISUP.csproj" />
+    <Project Path="QuickNV.Driver.Onvif/QuickNV.Driver.Onvif.csproj" />
+    <Project Path="QuickNV.Driver.RTSP/QuickNV.Driver.RTSP.csproj" />
+    <Project Path="QuickNV.Driver.Ys7/QuickNV.Driver.Ys7.csproj" />
+  </Folder>
+  <Project Path="QuickNV/QuickNV.csproj" />
+  <Project Path="_build/_build.csproj" />
+</Solution>

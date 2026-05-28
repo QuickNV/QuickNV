@@ -1,0 +1,10 @@
+﻿{
+  "DefaultId": "QuickNV",
+  "Name": "QuickNV",
+  "Version": "1.0.x.x",
+  "Description": "[QuickNV]是支持Onvif、GB28181等多种协议的视频监控管理平台。",
+  "Tags": [ "视频监控" ],
+  "Platform": [ "any" ],
+  "Runtime": [ "dotnet-8.0" ],
+  "AgentStartup": "QuickNV.dll"
+}

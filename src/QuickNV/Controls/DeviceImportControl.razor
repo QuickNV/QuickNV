@@ -1,0 +1,37 @@
+﻿<div class="row">
+    <div class="col-12">
+        <EditForm Model="this">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>驱动</label>
+                <InputSelect class="form-control" @bind-Value="DriverId">
+                    <option value="">请选择...</option>
+                    @foreach (var driverContext in Core.DriverManager.Instance.DriverContexts)
+                    {
+                        <option value="@driverContext.DriverInfo.Id">@driverContext.DriverInfo.Name</option>
+                    }
+                </InputSelect>
+            </div>
+            @if (string.IsNullOrEmpty(DriverId))
+            {
+                <div class="alert alert-warning" role="alert">
+                    请先选择驱动！
+                </div>
+            }
+            else
+            {
+                @if (fieldForGetArray != null)
+                {
+                    @foreach (var field in fieldForGetArray)
+                    {
+                        <Quick.Blazor.Bootstrap.QuickFields.Control Field="field"></Quick.Blazor.Bootstrap.QuickFields.Control>
+                    }
+                }
+            }
+        </EditForm>
+    </div>
+</div>
+
+<ModalLoading @ref="modalLoading"></ModalLoading>
+<ModalAlert @ref="modalAlert"></ModalAlert>
+<ToastStack @ref="toastStack" AutoClose="true" />

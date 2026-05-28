@@ -1,0 +1,47 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div class="btn-toolbar mb-1">
+            <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">关键字</div>
+                </div>
+                <input type="text" class="form-control" @bind-value="keywords">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" @onclick="search">
+                        <span class="fa fa-search">搜索</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        @if (mediaInfos != null)
+        {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">MediaId</th>
+                        <th scope="col">SSRC</th>
+                        <th scope="col">StreamId</th>
+                        <th scope="col">设备</th>
+                        <th scope="col">通道</th>
+                        <th scope="col">创建时间</th>
+                        <th scope="col">流注册时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var mediaInfo in mediaInfos)
+                    {
+                        <tr>
+                            <th scope="row">@mediaInfo.MediaId</th>
+                            <td>@mediaInfo.SSRC</td>
+                            <td>@mediaInfo.StreamId</td>
+                            <td>@mediaInfo.Device.Name</td>
+                            <td>@mediaInfo.Channel.Name</td>
+                            <td>@mediaInfo.CreateTime</td>
+                            <td>@mediaInfo.StreamRegistTime</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

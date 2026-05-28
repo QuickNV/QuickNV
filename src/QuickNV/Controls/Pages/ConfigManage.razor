@@ -1,0 +1,23 @@
+﻿<Tabs IsNavPills>
+    <TabPane Key="Video">
+        <Tab>视频</Tab>
+        <ChildContent>
+            <div class="pt-1">
+                <PlayerConfigManage></PlayerConfigManage>
+            </div>
+        </ChildContent>
+    </TabPane>
+    <TabPane Key="Advance">
+        <Tab>高级</Tab>
+        <ChildContent>
+            <div class="pt-1">
+                <div class="form-group">
+                    <label>ApiKey</label>
+                    <input type="text" class="form-control" @bind-value="ApiKey" />
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary col-sm-5 col-md-4 col-lg-2 mt-2" @onclick="Save">保存</button>
+        </ChildContent>
+    </TabPane>
+</Tabs>
+<ModalAlert @ref="modalAlert"></ModalAlert>

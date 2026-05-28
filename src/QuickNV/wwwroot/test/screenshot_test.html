@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>QuickNV抓拍测试</title>
+</head>
+<body>
+    <iframe id="liveFrame" style="width: 400px; height: 300px; border: 0;" src="http://xxx.xxx.xxx.xxx/QuickNV/preview/44000000542006000010/44520200541326003320"></iframe>
+    <p>
+    <button onclick="screenshot('download')">抓拍(下载)</button>
+        <button onclick="screenshot('base64')">抓拍(base64格式)</button>
+        <button onclick="screenshot('blob')">抓拍(blob格式)</button>
+    </p>
+    <pre id='log'><pre>
+</body>
+</html>
+
+<script>
+
+var pushLog = function(log){
+    var logElement = document.getElementById('log');
+    logElement.innerHTML += new Date().toLocaleTimeString() + ': '+ log +'\n';
+};
+
+//接收到消息时
+var receiveMessage = function (event) {
+    //事件数据
+    var eventData = event.data;
+    //动作
+    var action = eventData.action;
+    //动作数据
+    var data = eventData.data;
+    pushLog('收到消息');
+    pushLog('--------');
+    pushLog('action: ' + action);
+    pushLog('data: ' + data);
+};
+window.addEventListener("message", receiveMessage);
+
+function screenshot(type){
+    var command = {
+        action:'screenshot',
+        data:{ type:type }
+    };
+    pushLog('发送抓拍指令。指令:' + JSON.stringify(command));
+    var liveFrame = document.getElementById('liveFrame');
+    liveFrame.contentWindow.postMessage(command,'*');
+}
+</script>

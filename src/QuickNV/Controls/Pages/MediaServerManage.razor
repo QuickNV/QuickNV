@@ -1,0 +1,80 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div class="btn-toolbar">
+            <div class="btn-group mr-2 mb-1">
+                <button type="button" class="btn btn-sm btn-secondary" @onclick="Create">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    添加媒体服务器
+                </button>
+            </div>
+            <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">关键字</div>
+                </div>
+                <input type="text" class="form-control" @bind-value="searchKeywords">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-sm btn-secondary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @foreach (var t in Core.MediaServerManager.Instance.QueryMediaServers(searchKeywords))
+    {
+        <div class="col-xl-4 col-lg-6 col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-cube" aria-hidden="true"></i>
+                    <span>@t.Model.Name</span>
+                    @if (t.IsConnected)
+                    {
+                        <span class="badge badge-success ml-2">已连接</span>                        
+                    }
+                    else
+                    {
+                        <span class="badge badge-secondary ml-2">未连接</span>
+                    }
+                </div>
+                <div class="card-body small p-2">
+                    <p class="mb-0">
+                        <span class="font-weight-bold">编号: </span>@t.Model.Id
+                    </p>
+                    <p class="mb-0">
+                        <span class="font-weight-bold">地址: </span> @t.Model.ApiUrl
+                    </p>
+                    @if (t.IsConnected)
+                    {
+                        <p class="mb-0">
+                            <span class="font-weight-bold">媒体流: </span> @t.GetMediaCount()
+                        </p>
+                    }
+                </div>
+                <div class="card-footer p-1">
+                    <div class="btn-group">
+                        <button type="button" title="编辑" class="btn btn-sm btn-secondary" @onclick="() => Edit(t)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" title="删除" class="btn btn-sm btn-secondary" @onclick="() => Delete(t)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" title="媒体流" class="btn btn-sm btn-secondary" @onclick="() => DisplayMediaInfos(t)">
+                            <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" title="日志" class="btn btn-sm btn-secondary" @onclick="() => DisplayLogs(t)">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<ModalWindow @ref="modalWindow" DialogSizeExtraLarge="true" DialogCentered="false" />
+<ModalLoading @ref="modalLoading" />
+<ModalAlert @ref="modalAlert" />

@@ -1,0 +1,115 @@
+﻿<div class="row">
+    <div class="col-12">
+        <EditForm Model="@createModel" OnValidSubmit="Ok">
+            <DataAnnotationsValidator />
+            <Tabs NavTabsExtraClass="mb-3">
+                <TabPane Key="1">
+                    <Tab>基本</Tab>
+                    <ChildContent>
+                        <div class="form-group">
+                            <label>编号</label>
+                            @if (Model == null)
+                            {
+                                <InputText class="form-control" @bind-Value="createModel.Id" />
+                            }
+                            else
+                            {
+                                <InputText class="form-control" @bind-Value="createModel.Id" readonly />
+                            }
+                            <ValidationMessage For="@(() => createModel.Id)" />
+                        </div>
+                        <div class="form-group">
+                            <label>名称</label>
+                            <InputText class="form-control" @bind-Value="createModel.Name" />
+                            <ValidationMessage For="@(() => createModel.Name)" />
+                        </div>
+                        <div class="form-group">
+                            <label>驱动</label>
+                            <InputSelect class="form-control" @bind-Value="ParameterDriverId">
+                                @if (string.IsNullOrEmpty(createModel.DriverId))
+                                {
+                                    <option value="">请选择...</option>
+                                }
+                                else
+                                {
+                                    @if (Core.DriverManager.Instance.GetDriverContext(createModel.DriverId) == null)
+                                    {
+                                        <option value="@createModel.DriverId">未知驱动[@createModel.DriverId]</option>
+                                    }
+                                }
+                                @foreach (var driverContext in Core.DriverManager.Instance.DriverContexts)
+                                {
+                                    <option value="@driverContext.DriverInfo.Id">@driverContext.DriverInfo.Name</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => createModel.SerialNumber)" />
+                        </div>
+                        <div class="form-group">
+                            <label>地点</label>
+                            <InputSelect class="form-control" @bind-Value="createModel.AddressId">
+                                <option value="">请选择...</option>
+                                @foreach (var address in Core.AddressManager.Instance.GetAddressTree())
+                                {
+                                    <option value="@address.Key">@address.Value</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => createModel.AddressId)" />
+                        </div>
+                        <div class="form-group">
+                            <label>经度</label>
+                            <InputNumber class="form-control" @bind-Value="createModel.Lng" />
+                            <ValidationMessage For="@(() => createModel.Lng)" />
+                        </div>
+                        <div class="form-group">
+                            <label>纬度</label>
+                            <InputNumber class="form-control" @bind-Value="createModel.Lat" />
+                            <ValidationMessage For="@(() => createModel.Lat)" />
+                        </div>
+                        @if (!isCreate)
+                        {
+                            <div class="form-group">
+                                <label>硬件信息</label>
+                                <textarea class="form-control" rows="5" readonly>@GetHardwareInfo()</textarea>
+                            </div>
+                        }
+                    </ChildContent>
+                </TabPane>
+                <TabPane Key="2">
+                    <Tab>配置</Tab>
+                    <ChildContent>
+                        @if(string.IsNullOrEmpty(createModel.DriverId))
+                        {
+                            <div class="alert alert-warning" role="alert">
+                                请先选择驱动！
+                            </div>
+                        }
+                        else
+                        {
+                            @if (fieldForGetArray != null)
+                            {
+                                @foreach (var field in fieldForGetArray)
+                                {
+                                    <Quick.Blazor.Bootstrap.QuickFields.Control Field="field"></Quick.Blazor.Bootstrap.QuickFields.Control>
+                                }
+                            }
+                        }
+                    </ChildContent>
+                </TabPane>
+                <TabPane Key="3">
+                    <Tab>高级配置</Tab>
+                    <ChildContent>
+                        <div class="form-group">
+                            <InputTextArea class="form-control" rows="10" @bind-Value="createModel.DriverConfig" />
+                            <ValidationMessage For="@(() => createModel.DriverConfig)" />
+                        </div>
+                    </ChildContent>
+                </TabPane>
+            </Tabs>
+            <button type="submit" class="btn btn-primary col-sm-5 col-md-4 col-lg-2">确定</button>
+        </EditForm>
+    </div>
+</div>
+
+<ModalLoading @ref="modalLoading"></ModalLoading>
+<ModalAlert @ref="modalAlert"></ModalAlert>
+<ToastStack @ref="toastStack" AutoClose="true" />

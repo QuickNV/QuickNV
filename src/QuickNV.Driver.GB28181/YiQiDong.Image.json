@@ -1,0 +1,10 @@
+﻿{
+  "DefaultId": "QuickNV.Driver.GB28181",
+  "Name": "QuickNV驱动_GB28181",
+  "Version": "3.7.x.x",
+  "Tags": [ "视频监控" ],
+  "Description": "[QuickNV驱动_GB28181]是连接为QuickNV提供GB28181驱动的程序。",
+  "Platform": [ "any" ],
+  "Runtime": [ "dotnet-8.0" ],
+  "AgentStartup": "QuickNV.Driver.GB28181.dll"
+}

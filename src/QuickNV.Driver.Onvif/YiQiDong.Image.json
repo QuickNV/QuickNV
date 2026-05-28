@@ -1,0 +1,10 @@
+﻿{
+  "DefaultId": "QuickNV.Driver.Onvif",
+  "Name": "QuickNV驱动_Onvif",
+  "Version": "3.7.x.x",
+  "Tags": [ "视频监控" ],
+  "Description": "[QuickNV驱动_Onvif]是连接为QuickNV提供Onvif驱动的程序。",
+  "Platform": [ "any" ],
+  "Runtime": [ "dotnet-8.0" ],
+  "AgentStartup": "QuickNV.Driver.Onvif.dll"
+}

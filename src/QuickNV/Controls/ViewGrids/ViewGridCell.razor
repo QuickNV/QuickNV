@@ -1,0 +1,3 @@
+﻿<iframe @onclick="@(e => ViewModel.ChangeSelectedCell(Index))"
+        class="ChannelLiveIframe @ViewModel.GetCellCssClass(Index) @GetCellCssClass()" src="@ViewModel.GetChannelViewUrl(Index)">
+</iframe>

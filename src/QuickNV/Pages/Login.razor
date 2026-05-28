@@ -1,0 +1,36 @@
+﻿@page "/Login"
+@using QuickNV.Controls.Pages
+
+@*
+        登录窗口
+    *@
+<Modal Visiable DialogBackdropVisiable DialogCentered>
+    <TitleContent>
+        <i class="fa fa-video-camera text-success mr-2"></i>@Title
+    </TitleContent>
+    <BodyContent>
+        <div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input class="form-control @(string.IsNullOrEmpty(Message) ? "" : "is-invalid")"
+                           placeholder="请输入密码" type="password" autocomplete="off"
+                           @bind-value="Password" @bind-value:event="oninput"
+                           @onkeypress="onPasswordKeyPress"
+                           required autofocus />
+                    @if (!string.IsNullOrEmpty(Message))
+                    {
+                        <div class="invalid-feedback">
+                            @(Message)
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-success btn-block" value="登录" @onclick="OnPost" />
+            </div>
+        </div>
+    </BodyContent>
+</Modal>

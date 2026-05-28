@@ -1,0 +1,272 @@
+﻿@if (LiveWithPtz)
+{
+    <iframe style="width: 100%; height: calc(100vh - 10px); border: 0;" src="live.html?DeviceId=@Channel.DeviceId&ChannelId=@Channel.Id">
+    </iframe>
+    <div class="bd-highlight" style="position: fixed;bottom: 10px;">
+        <div class="flex bd-highlight">
+            <table class="rounded-circle">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-sm btn-light" @onmousedown="moveUp" @onmouseup="stopMove">
+                                <i class="fa fa-caret-up" style="width:1rem;"></i>
+                            </button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <form>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">调焦</div>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" @onmousedown="zoomOut" @onmouseup="stopMove">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" @onmousedown="zoomIn" @onmouseup="stopMove">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="btn btn-sm btn-light" @onmousedown="moveLeft" @onmouseup="stopMove">
+                                <i class="fa fa-caret-left" style="width:1rem;"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-light" @onclick="autoPan">
+                                <i class="fa fa-refresh" style="width:1rem;"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-light" @onmousedown="moveRight" @onmouseup="stopMove">
+                                <i class="fa fa-caret-right" style="width:1rem;"></i>
+                            </button>
+                        </td>
+                        <td></td>
+                        <td>
+                            <form>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">聚焦</div>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" @onmousedown="focusNear" @onmouseup="stopMove">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" @onmousedown="focusFar" @onmouseup="stopMove">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-sm btn-light" @onmousedown="moveDown" @onmouseup="stopMove">
+                                <i class="fa fa-caret-down" style="width:1rem;"></i>
+                            </button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <form>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">光圈</div>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" @onmousedown="irisOut" @onmouseup="stopMove">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" @onmousedown="irisIn" @onmouseup="stopMove">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <input type="range" min="0" max="1" step="0.1" class="form-control-range" @bind-value="moveSpeed">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <iframe style="width: 100%; height: calc(100vh - 320px); border: 0;" src="live.html?DeviceId=@Channel.DeviceId&ChannelId=@Channel.Id">
+    </iframe>
+    <Tabs>
+        <TabPane Key="LiveVideo">
+            <Tab>实时视频</Tab>
+            <ChildContent>
+                <div class="card border-top-0 rounded-0">
+                    <div class="card-body">
+                        <form>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">画面地址</div>
+                                </div>
+                                <input type="text" class="form-control" readonly value="@liveUrl" />
+                                <div class="input-group-append">
+                                    <a class="btn btn-secondary" target="_blank" href="@liveUrl">
+                                        <i class="fa fa-share"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">控制地址</div>
+                                </div>
+                                <input type="text" class="form-control" readonly value="@liveWithPtzUrl" />
+                                <div class="input-group-append">
+                                    <a class="btn btn-secondary" target="_blank" href="@liveWithPtzUrl">
+                                        <i class="fa fa-share"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ChildContent>
+        </TabPane>
+        <TabPane Key="PTZControl">
+            <Tab>云台控制</Tab>
+            <ChildContent>
+                <div class="card border-top-0 rounded-0">
+                    <div class="card-body p-0">
+                        <div class="d-flex bd-highlight">
+                            <div class="flex bd-highlight">
+                                <table class="rounded-circle">
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-light" @onmousedown="moveUp" @onmouseup="stopMove">
+                                                    <i class="fa fa-caret-up" style="width:1rem;"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <form>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">调焦</div>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary" @onmousedown="zoomOut" @onmouseup="stopMove">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary" @onmousedown="zoomIn" @onmouseup="stopMove">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="btn btn-sm btn-light" @onmousedown="moveLeft" @onmouseup="stopMove">
+                                                    <i class="fa fa-caret-left" style="width:1rem;"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-light" @onclick="autoPan">
+                                                    <i class="fa fa-refresh" style="width:1rem;"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-light" @onmousedown="moveRight" @onmouseup="stopMove">
+                                                    <i class="fa fa-caret-right" style="width:1rem;"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <form>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">聚焦</div>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary" @onmousedown="focusNear" @onmouseup="stopMove">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary" @onmousedown="focusFar" @onmouseup="stopMove">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-light" @onmousedown="moveDown" @onmouseup="stopMove">
+                                                    <i class="fa fa-caret-down" style="width:1rem;"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <form>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">光圈</div>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary" @onmousedown="irisOut" @onmouseup="stopMove">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary" @onmousedown="irisIn" @onmouseup="stopMove">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <input type="range" min="0" max="1" step="0.1" class="form-control-range" @bind-value="moveSpeed">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </TabPane>
+    </Tabs>
+    <div class="row">
+    </div>
+}

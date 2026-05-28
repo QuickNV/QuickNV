@@ -1,0 +1,83 @@
+﻿<ModalLoading @ref="modalLoading" />
+<ModalAlert @ref="modalAlert" />
+<div class="card">
+    <div class="card-header">
+        <div class="form-inline">
+            <div class="form-group ml-2">
+                <button type="button" class="btn btn-primary" @onclick="expandAll">全部展开</button>
+            </div>
+
+            <div class="form-group ml-2">
+                <button type="button" class="btn btn-primary" @onclick="createRootNode">添加根地点</button>
+            </div>
+            <div class="form-group ml-2">
+                @if (SelectedNode == null)
+                {
+                    <button type="button" class="btn btn-primary" @onclick="createChildNode" disabled>添加子地点</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" @onclick="createChildNode">添加子地点</button>
+                }
+            </div>
+            <div class="form-group ml-2">
+                @if (SelectedNode == null)
+                {
+                    <button type="button" class="btn btn-primary" @onclick="editNode" disabled>编辑地点</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" @onclick="editNode">编辑地点</button>
+                }
+            </div>
+            <div class="form-group ml-2">
+                @if (SelectedNode == null)
+                {
+                    <button type="button" class="btn btn-primary" @onclick="deleteNode" disabled>删除地点</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" @onclick="deleteNode">删除地点</button>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <Tree @ref="tree" DataSource="_datas" SelectedNodeChanged="onSelectedNodeChanged" ShowIcon
+              TreeClass="treeview"
+              TitleExpression="x=>((Data)x.DataItem).Title"
+              ChildrenExpression="GetChildren"
+              IconExpression="@(t=>"fa fa-map-marker")"
+              IsLeafExpression="x=>false"></Tree>
+    </div>
+</div>
+
+<Modal Visiable="modify_Visiable" DialogCentered DialogBackdropVisiable>
+    <TitleContent>@(modify_IsCreate ? "添加地点" : "修改地点")</TitleContent>
+    <HeaderContent>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="@(e => modify_Visiable = false)">
+            <span aria-hidden="true">×</span>
+        </button>
+    </HeaderContent>
+    <BodyContent>
+        <EditForm Model="@modify_Model" OnValidSubmit="OnValidateSubmit">
+            <div class="form-group">
+                <label>编号</label>
+                @if (modify_IsCreate)
+                {
+                    <InputText class="form-control" @bind-Value="modify_Model.Id" />
+                }
+                else
+                {
+                    <InputText class="form-control" @bind-Value="modify_Model.Id" readonly />
+                }
+            </div>
+            <div class="form-group">
+                <label>名称</label>
+                <InputText class="form-control" @bind-Value="modify_Model.Name" />
+            </div>
+            <button type="submit" class="btn btn-primary col-sm-5 col-md-4 col-lg-2">保存</button>
+        </EditForm>
+    </BodyContent>
+</Modal>
