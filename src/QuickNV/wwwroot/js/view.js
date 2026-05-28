@@ -59,10 +59,9 @@
         element = element.parentElement;
     } while (element != null);
 
-    var viewPanelEl = document.getElementById('viewPanel');
     //定时检查设置iframe的点击事件
     setInterval(function () {
-        var iframes = viewPanelEl.getElementsByClassName('ChannelLiveIframe');
+        var iframes = document.getElementById('viewPanel').getElementsByClassName('ChannelLiveIframe');
         for (var i = 0; i < iframes.length; i++) {
             var iframe = iframes[i];
             if (iframe.contentDocument == null)
