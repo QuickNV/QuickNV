@@ -8,6 +8,7 @@ using YiQiDong.Core;
 using QuickNV.Core;
 using QuickNV.Model;
 using QuickNV.Utils;
+using QuickNV.Components;
 
 namespace QuickNV;
 
@@ -51,7 +52,7 @@ public class Agent : AbstractAgent
     {
         //加载配置文件
         Config = configFunction.ReadConfig();
-        Controls.Pages.PlayerConfigManage.Init(null);
+        Components.Controls.Pages.PlayerConfigManage.Init(null);
 
         //初始化数据库连接
         var dbContextConfigHandler = DbUtils.GetDbContextConfigHandler(Config);
@@ -62,7 +63,7 @@ public class Agent : AbstractAgent
         ConfigDbContext.CacheContext.LoadCache();
 
         //ViewGrid管理器初始化
-        Controls.ViewGrids.ViewGridManager.Instance.Init();
+        Components.Controls.ViewGrids.ViewGridManager.Instance.Init();
         //ApiKey管理器初始化
         ApiKeyManager.Instance.Init();
         //启动Web服务
@@ -70,19 +71,24 @@ public class Agent : AbstractAgent
         var token = cts.Token;
         Task.Run(() =>
         {
-#if DEBUG
-            var webApplicationOptions = new WebApplicationOptions();
+            #if DEBUG
+            var contentRootPath = Path.Combine(AppContext.BaseDirectory, "../../");
+            var defaultWebRootPath = Path.Combine(contentRootPath, "../QiYun.UI/dist");
 #else
+            var contentRootPath = AgentContext.Container.ImageFolder;
+            var defaultWebRootPath = Path.Combine(contentRootPath, "wwwroot");
+#endif
             var webApplicationOptions = new WebApplicationOptions()
             {
-                ContentRootPath = System.IO.Path.GetDirectoryName(typeof(Agent).Assembly.Location)
+                ContentRootPath = contentRootPath,
+                WebRootPath = defaultWebRootPath
             };
-#endif
             var builder = WebApplication.CreateBuilder(webApplicationOptions);
 #if DEBUG
             builder.WebHost.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
 #endif
             builder.Logging.ClearProviders();
+            builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
                 options.Cookie.Name = Config.SessionCookieName;
@@ -90,9 +96,14 @@ public class Agent : AbstractAgent
             Core.Web.ReverseProxyManager.Instance.Load(builder.Services.AddReverseProxy());
             builder.Services.AddFileReaderService();
             builder.Services.AddControllers();
-            builder.Services.AddRazorPages();
-            builder.Services.AddServerSideBlazor()
-                .AddCircuitOptions(options => { options.DetailedErrors = true; });
+            builder.Services.AddRazorComponents()
+                    .AddInteractiveServerComponents()
+                    .AddHubOptions(options =>
+                    {
+                        options.EnableDetailedErrors = true;
+                        //设置最大包大小为100 MB
+                        options.MaximumReceiveMessageSize = 100 * 1024 * 1024;
+                    });
 #if DEBUG
             builder.Services.AddSwaggerGen(c =>
             {
@@ -133,18 +144,25 @@ public class Agent : AbstractAgent
 #endif
 
             app = builder.Build();
-            if (builder.Environment.IsDevelopment())
+#if DEBUG
+            app.UseDeveloperExceptionPage();
+#else
+            app.UseExceptionHandler(errorApp =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+                errorApp.Run(async context =>
+                {
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "text/plain;charset=UTF-8";
+                    var exceptionHandlerPathFeature =
+                        context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
+                    await context.Response.WriteAsync(ExceptionUtils.GetExceptionMessage(exceptionHandlerPathFeature?.Error));
+                });
+            });
+#endif
             app.UseWebSockets();
             Interfaces.Driver.Manager.Instance.Init(app, Config);
             Interfaces.North.Manager.Instance.Init(app, Config);
-            app.UseStaticFiles();
+            app.MapStaticAssets();
             app.MapReverseProxy();
 #if DEBUG
             app.UseSwagger();
@@ -156,9 +174,9 @@ public class Agent : AbstractAgent
             app.UseSession();
             app.UseMiddleware<Core.Web.LoginMiddleware>();
             app.UseRouting();
+            app.UseAntiforgery();
             app.MapControllers();
-            app.MapBlazorHub();
-            app.MapFallbackToPage("/_Host");
+            app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
             while (true)
             {

@@ -52,7 +52,7 @@
         style.text('input[type=range]::-webkit-slider-runnable-track{background: ' + backgroundStyle + '}');
     });
 
-    var element = document.getElementById('root');
+    var element = document.getElementById('root').parentElement;
     do {
         element.classList.add('w-100');
         element.classList.add('h-100');

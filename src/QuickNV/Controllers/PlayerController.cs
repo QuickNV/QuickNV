@@ -58,7 +58,7 @@ namespace QuickNV.Controllers
         }
 
         [HttpGet("conf")]
-        public Model.PlayerConfigModel GetConf() => Controls.Pages.PlayerConfigManage.GlobalConfig;
+        public Model.PlayerConfigModel GetConf() => Components.Controls.Pages.PlayerConfigManage.GlobalConfig;
 
         [HttpGet("live")]
         public async Task<ActionResult<LiveResponse>> GetLiveStreamUrl([FromQuery] string deviceId, [FromQuery] string channelId, [FromQuery] bool useProxy)

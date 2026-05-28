@@ -153,7 +153,7 @@ namespace QuickNV.Controllers
         {
             try
             {
-                Pages.View.Show(externalId);
+                Components.Pages.View.Show(externalId);
                 return Ok();
             }
             catch (Exception ex)

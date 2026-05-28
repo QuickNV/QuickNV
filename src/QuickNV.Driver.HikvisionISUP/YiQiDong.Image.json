@@ -5,6 +5,6 @@
   "Tags": [ "视频监控" ],
   "Description": "[QuickNV驱动_海康ISUP]是连接为QuickNV提供海康EHome和ISUP驱动的程序。",
   "Platform": [ "win-x64", "linux-x64" ],
-  "Runtime": [ "dotnet-8.0" ],
+  "Runtime": [ "dotnet-10.0" ],
   "AgentStartup": "QuickNV.Driver.HikvisionISUP.dll"
 }

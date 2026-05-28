@@ -1,0 +1,75 @@
+﻿@page "/ViewPlayback"
+@layout ViewLayout
+
+<HeadContent>
+    <link href="css/view.css" rel="stylesheet" />
+    <script src="js/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery.nicescroll-3.6.8/jquery.nicescroll.min.js"></script>
+    <script src="js/view-playback.js"></script>
+</HeadContent>
+
+<div id="root" class="row p-1 bg-dark m-0 w-100 h-100 ViewRoot">
+    <div class="col-lg-3 col-md-4 col-sm-6 h-100" style="padding: 1px;@(showLeftPanel?"":"display: none;")">
+        <div class="border_corner border_corner_left_top"></div>
+        <div class="border_corner border_corner_right_top"></div>
+        <div class="border_corner border_corner_left_bottom"></div>
+        <div class="border_corner border_corner_right_bottom"></div>
+        <div class="h-100 ViewBorder" style="display:flex;flex-direction:column;">
+            <div class="card bg-dark ViewCard" style="height: 100%;background-color: transparent!important;">
+                <div class="card-header p-0">
+                    <div class="form">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm pl-3" placeholder="搜索" @bind-value="searchKeywords">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-sm btn-secondary TransparentBgButton" style="padding-right: 12px;" @onclick="refresh">
+                                    <i class="fa fa-search" style="font-size: 50%;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tree" class="card-body p-0" style="overflow: auto;">
+                    <Tree @ref="tree" DataSource="_datas" SelectedNodeChanged="onSelectedNodeChanged" ShowIcon
+                          TitleExpression="x=>((Data)x.DataItem).Title"
+                          ChildrenExpression="x=>((Data)x.DataItem).Childs"
+                          IconExpression="@(x=>((Data)x.DataItem).IsLeaf?"fa fa-camera": "fa fa-map-marker")"
+                          IsLeafExpression="x=>((Data)x.DataItem).IsLeaf"
+                          TreeClass="treeview ChannelTree"
+                          TreeNodeDblClicked="onTreeNodeDblClicked"></Tree>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="h-100">
+        <table class="h-100">
+            <tr><td></td></tr>
+            <tr>
+                <td>
+                    <button class="btn-splitter" @onclick="@(e=>showLeftPanel=!showLeftPanel)">
+                        @if (showLeftPanel)
+                        {
+                            <i class="fa fa-caret-left"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-caret-right"></i>
+                        }
+                    </button>
+                </td>
+            </tr>
+            <tr><td></td></tr>
+        </table>
+    </div>
+    <div id="viewPanel" class="col h-100" style="padding: 1px;">
+        <div class="border_corner border_corner_left_top"></div>
+        <div class="border_corner border_corner_right_top"></div>
+        <div class="border_corner border_corner_left_bottom"></div>
+        <div class="border_corner border_corner_right_bottom"></div>
+        <div class="h-100 ViewBorder">
+            @viewGridRenderFragment
+        </div>        
+    </div>
+</div>
+
+<ModalLoading @ref="modalLoading" />
+<ModalAlert @ref="modalAlert" />

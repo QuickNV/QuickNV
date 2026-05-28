@@ -1,0 +1,52 @@
+﻿@page "/"
+@using QuickNV.Components.Controls.Pages
+<script src="js/index.js"></script>
+<div class="sidebar">
+    <NavMenu ActiveKey="Home">
+        <Title>
+            @Title
+        </Title>
+        <ChildContent>
+            <NavMenuItem Key="Dashboard" OnClick="@(() => Show<Dashboard>())">
+                <Tab>
+                    <i class="fa fa-tachometer" aria-hidden="true"></i>仪表盘
+                </Tab>
+            </NavMenuItem>
+            <NavMenuItem Key="AddressManage" OnClick="@(() => Show<AddressManage>())">
+                <Tab>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>地点
+                </Tab>
+            </NavMenuItem>
+            <NavMenuItem Key="MediaServerManage" OnClick="@(() => Show<MediaServerManage>())">
+                <Tab>
+                    <i class="fa fa-server" aria-hidden="true"></i>媒体服务器
+                </Tab>
+            </NavMenuItem>
+            <NavMenuItem Key="DriverManage" OnClick="@(() => Show<DriverManage>())">
+                <Tab>
+                    <i class="fa fa-microchip" aria-hidden="true"></i>驱动
+                </Tab>
+            </NavMenuItem>
+            <NavMenuItem Key="DeviceManage" OnClick="@(() => Show<DeviceManage>())">
+                <Tab>
+                    <i class="fa fa-cubes" aria-hidden="true"></i>设备
+                </Tab>
+            </NavMenuItem>
+            <NavMenuItem Key="PlayerConfigManage" OnClick="@(() => Show<ConfigManage>())">
+                <Tab>
+                    <i class="fa fa-cogs" aria-hidden="true"></i>设置
+                </Tab>
+            </NavMenuItem>
+            <NavMenuItem Key="Exit" OnClick="@(() => Show<Exit>())">
+                <Tab>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>退出
+                </Tab>
+            </NavMenuItem>
+        </ChildContent>
+    </NavMenu>
+</div>
+<div class="main">
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
