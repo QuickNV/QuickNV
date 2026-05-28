@@ -9,6 +9,7 @@ using QuickNV.Core;
 using QuickNV.Core.Utils;
 using QuickNV.Core.Web;
 using QuickNV.Driver.Protocol.QpModels;
+using Quick.Utils;
 
 namespace QuickNV.Controllers
 {

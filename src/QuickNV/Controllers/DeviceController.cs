@@ -24,7 +24,7 @@ namespace QuickNV.Controllers
         [HttpGet("export/excel")]
         public ActionResult ExportExcel()
         {
-            var dbContextBackupContext = new DbContextBackup.Excel.XlsxDbContextBackupContext();
+            var dbContextBackupContext = new DbContextBackup.Excel.XlsxDbContextBackupContext(_ => Model.ModelsJsonSerializerContext.Default2);
             using (var dbContext = new ConfigDbContext())
             using (var ms = new MemoryStream())
             {

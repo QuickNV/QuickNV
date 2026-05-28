@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="QuickNV.Onvif" Version="1.1.0" />
-	  <PackageReference Include="QuickNV.Onvif.Discovery" Version="1.1.0" />
+	  <PackageReference Include="QuickNV.Onvif" Version="10.2025.1" />
+	  <PackageReference Include="QuickNV.Onvif.Discovery" Version="10.2025.1" />
 	</ItemGroup>
 
 	<ItemGroup>

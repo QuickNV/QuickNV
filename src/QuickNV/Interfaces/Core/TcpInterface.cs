@@ -1,5 +1,6 @@
 ﻿using Quick.Protocol;
 using Quick.Protocol.Tcp;
+using Quick.Utils;
 using System;
 using YiQiDong.Agent;
 using YiQiDong.Core.Utils;
@@ -19,7 +20,7 @@ namespace QuickNV.Interfaces.Core
             this.config = config;
             options = new QpTcpServerOptions()
             {
-                Address = System.Net.IPAddress.Parse(config.TcpListenAddress),
+                Address = config.TcpListenAddress,
                 Port = config.TcpListenPort,
                 Password = config.Password,
                 ServerProgram = config.InterfaceName,

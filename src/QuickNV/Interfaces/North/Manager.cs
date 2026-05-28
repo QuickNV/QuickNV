@@ -6,6 +6,7 @@ using YiQiDong.Agent;
 using QuickNV.Core;
 using QuickNV.Interfaces.Core;
 using QuickNV.Model;
+using Quick.Utils;
 
 namespace QuickNV.Interfaces.North
 {

@@ -7,6 +7,7 @@ using QuickNV.Components.Controls.ViewGrids;
 using QuickNV.Core;
 using QuickNV.Driver.Protocol.QpModels;
 using QuickNV.Model;
+using Quick.Utils;
 
 namespace QuickNV.Components.Pages
 {

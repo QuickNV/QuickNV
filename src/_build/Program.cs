@@ -64,7 +64,7 @@ foreach (var productDir in productDirs)
     QbJson.WriteString(Path.Combine(publishFolder, "YiQiDong.Image.json"), "Version", version);
 
     Console.WriteLine("正在制作易启动镜像...");
-    using (var archive = ZipArchive.Create())
+    using (var archive = ZipArchive.CreateArchive())
     {
         archive.AddAllFromDirectory(publishFolder);
         archive.SaveTo(outFile, CompressionType.LZMA);

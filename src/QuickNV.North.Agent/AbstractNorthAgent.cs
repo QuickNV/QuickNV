@@ -1,8 +1,8 @@
 ﻿using Quick.Protocol;
 using YiQiDong.Agent;
 using YiQiDong.Core;
-using YiQiDong.Core.Utils;
 using QuickNV.North.Protocol.QpModels;
+using Quick.Utils;
 
 namespace QuickNV.North.Agent
 {
@@ -22,7 +22,9 @@ namespace QuickNV.North.Agent
 
         public AbstractNorthAgent()
         {
-            QpAllClients.RegisterUriSchema();
+            Quick.Protocol.Pipeline.QpPipelineClientOptions.RegisterUriSchema();
+            Quick.Protocol.Tcp.QpTcpClientOptions.RegisterUriSchema();
+            Quick.Protocol.WebSocket.Client.QpWebSocketClientOptions.RegisterUriSchema();
             commandExecuterManager = new CommandExecuterManager();
             noticeHandlerManager = new NoticeHandlerManager();
         }

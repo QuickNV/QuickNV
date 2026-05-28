@@ -1,6 +1,7 @@
 ﻿using Quick.Protocol;
 using Quick.Protocol.Pipeline;
 using Quick.Protocol.WebSocket.Server.AspNetCore;
+using Quick.Utils;
 using System;
 using YiQiDong.Agent;
 using YiQiDong.Core.Utils;

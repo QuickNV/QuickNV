@@ -3,6 +3,7 @@ using Quick.Blazor.Bootstrap;
 using Quick.EntityFrameworkCore.Plus;
 using YiQiDong.Core.Utils;
 using QuickNV.Core;
+using Quick.Utils;
 
 namespace QuickNV.Components.Controls
 {
@@ -185,27 +186,29 @@ namespace QuickNV.Components.Controls
             modalAlert.Show(
                 "删除确认",
                 $"确定要删除通道[{channel.Name}]?",
-                () =>
+                new ModalAlertOptions()
                 {
-                    modalLoading.Show("删除通道", $"正在删除通道[{channel.Name}]...", true, null);
-                    Task.Run(async () =>
+                     OkCallback = () =>
                     {
-                        try
+                        modalLoading.Show("删除通道", $"正在删除通道[{channel.Name}]...", true, null);
+                        Task.Run(async () =>
                         {
-                            await ChannelManager.Instance.DeleteChannel(driverContext, Device, channel);
-                            modalAlert.Show("信息", $"删除通道[{channel.Name}]成功!");
-                        }
-                        catch (Exception ex)
-                        {
-                            modalAlert.Show("错误", $"删除通道[{channel.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
-                        }
-                        modalLoading.Close();
-                        search();
-                        await InvokeAsync(StateHasChanged);
-                        ChannelChanged?.Invoke();
-                    });
-                },
-            null);
+                            try
+                            {
+                                await ChannelManager.Instance.DeleteChannel(driverContext, Device, channel);
+                                modalAlert.Show("信息", $"删除通道[{channel.Name}]成功!");
+                            }
+                            catch (Exception ex)
+                            {
+                                modalAlert.Show("错误", $"删除通道[{channel.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
+                            }
+                            modalLoading.Close();
+                            search();
+                            await InvokeAsync(StateHasChanged);
+                            ChannelChanged?.Invoke();
+                        });
+                    }
+                });
         }
     }
 }

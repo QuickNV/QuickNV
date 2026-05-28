@@ -2,7 +2,7 @@ using Quick.EntityFrameworkCore.Plus;
 using Quick.Fields;
 using YiQiDong.Agent;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Utils;
+using QuickNV.Model;
 
 namespace QuickNV.Functions;
 
@@ -86,105 +86,41 @@ public class Config : YiQiDong.Core.Functions.ModelJsonConfig<ConfigModel>
     public override ConfigModel ReadConfig()
     {
         var config = base.ReadConfig();
-        configHandler = DbUtils.GetDbContextConfigHandler(config);
+        configHandler = DbUtils.GetDbContextConfigHandler(
+            config.AppDb.DbType,
+            t => ModelsJsonSerializerContext.Default2,
+            config.AppDb.DbConnectionParameter);
         return config;
     }
 
     public override void WriteConfig(ConfigModel model)
     {
         if (configHandler != null)
-            model.AppDbConfig = DbUtils.SerializerConfigHandler(configHandler);
+            model.AppDb.DbConnectionParameter = DbUtils.SerializerConfigHandler(configHandler);
         base.WriteConfig(model);
     }
 
     protected FieldForGet getAppDbGroup(FunctionRequest request, ConfigModel requestModel, bool isReadOnly = false)
     {
         var model = requestModel ?? Model;
-        FieldsForPostContainer gatewayDbConfigRequest = null;
-
-        gatewayDbConfigRequest = new FieldsForPostContainer();
-        //准备Children
-        var gatewayDbConfigRequestFieldList = new List<FieldForPost>();
-        if (isReadOnly)
-        {
-            gatewayDbConfigRequestFieldList.Add
-            (
-                new()
-                {
-                    Id = AbstractDbContextConfigHandler.Quick_EntityFrameworkCore_Plus_AbstractDbContextConfigHandler_IsReadOnly,
-                    Value = isReadOnly.ToString()
-                }
-            );
-        }
-        if (request != null)
-        {
-            //准备FieldIds
-            if (request.IsFieldIdsMatch(TAB_APP_DB, nameof(Model.AppDbConfig)))
-            {
-                gatewayDbConfigRequest.FieldIds = request.FieldIds.Skip(2).ToArray();
-            }
-            var otherChildren = request.GetField(nameof(Model.AppDbConfig)).Children;
-            if (otherChildren != null)
-                gatewayDbConfigRequestFieldList.AddRange(otherChildren);
-        }
-        gatewayDbConfigRequest.Fields = gatewayDbConfigRequestFieldList.ToArray();
-
-        configHandler = DbUtils.GetDbContextConfigHandler(model);
-
-        var list = new List<FieldForGet>
-        {
-            new ()
-            {
-                Id=nameof(Model.AppDbType),
-                Name="数据库类型",
-                Type= FieldType.InputSelect,
-                InputSelect_Options = DbUtils.GetDbTypeDict(),
-                PostOnChanged=true,
-                Value = model.AppDbType,
-                Input_ReadOnly = isReadOnly
-            }
-        };
-        if (model.AppDbType == "Quick.EntityFrameworkCore.Plus.SQLite.SQLiteDbContextConfigHandler")
-        {
-            list.Add(new()
-            {
-                Name = "警告",
-                Input_AllowBlank = false,
-                Type = FieldType.Alert,
-                Theme = FieldTheme.Danger,
-                Description = "一般只在开发和调试的情况下使用SQLite数据库，生产环境建议使用其他数据库！",
-                Input_ReadOnly = isReadOnly
-            });
-        }
-        list.AddRange(
-        [
-            new ()
-            {
-                Id=nameof(Model.AppDbConfig),
-                Type = FieldType.ContainerRow,
-                Children=
-                [
-                    new ()
-                    {
-                        Type = FieldType.HtmlDiv,
-                        ColumnWidth = 0,
-                        Children =  configHandler.QuickFields_Request(gatewayDbConfigRequest)
-                    }
-                ]
-            },
-            new FieldForGet()
-            {
-                Type = FieldType.ContainerRow,
-                Margin = 1
-            }
-        ]);
-
         return new FieldForGet()
         {
-            Id = TAB_APP_DB,
             Type = FieldType.ContainerGroup,
-            Name = "数据库连接",
-            Children = list.ToArray()
+            Name = "数据库",
+            Children =
+            [
+                new ()
+                {
+                    Type = FieldType.ContainerTab,
+                    Children = [
+                        model.AppDb.GetDbConfigGroup(request,isReadOnly,nameof(ConfigModel.AppDb),"数据库连接",
+                            t=>new ConfigDbContext(t),
+                            t => ModelsJsonSerializerContext.Default2,
+                            ()=> configHandler,
+                            t=>configHandler=t)
+                    ]
+                }
+            ]
         };
     }
 

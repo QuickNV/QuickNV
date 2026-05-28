@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using Quick.EntityFrameworkCore.Plus;
 using YiQiDong.Core.JsonConverters;
 
 namespace QuickNV;
@@ -24,13 +25,20 @@ public class ConfigModel
     public string SessionCookieName { get; set; } = "QuickNV.SID";
 
     /// <summary>
-    /// 应用数据库类型
+    /// 配置数据库
     /// </summary>
-    public string AppDbType { get; set; } = "Quick.EntityFrameworkCore.Plus.SQLite.SQLiteDbContextConfigHandler";
-    /// <summary>
-    /// 应用数据库配置
-    /// </summary>
-    public JsonNode AppDbConfig { get; set; }    
+    public DbConfigInfo AppDb { get; set; } = new()
+    {
+#if DEBUG
+        DbType = "Quick.EntityFrameworkCore.Plus.SQLite.SQLiteDbContextConfigHandler",
+        DbConnectionParameter = new JsonObject()
+        {
+            ["DataSource"] = "Config.db"
+        }
+#else
+        DbType = "Quick.EntityFrameworkCore.Plus.MySql.MySqlDbContextConfigHandler",
+#endif
+    };    
 
     /// <summary>
     /// 驱动接口密码

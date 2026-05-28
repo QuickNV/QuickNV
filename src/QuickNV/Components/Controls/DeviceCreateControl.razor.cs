@@ -7,6 +7,7 @@ using System.Text;
 using YiQiDong.Core.Utils;
 using QuickNV.Core;
 using QuickNV.Utils;
+using Quick.Utils;
 
 namespace QuickNV.Components.Controls
 {
@@ -106,7 +107,7 @@ namespace QuickNV.Components.Controls
                 switch (field.Type)
                 {
                     case FieldType.MessageBox:
-                        modalAlert.Show(field.Name, field.Description, null, null);
+                        modalAlert.Show(field.Name, field.Description);
                         return;
                     case FieldType.Toast:
                         toastStack.AddToast(field.Name, field.Description, BackgroundTheme.info);

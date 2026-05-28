@@ -9,6 +9,7 @@ using QuickNV.Core;
 using QuickNV.Model;
 using QuickNV.Utils;
 using QuickNV.Components;
+using Quick.Utils;
 
 namespace QuickNV;
 
@@ -31,9 +32,19 @@ public class Agent : AbstractAgent
     private Functions.Config configFunction;
     public override void Init()
     {
-        QpAllClients.RegisterUriSchema();
+        Quick.Protocol.Pipeline.QpPipelineClientOptions.RegisterUriSchema();
+        Quick.Protocol.Tcp.QpTcpClientOptions.RegisterUriSchema();
+        Quick.Protocol.WebSocket.Client.QpWebSocketClientOptions.RegisterUriSchema();
+
         base.Init();
-        DbUtils.Init();
+        //使用的数据库类型：SQLite、MySQL、达梦
+        DbUtils.Init(
+#if DEBUG
+            Quick.EntityFrameworkCore.Plus.SQLite.SQLiteDbContextConfigHandler.Info,
+#endif
+            Quick.EntityFrameworkCore.Plus.MySql.MySqlDbContextConfigHandler.Info,
+            Quick.EntityFrameworkCore.Plus.Dm.DmDbContextConfigHandler.Info
+            );
         ConfigDbContext.ModelBuilderHandler = OnModelCreating;
         configFunction = new Functions.Config();
         AddFunction(configFunction);
@@ -54,13 +65,20 @@ public class Agent : AbstractAgent
         Config = configFunction.ReadConfig();
         Components.Controls.Pages.PlayerConfigManage.Init(null);
 
-        //初始化数据库连接
-        var dbContextConfigHandler = DbUtils.GetDbContextConfigHandler(Config);
-        ConfigDbContext.ConfigHandler = dbContextConfigHandler;
-        AgentContext.LogInfo("确保数据库创建和更新...");
-        ConfigDbContext.ConfigHandler.DatabaseEnsureCreatedAndUpdated(() => new ConfigDbContext());
-        AgentContext.LogInfo("正在从数据库加载缓存...");
-        ConfigDbContext.CacheContext.LoadCache();
+        try
+        {
+            //初始化数据库连接
+            ConfigDbContext.ConfigHandler = DbUtils.GetDbContextConfigHandler(Config.AppDb.DbType, t => ModelsJsonSerializerContext.Default2, Config.AppDb.DbConnectionParameter);
+            AgentContext.LogInfo("确保数据库创建和更新...");
+            ConfigDbContext.ConfigHandler.DatabaseEnsureCreatedAndUpdated(() => new ConfigDbContext());
+            ConfigDbContext.CacheContext.LoadCache();
+            AgentContext.LogInfo("数据库连接初始化完成.");
+        }
+        catch (Exception ex)
+        {
+            AgentContext.LogWarn($"初始化数据库连接时出错，原因：{ExceptionUtils.GetExceptionMessage(ex)}");
+            throw new IOException($"初始化数据库连接时出错，原因：{ExceptionUtils.GetExceptionMessage(ex)}");
+        }
 
         //ViewGrid管理器初始化
         Components.Controls.ViewGrids.ViewGridManager.Instance.Init();

@@ -1,5 +1,6 @@
 ﻿using NPOI.SS.Formula.Functions;
 using Quick.Protocol;
+using Quick.Utils;
 using YiQiDong.Agent;
 using YiQiDong.Core.Utils;
 

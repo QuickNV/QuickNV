@@ -1,5 +1,6 @@
 ﻿using Quick.Protocol;
 using Quick.Protocol.Pipeline;
+using Quick.Utils;
 using System;
 using System.Collections.Generic;
 using YiQiDong.Agent;

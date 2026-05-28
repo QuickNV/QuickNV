@@ -10,7 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="QuickNV.HikvisionNetSDK.Api" Version="2025.3.1212" />
+	  <PackageReference Include="QuickNV.HikvisionNetSDK.Api" Version="2026.2.309" />
 	</ItemGroup>
 
 	<ItemGroup>

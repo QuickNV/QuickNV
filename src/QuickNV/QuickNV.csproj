@@ -11,18 +11,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DbContextBackup.Excel" Version="8.0.18.2" />
-		<PackageReference Include="Quick.Blazor.Bootstrap.QuickFields" Version="4.4.5" />
-		<PackageReference Include="Quick.EntityFrameworkCore.Plus.Dm" Version="8.0.18.2" />
-		<PackageReference Include="Quick.EntityFrameworkCore.Plus.MySql" Version="8.0.18.2" />
-		<PackageReference Include="Quick.EntityFrameworkCore.Plus.SQLite" Version="8.0.18.2" />
-		<PackageReference Include="Quick.Excel" Version="1.0.9" />
-		<PackageReference Include="Quick.Protocol.AllClients" Version="2.6.6" />
-		<PackageReference Include="Quick.Protocol.WebSocket.Server.AspNetCore" Version="2.6.6" />
+		<PackageReference Include="DbContextBackup.Excel" Version="2026.6.523" />
+		<PackageReference Include="Quick.Blazor.Bootstrap.QuickFields" Version="2026.19.514" />
+		<PackageReference Include="Quick.EntityFrameworkCore.Plus.Dm" Version="2026.10.523" />
+		<PackageReference Include="Quick.EntityFrameworkCore.Plus.MySql" Version="2026.10.523" />
+		<PackageReference Include="Quick.EntityFrameworkCore.Plus.SQLite" Version="2026.10.523" />
+		<PackageReference Include="Quick.Excel" Version="2026.1.522" />
+		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.6.11" />
+		<PackageReference Include="Quick.Protocol.Tcp" Version="2.6.11" />
+		<PackageReference Include="Quick.Protocol.WebSocket.Client" Version="2.6.11" />
+		<PackageReference Include="Quick.Protocol.WebSocket.Server.AspNetCore" Version="2.6.11" />
 		<PackageReference Include="Quick.ZLMediaKit" Version="1.1.0" />
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Swashbuckle.AspNetCore" Version="10.0.1" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Swashbuckle.AspNetCore" Version="10.1.7" />
 		<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
-		<PackageReference Include="YiQiDong.Core" Version="2.6.8" />
+		<PackageReference Include="YiQiDong.Core" Version="2026.16.507" />
 		<PackageReference Include="YiRenZheng.Protocol" Version="2.3.0" />
 	</ItemGroup>
 

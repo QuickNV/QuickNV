@@ -7,6 +7,7 @@ using YiQiDong.Core.Utils;
 using QuickNV.Core.Utils;
 using QuickNV.Driver.Protocol.QpModels;
 using QuickNV.Model;
+using Quick.Utils;
 
 namespace QuickNV.Core
 {

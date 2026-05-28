@@ -1,6 +1,6 @@
 ﻿using Quick.Blazor.Bootstrap;
 using Quick.EntityFrameworkCore.Plus;
-using YiQiDong.Core.Utils;
+using Quick.Utils;
 
 namespace QuickNV.Components.Controls.Pages
 {
@@ -84,25 +84,27 @@ namespace QuickNV.Components.Controls.Pages
             modalAlert.Show(
                 "删除确认",
                 $"确定要删除媒体服务器[{device.Name}]?",
-                () =>
+                new ModalAlertOptions()
                 {
-                    modalLoading.Show("删除媒体服务器", $"正在删除媒体服务器[{device.Name}]...", true, null);
-                    Task.Run(() =>
+                    OkCallback = () =>
                     {
-                        try
+                        modalLoading.Show("删除媒体服务器", $"正在删除媒体服务器[{device.Name}]...", true, null);
+                        Task.Run(() =>
                         {
-                            ConfigDbContext.CacheContext.Remove(device);
-                            Core.MediaServerManager.Instance.RemoveMediaServer(device.Id);
-                            modalAlert.Show("信息", $"删除媒体服务器[{device.Name}]成功!");
-                        }
-                        catch (Exception ex)
-                        {
-                            modalAlert.Show("错误", $"删除视频设备[{device.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
-                        }
-                        modalLoading.Close();
-                    });
-                },
-            null);
+                            try
+                            {
+                                ConfigDbContext.CacheContext.Remove(device);
+                                Core.MediaServerManager.Instance.RemoveMediaServer(device.Id);
+                                modalAlert.Show("信息", $"删除媒体服务器[{device.Name}]成功!");
+                            }
+                            catch (Exception ex)
+                            {
+                                modalAlert.Show("错误", $"删除视频设备[{device.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
+                            }
+                            modalLoading.Close();
+                        });
+                    }
+                });
         }
 
         private void DisplayMediaInfos(Core.MediaServerContext context)

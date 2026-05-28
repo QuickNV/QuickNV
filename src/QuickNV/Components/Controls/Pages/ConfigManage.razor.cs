@@ -1,5 +1,6 @@
 ﻿using Quick.Blazor.Bootstrap;
 using Quick.Blazor.Bootstrap.Utils;
+using Quick.Utils;
 
 namespace QuickNV.Components.Controls.Pages
 {

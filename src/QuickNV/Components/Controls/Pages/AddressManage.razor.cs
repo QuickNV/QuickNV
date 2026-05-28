@@ -6,6 +6,7 @@ using System.Text.Json;
 using YiQiDong.Core.Utils;
 using QuickNV.Model;
 using QuickNV.Utils;
+using Quick.Utils;
 
 namespace QuickNV.Components.Controls.Pages
 {
@@ -55,33 +56,36 @@ namespace QuickNV.Components.Controls.Pages
             var currentNode = SelectedNode;
             Address model = SelectedNode.Model;
 
-            modalAlert.Show("删除确认", $"将要删除{model}，确认要继续?", () =>
+            modalAlert.Show("删除确认", $"将要删除{model}，确认要继续?", new ModalAlertOptions()
             {
-                modalLoading.Show("删除", "正在删除中...", true);
-                Task.Run(() =>
+                OkCallback = () =>
                 {
-                    try
+                    modalLoading.Show("删除", "正在删除中...", true);
+                    Task.Run(() =>
                     {
-                        var isExistChildAddress = ConfigDbContext.CacheContext
-                                                    .Query<Address>(t => t.ParentId == model.Id)
-                                                    .Count() > 0;
-                        if(isExistChildAddress)
-                            throw new ApplicationException($"{model}存在子地点，请先删除子地点。");
-                        ConfigDbContext.CacheContext.Remove(model);
-                        modalAlert.Show("成功", "删除成功！");
-                        currentNode.ParentList.Remove(currentNode);
-                        SelectedNode = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        modalAlert.Show("删除失败", ExceptionUtils.GetExceptionMessage(ex));
-                    }
-                    finally
-                    {
-                        modalLoading.Close();
-                        InvokeAsync(StateHasChanged);
-                    }
-                });
+                        try
+                        {
+                            var isExistChildAddress = ConfigDbContext.CacheContext
+                                                        .Query<Address>(t => t.ParentId == model.Id)
+                                                        .Count() > 0;
+                            if(isExistChildAddress)
+                                throw new ApplicationException($"{model}存在子地点，请先删除子地点。");
+                            ConfigDbContext.CacheContext.Remove(model);
+                            modalAlert.Show("成功", "删除成功！");
+                            currentNode.ParentList.Remove(currentNode);
+                            SelectedNode = null;
+                        }
+                        catch (Exception ex)
+                        {
+                            modalAlert.Show("删除失败", ExceptionUtils.GetExceptionMessage(ex));
+                        }
+                        finally
+                        {
+                            modalLoading.Close();
+                            InvokeAsync(StateHasChanged);
+                        }
+                    });
+                }
             });
         }
 

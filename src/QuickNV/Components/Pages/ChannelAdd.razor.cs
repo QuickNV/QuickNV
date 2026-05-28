@@ -6,6 +6,7 @@ using Quick.Blazor.Bootstrap.Utils;
 using Quick.EntityFrameworkCore.Plus;
 using QuickNV.Components.Controls;
 using QuickNV.Core;
+using Quick.Utils;
 
 namespace QuickNV.Components.Pages;
 

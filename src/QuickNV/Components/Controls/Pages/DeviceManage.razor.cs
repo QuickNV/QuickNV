@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Quick.Blazor.Bootstrap;
 using Quick.Blazor.Bootstrap.Admin.Utils;
 using Quick.EntityFrameworkCore.Plus;
 using Tewr.Blazor.FileReader;
-using YiQiDong.Agent;
-using YiQiDong.Core.Utils;
 using QuickNV.Core;
 using QuickNV.Model;
 using static Quick.Blazor.Bootstrap.Admin.Utils.FileUploadHelper;
+using Quick.Utils;
 
 namespace QuickNV.Components.Controls.Pages
 {
@@ -171,24 +169,26 @@ namespace QuickNV.Components.Controls.Pages
             modalAlert.Show(
             "禁用确认",
                 $"确定要禁用设备[{device.Name}]?",
-                () =>
+                new ModalAlertOptions()
                 {
-                    modalLoading.Show("禁用设备", $"正在禁用设备[{device.Name}]...", true, null);
-                    Task.Run(async () =>
+                    OkCallback = () =>
                     {
-                        try
+                        modalLoading.Show("禁用设备", $"正在禁用设备[{device.Name}]...", true, null);
+                        Task.Run(async () =>
                         {
-                            await DeviceManager.Instance.Disable(device);
-                            await InvokeAsync(StateHasChanged);
-                        }
-                        catch (Exception ex)
-                        {
-                            modalAlert.Show("错误", $"禁用设备[{device.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
-                        }
-                        modalLoading.Close();
-                    });
-                },
-            null);
+                            try
+                            {
+                                await DeviceManager.Instance.Disable(device);
+                                await InvokeAsync(StateHasChanged);
+                            }
+                            catch (Exception ex)
+                            {
+                                modalAlert.Show("错误", $"禁用设备[{device.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
+                            }
+                            modalLoading.Close();
+                        });
+                    }
+                });
         }
 
         private void Edit(Model.Device model)
@@ -229,25 +229,27 @@ namespace QuickNV.Components.Controls.Pages
             modalAlert.Show(
                 "删除确认",
                 $"确定要删除设备[{device.Name}]?",
-                () =>
+                new ModalAlertOptions()
                 {
-                    modalLoading.Show("删除设备", $"正在删除设备[{device.Name}]...", true, null);
-                    Task.Run(async () =>
+                    OkCallback = () =>
                     {
-                        try
+                        modalLoading.Show("删除设备", $"正在删除设备[{device.Name}]...", true, null);
+                        Task.Run(async () =>
                         {
-                            await DeviceManager.Instance.DeleteDevice(device.Id);
-                            modalAlert.Show("信息", $"删除设备[{device.Name}]成功!");
-                        }
-                        catch (Exception ex)
-                        {
-                            modalAlert.Show("错误", $"删除设备[{device.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
-                        }
-                        modalLoading.Close();
-                        search();
-                    });
-                },
-            null);
+                            try
+                            {
+                                await DeviceManager.Instance.DeleteDevice(device.Id);
+                                modalAlert.Show("信息", $"删除设备[{device.Name}]成功!");
+                            }
+                            catch (Exception ex)
+                            {
+                                modalAlert.Show("错误", $"删除设备[{device.Name}]时出错！原因：{ExceptionUtils.GetExceptionMessage(ex)}");
+                            }
+                            modalLoading.Close();
+                            search();
+                        });
+                    }
+                });
         }
 
         private CancellationTokenSource uploadCts;
@@ -276,8 +278,8 @@ namespace QuickNV.Components.Controls.Pages
 
                 modalLoading.UpdateProgress(null, null);
                 modalLoading.Show($"从Excel文件导入", $"正在加载Excel文件[{uploadingFileInfoStr}]...", true, uploadCts.Cancel);
-                
-                var dbContextBackupContext = new DbContextBackup.Excel.XlsxDbContextBackupContext();
+
+                var dbContextBackupContext = new DbContextBackup.Excel.XlsxDbContextBackupContext(_ => Model.ModelsJsonSerializerContext.Default2);
                 var newModels = new List<Model.Channel>();
 
                 using (var dbContext = new ConfigDbContext())

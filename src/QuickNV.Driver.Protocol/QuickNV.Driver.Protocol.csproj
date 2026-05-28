@@ -6,8 +6,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Quick.Fields" Version="1.3.5" />
-		<PackageReference Include="Quick.Protocol" Version="2.6.6" />
+		<PackageReference Include="Quick.Fields" Version="2026.3.321" />
+		<PackageReference Include="Quick.Protocol" Version="2.6.11" />
 	</ItemGroup>
 
 
