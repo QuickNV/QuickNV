@@ -106,9 +106,7 @@ namespace QuickNV.Driver.HikvisionDeviceNetwork.Functions
             {
                 Id = STEP_1_BUTTON_NEXT,
                 Name = "下一步",
-                Type = FieldType.Button,
-                PostOnChanged = true,
-                Html_Class = "m-1"
+                Type = FieldType.Button
             });
             return list;
         }
