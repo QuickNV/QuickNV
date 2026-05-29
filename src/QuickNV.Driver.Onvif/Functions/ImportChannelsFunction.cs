@@ -130,9 +130,7 @@ namespace QuickNV.Driver.Onvif.Functions
             {
                 Id = BUTTON_IMPORT,
                 Name = "导入",
-                Type = FieldType.Button,
-                PostOnChanged = true,
-                Html_Class = "m-1"
+                Type = FieldType.Button
             });
             return list;
         }

@@ -12,10 +12,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="DbContextBackup.Excel" Version="2026.6.523" />
-		<PackageReference Include="Quick.Blazor.Bootstrap.QuickFields" Version="2026.19.514" />
+		<PackageReference Include="Quick.Blazor.Bootstrap.QuickFields" Version="2026.20.529" />
 		<PackageReference Include="Quick.EntityFrameworkCore.Plus.Dm" Version="2026.10.523" />
 		<PackageReference Include="Quick.EntityFrameworkCore.Plus.MySql" Version="2026.10.523" />
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Quick.EntityFrameworkCore.Plus.SQLite" Version="2026.7.331" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Quick.EntityFrameworkCore.Plus.SQLite" Version="2026.10.523" />
 		<PackageReference Include="Quick.Excel" Version="2026.1.522" />
 		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.6.11" />
 		<PackageReference Include="Quick.Protocol.Tcp" Version="2.6.11" />

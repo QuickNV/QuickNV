@@ -70,9 +70,7 @@ namespace QuickNV.Driver.Onvif.Functions
                 {
                     Id = STEP_1_BUTTON_DISCOVERY,
                     Name = "搜索发现",
-                    Type = FieldType.Button,
-                    PostOnChanged = true,
-                    Html_Class = "m-1"
+                    Type = FieldType.Button
                 });
                 //如果是点击了“搜索发现”按钮
                 if (functionRequest != null && functionRequest.IsFieldIdsMatch(STEP_1_BUTTON_DISCOVERY))
@@ -176,9 +174,7 @@ namespace QuickNV.Driver.Onvif.Functions
             {
                 Id = STEP_2_BUTTON_IMPORT,
                 Name = "导入",
-                Type = FieldType.Button,
-                PostOnChanged = true,
-                Html_Class = "m-1"
+                Type = FieldType.Button
             });
             return list;
         }

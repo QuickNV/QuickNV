@@ -45,17 +45,13 @@ namespace QuickNV.Driver.GB28181.Functions
                 {
                     Id = BTN_IMPORT_SELECTED,
                     Name = "导入选中通道",
-                    Type = FieldType.Button,
-                    PostOnChanged = true,
-                    Html_Class = "m-1"
+                    Type = FieldType.Button
                 });
                 list.Add(new FieldForGet()
                 {
                     Id = BTN_IMPORT_ALL,
                     Name = "导入全部",
-                    Type = FieldType.Button,
-                    PostOnChanged = true,
-                    Html_Class = "m-1"
+                    Type = FieldType.Button
                 });
                 var itemList = new List<FieldForGet>();
                 foreach (var channel in waitImportChannelList)
