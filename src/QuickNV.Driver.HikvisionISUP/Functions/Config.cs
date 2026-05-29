@@ -162,20 +162,9 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         };
     }
 
-    protected override List<FieldForGet> innerGet(FunctionRequest request, ConfigModel requestModel, bool isReadOnly = false)
-    {
-        return new List<FieldForGet>()
-        {
-            new FieldForGet()
-            {                
-                Type = FieldType.ContainerTab,
-                Children =
-                [
-                    getQuickNVDriverInterfaceGroup(request,requestModel,isReadOnly),
-                    getCmsServiceGroup(request,requestModel,isReadOnly),
-                    getSmsServiceGroup(request,requestModel,isReadOnly)
-                ]
-            }
-        };
-    }
+    protected override FieldForGet[] getOtherGroups(FunctionRequest request, ConfigModel requestModel, bool isReadOnly = false) =>
+    [
+        getCmsServiceGroup(request,requestModel,isReadOnly),
+        getSmsServiceGroup(request,requestModel,isReadOnly)
+    ];
 }

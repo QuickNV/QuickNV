@@ -48,5 +48,35 @@ namespace QuickNV.Driver.Agent.Functions
                 ]
             };
         }
+
+        protected virtual FieldForGet[] getOtherGroups(FunctionRequest request, T requestModel, bool isReadOnly = false) => null;
+
+        protected override List<FieldForGet> innerGet(FunctionRequest request, T requestModel, bool isReadOnly = false)
+        {
+            var otherGroups = getOtherGroups(request, requestModel, isReadOnly);
+            if (otherGroups == null)
+                return new List<FieldForGet>()
+                {
+                    new FieldForGet()
+                    {
+                        Type = FieldType.ContainerTab,
+                        Children =
+                        [
+                            getQuickNVDriverInterfaceGroup(request,requestModel,isReadOnly)
+                        ]
+                    }
+                };
+            return new List<FieldForGet>()
+                {
+                    new FieldForGet()
+                    {
+                        Type = FieldType.ContainerTab,
+                        Children = new FieldForGet[]
+                        {
+                            getQuickNVDriverInterfaceGroup(request,requestModel,isReadOnly)
+                        }.Concat(otherGroups).ToArray()
+                    }
+                };
+        }
     }
 }
