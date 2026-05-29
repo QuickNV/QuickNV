@@ -4,8 +4,8 @@ using Quick.Fields;
 using Quick.Protocol;
 using System.Text;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.ImportDevices;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.ImportDevices;
+using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.Driver.HikvisionDeviceNetwork.Functions

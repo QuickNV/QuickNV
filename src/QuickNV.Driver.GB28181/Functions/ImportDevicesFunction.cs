@@ -3,8 +3,8 @@ using Quick.Protocol;
 using System.Collections.Generic;
 using YiQiDong.Protocol.V1.Model;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpCommands.ImportDevices;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.ImportDevices;
+using QuickNV.Protocol.Driver.QpModels;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using static QuickNV.Driver.GB28181.DeviceConfig;
 

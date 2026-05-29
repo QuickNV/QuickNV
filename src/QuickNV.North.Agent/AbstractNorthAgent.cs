@@ -1,7 +1,7 @@
 ﻿using Quick.Protocol;
 using YiQiDong.Agent;
 using YiQiDong.Core;
-using QuickNV.North.Protocol.QpModels;
+using QuickNV.Protocol.North.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.North.Agent
@@ -35,7 +35,7 @@ namespace QuickNV.North.Agent
             cts = new CancellationTokenSource();
             clientOptions = QpClientOptions.Parse(new Uri(QuickNVNorthInterfaceUrl));
             clientOptions.Password = QuickNVNorthInterfacePassword;
-            clientOptions.InstructionSet = new[] { Protocol.Instruction.Instance };
+            clientOptions.InstructionSet = new[] { Protocol.North.Instruction.Instance };
             clientOptions.RegisterCommandExecuterManager(commandExecuterManager);
             clientOptions.RegisterNoticeHandlerManager(noticeHandlerManager);
             _ = beginConnect(cts.Token);
@@ -98,7 +98,7 @@ namespace QuickNV.North.Agent
                 await client.ConnectAsync();
                 try
                 {
-                    var rep = await client.SendCommand(new Protocol.QpCommands.Register.Request()
+                    var rep = await client.SendCommand(new Protocol.North.QpCommands.Register.Request()
                     {
                         Name = QuickNVNorthInterfaceName
                     });
@@ -130,23 +130,23 @@ namespace QuickNV.North.Agent
 
         public async Task<AddressInfo[]> GetAddressData()
         {
-            var rep = await Client.SendCommand(new North.Protocol.QpCommands.GetAddressData.Request());
+            var rep = await Client.SendCommand(new Protocol.North.QpCommands.GetAddressData.Request());
             return rep.Data;
         }
 
         public async Task<DeviceInfo[]> GetDeviceData()
         {
-            var rep = await Client.SendCommand(new North.Protocol.QpCommands.GetDeviceData.Request());
+            var rep = await Client.SendCommand(new Protocol.North.QpCommands.GetDeviceData.Request());
             return rep.Data;
         }
 
         public async Task<ChannelInfo[]> GetChannelData()
         {
-            var rep = await Client.SendCommand(new North.Protocol.QpCommands.GetChannelData.Request());
+            var rep = await Client.SendCommand(new Protocol.North.QpCommands.GetChannelData.Request());
             return rep.Data;
         }
 
-        public async Task Sync(Protocol.QpCommands.Sync.Request request)
+        public async Task Sync(Protocol.North.QpCommands.Sync.Request request)
         {
             await Client.SendCommand(request);
         }

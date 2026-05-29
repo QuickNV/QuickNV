@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpNotices
+namespace QuickNV.Protocol.Driver.QpNotices
 {
     [DisplayName("设备日志通知")]
     public class DeviceLogNotice : AbstractQpSerializer<DeviceLogNotice>

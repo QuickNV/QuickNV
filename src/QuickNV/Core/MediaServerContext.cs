@@ -5,7 +5,7 @@ using Quick.ZLMediaKit.WebHook.Model;
 using System.Net;
 using YiQiDong.Core.Utils;
 using QuickNV.Core.Utils;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using QuickNV.Model;
 using Quick.Utils;
 

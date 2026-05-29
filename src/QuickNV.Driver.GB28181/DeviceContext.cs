@@ -4,7 +4,7 @@ using System.Data;
 using System.Text.Json;
 using YiQiDong.Agent;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.GB28181
 {

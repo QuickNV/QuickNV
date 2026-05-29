@@ -1,4 +1,4 @@
-﻿namespace QuickNV.Driver.Protocol.QpModels;
+﻿namespace QuickNV.Protocol.Driver.QpModels;
 
 /// <summary>
 /// 视频文件信息

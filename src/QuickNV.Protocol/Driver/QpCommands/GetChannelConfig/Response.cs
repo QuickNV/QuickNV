@@ -2,7 +2,7 @@
 using Quick.Protocol;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.GetChannelConfig
+namespace QuickNV.Protocol.Driver.QpCommands.GetChannelConfig
 {
     public class Response : AbstractQpSerializer<Response>
     {

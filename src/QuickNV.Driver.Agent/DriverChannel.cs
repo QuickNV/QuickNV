@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.Agent
 {

@@ -1,6 +1,6 @@
 ﻿using QuickNV.HikvisionISUPSDK.Api;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.HikvisionISUP
 {

@@ -1,7 +1,7 @@
 ﻿using Quick.Protocol;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.North.Protocol.QpCommands.Sync
+namespace QuickNV.Protocol.North.QpCommands.Sync
 {
     public class Response : AbstractQpSerializer<Response>
     {

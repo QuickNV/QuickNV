@@ -3,7 +3,7 @@ using SIPSorcery.SIP;
 using System.Net;
 using YiQiDong.Agent;
 using QuickNV.Driver.GB28181.Utils;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.Driver.GB28181

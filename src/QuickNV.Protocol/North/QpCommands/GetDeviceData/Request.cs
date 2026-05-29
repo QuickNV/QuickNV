@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.North.Protocol.QpCommands.GetDeviceData
+namespace QuickNV.Protocol.North.QpCommands.GetDeviceData
 {
     [DisplayName("获取设备数据")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

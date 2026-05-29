@@ -5,8 +5,8 @@ using Quick.Protocol;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.ImportChannels;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.ImportChannels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.Onvif.Functions
 {

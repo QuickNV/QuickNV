@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.North.Protocol.QpCommands.Sync
+namespace QuickNV.Protocol.North.QpCommands.Sync
 {
     [DisplayName("同步")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpNotices
+namespace QuickNV.Protocol.Driver.QpNotices
 {
     [DisplayName("通道添加通知")]
     public class ChannelAddedNotice : AbstractQpSerializer<ChannelAddedNotice>

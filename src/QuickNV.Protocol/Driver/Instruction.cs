@@ -1,6 +1,6 @@
 ﻿using Quick.Protocol;
 
-namespace QuickNV.Driver.Protocol;
+namespace QuickNV.Protocol.Driver;
 
 public class Instruction
 {

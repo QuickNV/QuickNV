@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.North.Protocol.QpCommands.Register
+namespace QuickNV.Protocol.North.QpCommands.Register
 {
     [DisplayName("注册北向")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

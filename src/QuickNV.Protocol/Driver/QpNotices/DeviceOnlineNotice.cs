@@ -1,9 +1,9 @@
 ﻿using Quick.Protocol;
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
-namespace QuickNV.Driver.Protocol.QpNotices
+namespace QuickNV.Protocol.Driver.QpNotices
 {
     [DisplayName("设备在线通知")]
     public class DeviceOnlineNotice : AbstractQpSerializer<DeviceOnlineNotice>

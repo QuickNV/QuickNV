@@ -3,7 +3,7 @@ using Quick.Fields;
 using Quick.Protocol;
 using System.Collections.Generic;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.GetChannelConfig;
+using QuickNV.Protocol.Driver.QpCommands.GetChannelConfig;
 using System.Text.Json;
 
 namespace QuickNV.Driver.DahuaDeviceNetwork.Functions

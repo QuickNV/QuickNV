@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Quick.Blazor.Bootstrap;
 using QuickNV.Core;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Components.Controls
 {

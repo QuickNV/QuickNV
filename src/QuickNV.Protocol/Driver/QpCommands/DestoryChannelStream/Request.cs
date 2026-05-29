@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.DestoryChannelStream
+namespace QuickNV.Protocol.Driver.QpCommands.DestoryChannelStream
 {
     [DisplayName("销毁通道的流")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

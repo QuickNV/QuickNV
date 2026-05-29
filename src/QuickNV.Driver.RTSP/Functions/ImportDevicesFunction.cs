@@ -1,6 +1,6 @@
 ﻿using Quick.Fields;
 using Quick.Protocol;
-using QuickNV.Driver.Protocol.QpCommands.ImportDevices;
+using QuickNV.Protocol.Driver.QpCommands.ImportDevices;
 
 namespace QuickNV.Driver.RTSP.Functions
 {

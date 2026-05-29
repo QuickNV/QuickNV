@@ -91,7 +91,7 @@ namespace QuickNV.Driver.GB28181
             string deviceId = sipRequest.Header.From.FromURI.User;
             var device = GetDevice(deviceId);
             if (device == null)
-                device = new DeviceContext(this, new DriverDevice<DeviceConfig, ChannelConfig>(new Protocol.QpModels.DeviceInfo()
+                device = new DeviceContext(this, new DriverDevice<DeviceConfig, ChannelConfig>(new Protocol.Driver.QpModels.DeviceInfo()
                 {
                     Id = deviceId,
                     Name = deviceId

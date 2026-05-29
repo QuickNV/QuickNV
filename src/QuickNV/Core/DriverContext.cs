@@ -2,7 +2,7 @@
 using Quick.EntityFrameworkCore.Plus;
 using Quick.Fields;
 using Quick.Protocol;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using QuickNV.Model;
 
 namespace QuickNV.Core
@@ -20,7 +20,7 @@ namespace QuickNV.Core
 
         public async Task OnAddChannel(Channel channel)
         {
-            await Channel.SendNoticePackage(new Driver.Protocol.QpNotices.ChannelAddedNotice
+            await Channel.SendNoticePackage(new Protocol.Driver.QpNotices.ChannelAddedNotice
             {
                 Channel = channel
             });
@@ -28,7 +28,7 @@ namespace QuickNV.Core
 
         public async Task OnAddDevice(Device device)
         {
-            await Channel.SendNoticePackage(new Driver.Protocol.QpNotices.DeviceAddedNotice
+            await Channel.SendNoticePackage(new Protocol.Driver.QpNotices.DeviceAddedNotice
             {
                 Device = device
             });
@@ -39,7 +39,7 @@ namespace QuickNV.Core
 
         public async Task OnDelChannel(Channel channel)
         {
-            await Channel.SendNoticePackage(new Driver.Protocol.QpNotices.ChannelDeletedNotice
+            await Channel.SendNoticePackage(new Protocol.Driver.QpNotices.ChannelDeletedNotice
             {
                 Channel = channel
             });
@@ -47,7 +47,7 @@ namespace QuickNV.Core
 
         public async Task OnDelDevice(Device device)
         {
-            await Channel.SendNoticePackage(new Driver.Protocol.QpNotices.DeviceDeletedNotice
+            await Channel.SendNoticePackage(new Protocol.Driver.QpNotices.DeviceDeletedNotice
             {
                 Device = device
             });
@@ -56,20 +56,20 @@ namespace QuickNV.Core
                 await OnDelChannel(channel);
         }
 
-        public async Task<Driver.Protocol.QpCommands.ImportDevices.Response> ImportDevices(
+        public async Task<Protocol.Driver.QpCommands.ImportDevices.Response> ImportDevices(
             string[] fieldIds,
             FieldForPost[] fields)
         {
-            return await Channel.SendCommand(new Driver.Protocol.QpCommands.ImportDevices.Request()
+            return await Channel.SendCommand(new Protocol.Driver.QpCommands.ImportDevices.Request()
             {
                 FieldIds = fieldIds,
                 Fields = fields
             });
         }
 
-        public async Task<Driver.Protocol.QpCommands.ImportChannels.Response> ImportChannels(string deviceId, string[] fieldIds, FieldForPost[] fields)
+        public async Task<Protocol.Driver.QpCommands.ImportChannels.Response> ImportChannels(string deviceId, string[] fieldIds, FieldForPost[] fields)
         {
-            return await Channel.SendCommand(new Driver.Protocol.QpCommands.ImportChannels.Request()
+            return await Channel.SendCommand(new Protocol.Driver.QpCommands.ImportChannels.Request()
             {
                 DeviceId = deviceId,
                 FieldIds = fieldIds,
@@ -77,12 +77,12 @@ namespace QuickNV.Core
             });
         }
 
-        public async Task<Driver.Protocol.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(
+        public async Task<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(
             string config,
             string[] fieldIds,
             FieldForPost[] fields)
         {
-            return await Channel.SendCommand(new Driver.Protocol.QpCommands.GetDeviceConfig.Request()
+            return await Channel.SendCommand(new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
             {
                 Config = config,
                 FieldIds = fieldIds,
@@ -90,13 +90,13 @@ namespace QuickNV.Core
             });
         }
 
-        public async Task<Driver.Protocol.QpCommands.GetChannelConfig.Response> GetChannelConfig(
+        public async Task<Protocol.Driver.QpCommands.GetChannelConfig.Response> GetChannelConfig(
             string deviceId,
             string config,
             string[] fieldIds,
             FieldForPost[] fields)
         {
-            return await Channel.SendCommand(new Driver.Protocol.QpCommands.GetChannelConfig.Request()
+            return await Channel.SendCommand(new Protocol.Driver.QpCommands.GetChannelConfig.Request()
             {
                 DeviceId = deviceId,
                 Config = config,
@@ -107,7 +107,7 @@ namespace QuickNV.Core
 
         public async Task<StreamInfo> CreateChannelLiveStream(MediaServerContext mediaServer, MediaInfo mediaInfo)
         {
-            var rep = await Channel.SendCommand(new Driver.Protocol.QpCommands.CreateChannelLiveStream.Request()
+            var rep = await Channel.SendCommand(new Protocol.Driver.QpCommands.CreateChannelLiveStream.Request()
             {
                 MediaServerInfo = new MediaServerInfo()
                 {
@@ -123,7 +123,7 @@ namespace QuickNV.Core
 
         public async Task<StreamInfo> CreateChannelPlaybackStream(MediaServerContext mediaServer, MediaInfo mediaInfo, DateTime startTime, DateTime endTime)
         {
-            var rep = await Channel.SendCommand(new Driver.Protocol.QpCommands.CreateChannelPlaybackStream.Request()
+            var rep = await Channel.SendCommand(new Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request()
             {
                 MediaServerInfo = new MediaServerInfo()
                 {
@@ -141,7 +141,7 @@ namespace QuickNV.Core
 
         public async Task DestoryStream(string deviceId, string channelId, int mediaId)
         {
-            await Channel.SendCommand(new Driver.Protocol.QpCommands.DestoryChannelStream.Request()
+            await Channel.SendCommand(new Protocol.Driver.QpCommands.DestoryChannelStream.Request()
             {
                 DeviceId = deviceId,
                 ChannelId = channelId,
@@ -151,7 +151,7 @@ namespace QuickNV.Core
 
         public async Task PtzControl(string deviceId, string channelId, PTZCommandType commandType, float moveSpeed)
         {
-            await Channel.SendCommand(new Driver.Protocol.QpCommands.PtzControl.Request()
+            await Channel.SendCommand(new Protocol.Driver.QpCommands.PtzControl.Request()
             {
                 DeviceId = deviceId,
                 ChannelId = channelId,
@@ -166,18 +166,18 @@ namespace QuickNV.Core
             foreach (var device in devices)
                 Interfaces.Driver.Manager.Instance.NoticeDeviceOffline(device, "驱动取消注册");
         }
-        private Task<Driver.Protocol.QpCommands.Snapshot.Response> snapshotTask;
-        public async Task<Driver.Protocol.QpCommands.Snapshot.Response> Snapshot(
+        private Task<Protocol.Driver.QpCommands.Snapshot.Response> snapshotTask;
+        public async Task<Protocol.Driver.QpCommands.Snapshot.Response> Snapshot(
             string deviceId,
             string channelId,
             ImageParameter parameter = null)
         {
-            Task<Driver.Protocol.QpCommands.Snapshot.Response> currentTask = null;
+            Task<Protocol.Driver.QpCommands.Snapshot.Response> currentTask = null;
             lock (this)
             {
                 if (snapshotTask == null)
                 {
-                    snapshotTask = Channel.SendCommand(new Driver.Protocol.QpCommands.Snapshot.Request()
+                    snapshotTask = Channel.SendCommand(new Protocol.Driver.QpCommands.Snapshot.Request()
                     {
                         DeviceId = deviceId,
                         ChannelId = channelId,
@@ -188,7 +188,7 @@ namespace QuickNV.Core
                 {
                     snapshotTask = snapshotTask.ContinueWith(t =>
                     {
-                        return Channel.SendCommand(new Driver.Protocol.QpCommands.Snapshot.Request()
+                        return Channel.SendCommand(new Protocol.Driver.QpCommands.Snapshot.Request()
                         {
                             DeviceId = deviceId,
                             ChannelId = channelId,
@@ -201,13 +201,13 @@ namespace QuickNV.Core
             return await currentTask;
         }
 
-        public async Task<Driver.Protocol.QpCommands.FindPlaybackFiles.Response> FindPlaybackFiles(
+        public async Task<Protocol.Driver.QpCommands.FindPlaybackFiles.Response> FindPlaybackFiles(
             string deviceId,
             string channelId,
             DateTime startTime,
             DateTime endTime)
         {
-            return await Channel.SendCommand(new Driver.Protocol.QpCommands.FindPlaybackFiles.Request()
+            return await Channel.SendCommand(new Protocol.Driver.QpCommands.FindPlaybackFiles.Request()
             {
                 DeviceId = deviceId,
                 ChannelId = channelId,

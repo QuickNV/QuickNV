@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 using Quick.Protocol;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
-namespace QuickNV.Driver.Protocol.QpCommands.CreateChannelPlaybackStream;
+namespace QuickNV.Protocol.Driver.QpCommands.CreateChannelPlaybackStream;
 
 [DisplayName("获取通道实时流")]
 public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

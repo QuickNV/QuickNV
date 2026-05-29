@@ -134,7 +134,7 @@ namespace QuickNV.Components.Controls
             {
                 try
                 {
-                    var rep = await driverContext.Channel.SendCommand(new Driver.Protocol.QpCommands.GetDeviceConfig.Request()
+                    var rep = await driverContext.Channel.SendCommand(new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
                     {
                         FieldIds = field.GetFullFieldIds().Where(t => t != null).ToArray(),
                         Fields = fieldForGetArray.Select(t => t.ToPost()).ToArray()
@@ -166,7 +166,7 @@ namespace QuickNV.Components.Controls
                 driverContext = DriverManager.Instance.GetDriverContext(driverId);
                 if (driverContext != null)
                 {
-                    var rep = await driverContext.Channel.SendCommand(new Driver.Protocol.QpCommands.GetDeviceConfig.Request()
+                    var rep = await driverContext.Channel.SendCommand(new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
                     {
                         Config = createModel.DriverConfig
                     });

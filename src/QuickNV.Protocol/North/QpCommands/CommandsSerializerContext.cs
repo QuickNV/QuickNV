@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace QuickNV.North.Protocol.QpCommands;
+namespace QuickNV.Protocol.North.QpCommands;
 
 [JsonSerializable(typeof(Register.Request))]
 [JsonSerializable(typeof(Register.Response))]

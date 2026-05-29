@@ -1,7 +1,7 @@
 ﻿using Quick.Protocol;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.Register
+namespace QuickNV.Protocol.Driver.QpCommands.Register
 {
     public class Response : AbstractQpSerializer<Response>
     {

@@ -10,8 +10,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.ImportDevices;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.ImportDevices;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.Onvif.Functions
 {
@@ -166,7 +166,7 @@ namespace QuickNV.Driver.Onvif.Functions
                 functionRequest.Fields = fieldList.ToArray();
             }
 
-            var rep = GetDeviceConfigFunction.Invoke(null, new Protocol.QpCommands.GetDeviceConfig.Request()
+            var rep = GetDeviceConfigFunction.Invoke(null, new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
             {
                 FieldIds = functionRequest.FieldIds,
                 Fields = functionRequest.Fields
@@ -201,7 +201,7 @@ namespace QuickNV.Driver.Onvif.Functions
                 }
                 else if (functionRequest.IsFieldIdsMatch(STEP_2_BUTTON_IMPORT))
                 {
-                    var rep = GetDeviceConfigFunction.Invoke(null, new Protocol.QpCommands.GetDeviceConfig.Request()
+                    var rep = GetDeviceConfigFunction.Invoke(null, new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
                     {
                         FieldIds = functionRequest.FieldIds,
                         Fields = functionRequest.Fields

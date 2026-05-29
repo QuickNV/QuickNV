@@ -4,7 +4,7 @@ using System.Text;
 using YiQiDong.Agent;
 using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.Driver.DahuaDeviceNetwork

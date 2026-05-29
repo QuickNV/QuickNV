@@ -1,6 +1,6 @@
 ﻿using Quick.Fields;
 using Quick.Protocol;
-using QuickNV.Driver.Protocol.QpCommands.GetChannelConfig;
+using QuickNV.Protocol.Driver.QpCommands.GetChannelConfig;
 
 namespace QuickNV.Driver.GB28181.Functions
 {

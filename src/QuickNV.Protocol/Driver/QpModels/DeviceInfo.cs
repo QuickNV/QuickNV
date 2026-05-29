@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickNV.Driver.Protocol.QpModels
+namespace QuickNV.Protocol.Driver.QpModels
 {
     public class DeviceInfo
     {

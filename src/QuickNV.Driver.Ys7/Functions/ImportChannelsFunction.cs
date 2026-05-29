@@ -4,8 +4,8 @@ using Quick.Fields.AppSettings;
 using Quick.Protocol;
 using YiQiDong.Protocol.V1.Model;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpCommands.ImportChannels;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.ImportChannels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.Ys7.Functions
 {

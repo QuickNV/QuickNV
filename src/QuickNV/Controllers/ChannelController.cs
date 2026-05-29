@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using YiQiDong.Core.Utils;
 using QuickNV.Core;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using QuickNV.Model;
 using Quick.Utils;
 

@@ -1,4 +1,4 @@
-﻿namespace QuickNV.Driver.Protocol.QpModels
+﻿namespace QuickNV.Protocol.Driver.QpModels
 {
     public class DriverInfo
     {

@@ -3,7 +3,7 @@ using Quick.Protocol;
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.GetChannelConfig
+namespace QuickNV.Protocol.Driver.QpCommands.GetChannelConfig
 {
     [DisplayName("获取通道配置")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

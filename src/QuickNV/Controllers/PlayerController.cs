@@ -5,7 +5,7 @@ using YiQiDong.Agent;
 using QuickNV.Core;
 using QuickNV.Core.Utils;
 using QuickNV.Core.Web;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.Controllers

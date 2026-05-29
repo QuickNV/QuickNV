@@ -2,7 +2,7 @@
 using Quick.Blazor.Bootstrap;
 using Quick.EntityFrameworkCore.Plus;
 using QuickNV.Core;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using QuickNV.Model;
 
 namespace QuickNV.Components.Controls

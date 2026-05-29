@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.ChangeLiveStreamSSRC
+namespace QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC
 {
     [DisplayName("修改实时流SSRC")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

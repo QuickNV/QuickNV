@@ -1,6 +1,6 @@
 ﻿using Quick.Protocol;
 
-namespace QuickNV.North.Protocol;
+namespace QuickNV.Protocol.North;
 
 public class Instruction
 {

@@ -1,9 +1,9 @@
 ﻿using Quick.Protocol;
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
-namespace QuickNV.Driver.Protocol.QpCommands.MediaServerAddStreamProxy
+namespace QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy
 {
     [DisplayName("媒体服务器添加流代理")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

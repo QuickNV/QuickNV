@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization.Metadata;
 using Quick.Protocol;
 
-namespace QuickNV.Driver.Protocol.QpCommands.FindPlaybackFiles;
+namespace QuickNV.Protocol.Driver.QpCommands.FindPlaybackFiles;
 
 [DisplayName("查询录像回放文件")]
 public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

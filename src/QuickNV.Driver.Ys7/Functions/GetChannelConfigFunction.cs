@@ -3,7 +3,7 @@ using Quick.Fields;
 using Quick.Protocol;
 using QuickNV.YS7.Model;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.GetChannelConfig;
+using QuickNV.Protocol.Driver.QpCommands.GetChannelConfig;
 
 namespace QuickNV.Driver.Ys7.Functions
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickNV.North.Protocol.QpModels
+namespace QuickNV.Protocol.North.QpModels
 {
     /// <summary>
     /// 通道信息

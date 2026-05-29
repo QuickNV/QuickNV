@@ -3,7 +3,7 @@ using Quick.Protocol;
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.GetDeviceConfig
+namespace QuickNV.Protocol.Driver.QpCommands.GetDeviceConfig
 {
     [DisplayName("获取设备配置")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
 
-namespace QuickNV.Driver.Protocol.QpCommands.GetMediaServerStreamInfo
+namespace QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo
 {
     [DisplayName("获取媒体服务器流信息")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

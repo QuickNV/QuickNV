@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace QuickNV.Driver.Protocol.QpNotices;
+namespace QuickNV.Protocol.Driver.QpNotices;
 
 [JsonSerializable(typeof(ChannelAddedNotice))]
 [JsonSerializable(typeof(ChannelDeletedNotice))]

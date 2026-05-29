@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.Driver.RTSP

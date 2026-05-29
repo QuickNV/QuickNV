@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using YiQiDong.Agent;
 using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
 namespace QuickNV.Driver.GB28181
@@ -98,23 +98,23 @@ namespace QuickNV.Driver.GB28181
             }
         }
 
-        protected override Protocol.QpCommands.GetDeviceConfig.Response GetDeviceConfig(
+        protected override Protocol.Driver.QpCommands.GetDeviceConfig.Response GetDeviceConfig(
             QpChannel channel,
-            Protocol.QpCommands.GetDeviceConfig.Request request)
+            Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
             => Functions.GetDeviceConfigFunction.Invoke(channel, request);
 
-        protected override Protocol.QpCommands.GetChannelConfig.Response GetChannelConfig(
+        protected override Protocol.Driver.QpCommands.GetChannelConfig.Response GetChannelConfig(
             QpChannel channel,
-            Protocol.QpCommands.GetChannelConfig.Request request)
+            Protocol.Driver.QpCommands.GetChannelConfig.Request request)
             => Functions.GetChannelConfigFunction.Invoke(channel, request);
 
-        protected override Protocol.QpCommands.ImportDevices.Response ImportDevices(
+        protected override Protocol.Driver.QpCommands.ImportDevices.Response ImportDevices(
             QpChannel channel,
-            Protocol.QpCommands.ImportDevices.Request request)
+            Protocol.Driver.QpCommands.ImportDevices.Request request)
             => Functions.ImportDevicesFunction.Invoke(channel, request);
-        protected override Protocol.QpCommands.ImportChannels.Response ImportChannels(
+        protected override Protocol.Driver.QpCommands.ImportChannels.Response ImportChannels(
             QpChannel channel,
-            Protocol.QpCommands.ImportChannels.Request request)
+            Protocol.Driver.QpCommands.ImportChannels.Request request)
             => Functions.ImportChannelsFunction.Invoke(channel, request);
 
         protected override void OnDriverConnected()
@@ -148,21 +148,21 @@ namespace QuickNV.Driver.GB28181
             }
         }
 
-        protected override Protocol.QpCommands.CreateChannelLiveStream.Response CreateChannelLiveStream(QpChannel channel, Protocol.QpCommands.CreateChannelLiveStream.Request request)
+        protected override Protocol.Driver.QpCommands.CreateChannelLiveStream.Response CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
         {
             var channelContext = GetChannelContext(request.MediaInfo.Device.Id, request.MediaInfo.Channel.Id);
             var streamInfo = channelContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo).Result;
-            return new Protocol.QpCommands.CreateChannelLiveStream.Response()
+            return new Protocol.Driver.QpCommands.CreateChannelLiveStream.Response()
             {
                 LiveStreamInfo = streamInfo
             };
         }
 
-        protected override Protocol.QpCommands.CreateChannelPlaybackStream.Response CreateChannelPlaybackStream(QpChannel channel, Protocol.QpCommands.CreateChannelPlaybackStream.Request request)
+        protected override Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request)
         {
             var channelContext = GetChannelContext(request.MediaInfo.Device.Id, request.MediaInfo.Channel.Id);
             var streamInfo = channelContext.CreatePlaybackStream(request.MediaServerInfo, request.MediaInfo, request.StartTime, request.EndTime).Result;
-            return new Protocol.QpCommands.CreateChannelPlaybackStream.Response()
+            return new Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response()
             {
                 PlaybackStreamInfo = streamInfo
             };
@@ -179,11 +179,11 @@ namespace QuickNV.Driver.GB28181
             return channelContext;
         }
 
-        protected override Protocol.QpCommands.DestoryChannelStream.Response DestoryChannelStream(QpChannel channel, Protocol.QpCommands.DestoryChannelStream.Request request)
+        protected override Protocol.Driver.QpCommands.DestoryChannelStream.Response DestoryChannelStream(QpChannel channel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request)
         {
             var channelContext = GetChannelContext(request.DeviceId, request.ChannelId);
             channelContext.DestoryLiveStream();
-            return new Protocol.QpCommands.DestoryChannelStream.Response();
+            return new Protocol.Driver.QpCommands.DestoryChannelStream.Response();
         }
 
         protected override VideoFileInfo[] FindPlaybackFiles(string deviceId, string channelId, DateTime startTime, DateTime endTime)
@@ -197,7 +197,7 @@ namespace QuickNV.Driver.GB28181
             return channelContext.FindPlaybackFiles(startTime, endTime).Result;
         }
 
-        protected override Protocol.QpCommands.PtzControl.Response PtzControl(QpChannel channel, Protocol.QpCommands.PtzControl.Request request)
+        protected override Protocol.Driver.QpCommands.PtzControl.Response PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request)
         {
             var deviceContext = SipServer.GetDevice(request.DeviceId);
             if (deviceContext == null)
@@ -207,7 +207,7 @@ namespace QuickNV.Driver.GB28181
                 throw new ApplicationException($"设备[{request.DeviceId}]中未找到编号为[{request.ChannelId}]的通道");
             var speed = Convert.ToByte(request.MoveSpeed * byte.MaxValue);
             channelContext.SendPtzCommandAsync(request.CommandType, speed).Wait(5000);
-            return new Protocol.QpCommands.PtzControl.Response();
+            return new Protocol.Driver.QpCommands.PtzControl.Response();
         }
     }
 }

@@ -2,7 +2,7 @@
 using Quick.Fields;
 using Quick.Protocol;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.GetDeviceConfig;
+using QuickNV.Protocol.Driver.QpCommands.GetDeviceConfig;
 
 namespace QuickNV.Driver.RTSP.Functions
 {

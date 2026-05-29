@@ -3,8 +3,8 @@ using System.Text.Json;
 using Quick.Fields;
 using Quick.Protocol;
 using YiQiDong.Protocol.V1.Model;
-using QuickNV.Driver.Protocol.QpCommands.ImportChannels;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.ImportChannels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.HikvisionDeviceNetwork.Functions
 {

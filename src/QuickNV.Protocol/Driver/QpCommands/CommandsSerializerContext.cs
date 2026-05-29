@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace QuickNV.Driver.Protocol.QpCommands;
+namespace QuickNV.Protocol.Driver.QpCommands;
 
 [JsonSerializable(typeof(CreateChannelLiveStream.Request))]
 [JsonSerializable(typeof(CreateChannelLiveStream.Response))]

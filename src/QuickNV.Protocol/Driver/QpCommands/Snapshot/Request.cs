@@ -1,9 +1,9 @@
 ﻿using Quick.Protocol;
 using System.ComponentModel;
 using System.Text.Json.Serialization.Metadata;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
-namespace QuickNV.Driver.Protocol.QpCommands.Snapshot
+namespace QuickNV.Protocol.Driver.QpCommands.Snapshot
 {
     [DisplayName("快照")]
     public class Request : AbstractQpSerializer<Request>, IQpCommandRequest<Request, Response>

@@ -2,7 +2,7 @@
 using Quick.EntityFrameworkCore.Plus;
 using System.ComponentModel;
 using QuickNV.Core;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Controllers
 {
@@ -28,9 +28,9 @@ namespace QuickNV.Controllers
         /// <param name="request">请求参数</param>
         /// <returns></returns>
         [HttpPost("{driverId}/GetDeviceConfig")]
-        public async Task<Driver.Protocol.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(
+        public async Task<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(
             string driverId,
-            [FromBody] Driver.Protocol.QpCommands.GetDeviceConfig.Request request)
+            [FromBody] Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
         {
             var driverContext = DriverManager.Instance.GetDriverContext(driverId);
             return await driverContext.GetDeviceConfig(request.Config, request.FieldIds, request.Fields);
@@ -43,9 +43,9 @@ namespace QuickNV.Controllers
         /// <param name="request">请求参数</param>
         /// <returns></returns>
         [HttpPost("{driverId}/GetChannelConfig")]
-        public async Task<Driver.Protocol.QpCommands.GetChannelConfig.Response> GetChannelConfig(
+        public async Task<Protocol.Driver.QpCommands.GetChannelConfig.Response> GetChannelConfig(
             string driverId,
-            [FromBody] Driver.Protocol.QpCommands.GetChannelConfig.Request request)
+            [FromBody] Protocol.Driver.QpCommands.GetChannelConfig.Request request)
         {
 
             var driverContext = DriverManager.Instance.GetDriverContext(driverId);

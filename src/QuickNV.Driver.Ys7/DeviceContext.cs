@@ -1,6 +1,6 @@
 ﻿using QuickNV.Driver.Agent;
-using QuickNV.Driver.Protocol.QpCommands.DestoryChannelStream;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpCommands.DestoryChannelStream;
+using QuickNV.Protocol.Driver.QpModels;
 using QuickNV.YS7.Model;
 
 namespace QuickNV.Driver.Ys7

@@ -1,4 +1,4 @@
-﻿using QuickNV.Driver.Protocol.QpModels;
+﻿using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Driver.GB28181.Command.DeviceControl
 {

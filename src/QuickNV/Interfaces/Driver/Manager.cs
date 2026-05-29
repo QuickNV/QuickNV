@@ -3,9 +3,9 @@ using QuickNV.Interfaces.Core;
 using YiQiDong.Agent;
 using QuickNV.Core;
 using Quick.EntityFrameworkCore.Plus;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using QuickNV.Model;
-using QuickNV.Driver.Protocol.QpNotices;
+using QuickNV.Protocol.Driver.QpNotices;
 using Quick.Utils;
 
 namespace QuickNV.Interfaces.Driver
@@ -24,7 +24,7 @@ namespace QuickNV.Interfaces.Driver
             config = new AllInterfaceConfig()
             {
                 InterfaceName = "驱动接口",
-                InstructionSet = new QpInstruction[] { QuickNV.Driver.Protocol.Instruction.Instance },
+                InstructionSet = new QpInstruction[] { QuickNV.Protocol.Driver.Instruction.Instance },
                 Password = configModel.DriverInterfacePassword,
                 WebSocketEnable = configModel.DriverInterfaceWebSocketEnable,
                 WebSocketPath = "/ws/driver",
@@ -53,10 +53,10 @@ namespace QuickNV.Interfaces.Driver
         private Manager()
         {
             commandExecuterManager = new CommandExecuterManager();
-            commandExecuterManager.Register(new QuickNV.Driver.Protocol.QpCommands.Register.Request(), ExecuteRegister);
-            commandExecuterManager.Register(new QuickNV.Driver.Protocol.QpCommands.ChangeLiveStreamSSRC.Request(), ChangeLiveStreamSSRC);
-            commandExecuterManager.Register(new QuickNV.Driver.Protocol.QpCommands.GetMediaServerStreamInfo.Request(), GetMediaServerStreamInfo);
-            commandExecuterManager.Register(new QuickNV.Driver.Protocol.QpCommands.MediaServerAddStreamProxy.Request(), MediaServerAddStreamProxy);
+            commandExecuterManager.Register(new QuickNV.Protocol.Driver.QpCommands.Register.Request(), ExecuteRegister);
+            commandExecuterManager.Register(new QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Request(), ChangeLiveStreamSSRC);
+            commandExecuterManager.Register(new QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Request(), GetMediaServerStreamInfo);
+            commandExecuterManager.Register(new QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Request(), MediaServerAddStreamProxy);
 
             noticeHandlerManager = new NoticeHandlerManager();
             noticeHandlerManager.Register<DeviceOnlineNotice>(OnDeviceOnlineNotice);
@@ -152,7 +152,7 @@ namespace QuickNV.Interfaces.Driver
         }
 
 
-        private QuickNV.Driver.Protocol.QpCommands.ChangeLiveStreamSSRC.Response ChangeLiveStreamSSRC(QpChannel channel, QuickNV.Driver.Protocol.QpCommands.ChangeLiveStreamSSRC.Request request)
+        private QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Response ChangeLiveStreamSSRC(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Request request)
         {
             var mediaServer = MediaServerManager.Instance.GetMediaServer(request.MediaServerId);
             if (mediaServer == null)
@@ -162,13 +162,13 @@ namespace QuickNV.Interfaces.Driver
                 throw new ApplicationException($"媒体服务器[{mediaServer.Model.Name}]中未找到编号为[{request.MediaId}]的媒体信息");
             mediaServer.DestoryMediaId(request.MediaId);
             mediaInfo = mediaServer.GenerateMediaInfo(mediaInfo.Device, mediaInfo.Channel, request.SSRC);
-            return new QuickNV.Driver.Protocol.QpCommands.ChangeLiveStreamSSRC.Response()
+            return new QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Response()
             {
                 MediaInfo = mediaInfo
             };
         }
 
-        private QuickNV.Driver.Protocol.QpCommands.GetMediaServerStreamInfo.Response GetMediaServerStreamInfo(QpChannel channel, QuickNV.Driver.Protocol.QpCommands.GetMediaServerStreamInfo.Request request)
+        private QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Response GetMediaServerStreamInfo(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Request request)
         {
             var mediaServer = MediaServerManager.Instance.GetMediaServer(request.MediaServerId);
             if (mediaServer == null)
@@ -178,7 +178,7 @@ namespace QuickNV.Interfaces.Driver
             if (!task.Wait(15 * 1000))
                 throw new TimeoutException("等待流注册超时");
             var liveStreamInfo = task.Result;
-            return new QuickNV.Driver.Protocol.QpCommands.GetMediaServerStreamInfo.Response()
+            return new QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Response()
             {
                 StreamInfo = new StreamInfo()
                 {
@@ -189,7 +189,7 @@ namespace QuickNV.Interfaces.Driver
             };
         }
 
-        private QuickNV.Driver.Protocol.QpCommands.MediaServerAddStreamProxy.Response MediaServerAddStreamProxy(QpChannel channel, QuickNV.Driver.Protocol.QpCommands.MediaServerAddStreamProxy.Request request)
+        private QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Response MediaServerAddStreamProxy(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Request request)
         {
             var mediaServer = MediaServerManager.Instance.GetMediaServer(request.StreamInfo.MediaServerId);
             if (mediaServer == null)
@@ -200,7 +200,7 @@ namespace QuickNV.Interfaces.Driver
             if (!task.Wait(15 * 1000))
                 throw new TimeoutException("等待流注册超时");
             var liveStreamInfo = task.Result;
-            return new QuickNV.Driver.Protocol.QpCommands.MediaServerAddStreamProxy.Response()
+            return new QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Response()
             {
                 StreamInfo = new StreamInfo()
                 {
@@ -212,7 +212,7 @@ namespace QuickNV.Interfaces.Driver
             };
         }
 
-        private QuickNV.Driver.Protocol.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Driver.Protocol.QpCommands.Register.Request request)
+        private QuickNV.Protocol.Driver.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.Register.Request request)
         {
             var driverInfo = request.CurrentDriver;
             EventHandler channel_Disconnected_Hanlder = null;
@@ -228,7 +228,7 @@ namespace QuickNV.Interfaces.Driver
             AgentContext.LogInfo($"[驱动接口][{channel.ChannelName}]驱动[{driverInfo.Name}_{driverInfo.Version}]已经注册。");
             var driverContext = DriverManager.Instance.GetDriverContext(driverInfo.Id);
             driverContext.GetRelateDevicesAndChannels(out var devices,out var channels);
-            return new QuickNV.Driver.Protocol.QpCommands.Register.Response()
+            return new QuickNV.Protocol.Driver.QpCommands.Register.Response()
             {
                 Devices = devices,
                 Channels = channels

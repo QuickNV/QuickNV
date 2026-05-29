@@ -1,4 +1,4 @@
-﻿namespace QuickNV.Driver.Protocol.QpModels
+﻿namespace QuickNV.Protocol.Driver.QpModels
 {
     /// <summary>
     /// 云台控制命令

@@ -1,6 +1,6 @@
 ﻿using Quick.Protocol;
 using System.IO;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
 namespace QuickNV.Core
 {

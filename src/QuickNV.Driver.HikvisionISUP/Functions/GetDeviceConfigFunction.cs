@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Quick.Fields;
 using Quick.Protocol;
-using QuickNV.Driver.Protocol.QpCommands.GetDeviceConfig;
+using QuickNV.Protocol.Driver.QpCommands.GetDeviceConfig;
 using YiQiDong.Protocol.V1.Model;
 
 namespace QuickNV.Driver.HikvisionISUP.Functions

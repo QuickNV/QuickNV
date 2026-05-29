@@ -1,8 +1,8 @@
 ﻿using Quick.Protocol;
 using System.Text.Json.Serialization.Metadata;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 
-namespace QuickNV.Driver.Protocol.QpCommands.ChangeLiveStreamSSRC
+namespace QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC
 {
     public class Response : AbstractQpSerializer<Response>
     {

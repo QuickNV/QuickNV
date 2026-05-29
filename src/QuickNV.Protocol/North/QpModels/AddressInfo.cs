@@ -1,4 +1,4 @@
-﻿namespace QuickNV.North.Protocol.QpModels;
+﻿namespace QuickNV.Protocol.North.QpModels;
 
 public class AddressInfo
 {

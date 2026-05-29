@@ -1,7 +1,7 @@
 ﻿using Quick.EntityFrameworkCore.Plus;
 using System.ComponentModel.DataAnnotations.Schema;
 using QuickNV.Core;
-using QuickNV.Driver.Protocol.QpModels;
+using QuickNV.Protocol.Driver.QpModels;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
