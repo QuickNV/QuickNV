@@ -170,7 +170,7 @@ namespace QuickNV.Driver.HikvisionDeviceNetwork.Functions
                 var deviceConfig = session.ConfigService.GetDeviceConfig();
                 defaultDeviceId = deviceConfig.Serial;
                 if (defaultDeviceId.StartsWith(deviceConfig.TypeName))
-                    defaultDeviceId = defaultDeviceId.Substring(deviceConfig.TypeName.Length);
+                    defaultDeviceId = defaultDeviceId.Substring(deviceConfig.TypeName.Length).Trim();
                 defaultDeviceId = defaultDeviceId.Replace("/", "_").Replace(" ", "_");
                 defaultDeviceName = deviceConfig.Name;
             }
