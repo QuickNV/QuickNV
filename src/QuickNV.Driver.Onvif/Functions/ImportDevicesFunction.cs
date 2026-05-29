@@ -202,13 +202,22 @@ namespace QuickNV.Driver.Onvif.Functions
                         FieldIds = functionRequest.FieldIds,
                         Fields = functionRequest.Fields
                     });
-
-                    var ovnifClient = new OnvifClient(JsonSerializer.Deserialize<OnvifClientOptions>(rep.Config));
+                    OnvifClientOptions ovnifClientOptions = null;
+                    try
+                    {
+                        ovnifClientOptions = JsonSerializer.Deserialize(rep.Config, OnvifClientOptionsSerializerContext.Default.OnvifClientOptions);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new IOException($"将Json字符串[{rep.Config}]反序列化为OnvifClientOptions对象时出错。", ex);
+                    }
+                    var ovnifClient = new OnvifClient(ovnifClientOptions);
                     try
                     {
                         ovnifClient.ConnectAsync().Wait();
                     }
-                    catch { }
+                    catch 
+                    { }
 
                     return new Response()
                     {
