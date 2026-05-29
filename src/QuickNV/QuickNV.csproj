@@ -29,8 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\QuickNV.Driver.Protocol\QuickNV.Driver.Protocol.csproj" />
-	  <ProjectReference Include="..\QuickNV.North.Protocol\QuickNV.North.Protocol.csproj" />
+	  <ProjectReference Include="..\QuickNV.Protocol\QuickNV.Protocol.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

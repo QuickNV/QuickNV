@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using NPOI.SS.Formula.Functions;
 using Quick.Blazor.Bootstrap;
 using Quick.EntityFrameworkCore.Plus;
 using QuickNV.Core;

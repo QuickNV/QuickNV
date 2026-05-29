@@ -16,6 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\QuickNV.Driver.Protocol\QuickNV.Driver.Protocol.csproj" />
+	  <ProjectReference Include="..\QuickNV.Protocol\QuickNV.Protocol.csproj" />
 	</ItemGroup>
 </Project>
