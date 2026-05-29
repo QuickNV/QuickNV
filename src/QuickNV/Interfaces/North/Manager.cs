@@ -12,59 +12,24 @@ namespace QuickNV.Interfaces.North
     {
         public static Manager Instance { get; } = new Manager();
         private Dictionary<string, QpChannel> channelDict = new Dictionary<string, QpChannel>();
-        private AllInterface allInterface;
-        private AllInterfaceConfig config;
-
-        public void Init(IApplicationBuilder app, ConfigModel configModel)
-        {
-            config = new AllInterfaceConfig()
-            {
-                InterfaceName = "北向接口",
-                InstructionSet = [QuickNV.Protocol.North.Instruction.Instance],
-                Password = configModel.NorthInterfacePassword,
-                WebSocketEnable = configModel.NorthInterfaceWebSocketEnable,
-                WebSocketPath = "/ws/north",
-                PipeEnable = configModel.NorthInterfacePipeEnable,
-                PipeName = configModel.NorthInterfacePipeName,
-                TcpEnable = configModel.NorthInterfaceTcpEnable,
-                TcpListenAddress = configModel.NorthInterfaceTcpListenAddress,
-                TcpListenPort = configModel.NorthInterfaceTcpListenPort
-            };
-            allInterface = new AllInterface(config, app);
-        }
 
         public KeyValuePair<string, QpChannel>[] GetAllChannels()
         {
             return channelDict.ToArray();
         }
 
-        public void Start()
-        {
-            allInterface.Start(config, commandExecuterManagerForRegister, noticeHandlerManager);
-        }
-
-        public void Stop()
-        {
-            allInterface.Stop();
-        }
-
-        private CommandExecuterManager commandExecuterManagerForRegister;
         private CommandExecuterManager commandExecuterManager;
-        private NoticeHandlerManager noticeHandlerManager;
 
         private Manager()
         {
-            commandExecuterManagerForRegister = new CommandExecuterManager();
-            commandExecuterManagerForRegister.Register(new QuickNV.Protocol.North.QpCommands.Register.Request(), Register);
-
             commandExecuterManager = new CommandExecuterManager();
             commandExecuterManager.Register(new QuickNV.Protocol.North.QpCommands.GetAddressData.Request(), GetAddressData);
             commandExecuterManager.Register(new QuickNV.Protocol.North.QpCommands.GetDeviceData.Request(), GetDeviceData);
             commandExecuterManager.Register(new QuickNV.Protocol.North.QpCommands.GetChannelData.Request(), GetChannelData);
             commandExecuterManager.Register(new QuickNV.Protocol.North.QpCommands.Sync.Request(), Sync);
-            noticeHandlerManager = new NoticeHandlerManager();
         }
-        private QuickNV.Protocol.North.QpCommands.Register.Response Register(QpChannel channel, QuickNV.Protocol.North.QpCommands.Register.Request request)
+        
+        internal QuickNV.Protocol.North.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Protocol.North.QpCommands.Register.Request request)
         {
             EventHandler handler = null;
             handler = (sender, e) =>

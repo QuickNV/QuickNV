@@ -14,38 +14,8 @@ namespace QuickNV.Interfaces.Driver
     {
         public static Manager Instance { get; } = new Manager();
 
-        private AllInterface allInterface;
-        private AllInterfaceConfig config;
         public event EventHandler<Device> DeviceOnline;
         public event EventHandler<Device> DeviceOffline;
-
-        public void Init(IApplicationBuilder app, ConfigModel configModel)
-        {
-            config = new AllInterfaceConfig()
-            {
-                InterfaceName = "驱动接口",
-                InstructionSet = new QpInstruction[] { QuickNV.Protocol.Driver.Instruction.Instance },
-                Password = configModel.DriverInterfacePassword,
-                WebSocketEnable = configModel.DriverInterfaceWebSocketEnable,
-                WebSocketPath = "/ws/driver",
-                PipeEnable = configModel.DriverInterfacePipeEnable,
-                PipeName = configModel.DriverInterfacePipeName,
-                TcpEnable = configModel.DriverInterfaceTcpEnable,
-                TcpListenAddress = configModel.DriverInterfaceTcpListenAddress,
-                TcpListenPort = configModel.DriverInterfaceTcpListenPort
-            };
-            allInterface = new AllInterface(config, app);
-        }
-
-        public void Start()
-        {
-            allInterface.Start(config, commandExecuterManager, noticeHandlerManager);
-        }
-
-        public void Stop()
-        {
-            allInterface.Stop();
-        }
 
         private CommandExecuterManager commandExecuterManager;
         private NoticeHandlerManager noticeHandlerManager;
@@ -212,7 +182,7 @@ namespace QuickNV.Interfaces.Driver
             };
         }
 
-        private QuickNV.Protocol.Driver.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.Register.Request request)
+        internal QuickNV.Protocol.Driver.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.Register.Request request)
         {
             var driverInfo = request.CurrentDriver;
             EventHandler channel_Disconnected_Hanlder = null;
@@ -224,8 +194,11 @@ namespace QuickNV.Interfaces.Driver
              };
             channel.Disconnected += channel_Disconnected_Hanlder;
             DriverManager.Instance.RegisterDriver(channel, driverInfo);
-
+            channel.AddCommandExecuterManager(commandExecuterManager);
+            channel.AddNoticeHandlerManager(noticeHandlerManager);
             AgentContext.LogInfo($"[驱动接口][{channel.ChannelName}]驱动[{driverInfo.Name}_{driverInfo.Version}]已经注册。");
+
+            
             var driverContext = DriverManager.Instance.GetDriverContext(driverInfo.Id);
             driverContext.GetRelateDevicesAndChannels(out var devices,out var channels);
             return new QuickNV.Protocol.Driver.QpCommands.Register.Response()

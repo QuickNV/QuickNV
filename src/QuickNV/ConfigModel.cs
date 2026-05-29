@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using Quick.EntityFrameworkCore.Plus;
+using Quick.Protocol.InterfaceService;
 using YiQiDong.Core.JsonConverters;
 
 namespace QuickNV;
@@ -11,6 +12,8 @@ internal partial class ConfigModelSerializerContext : JsonSerializerContext { }
 
 public class ConfigModel
 {
+    public static ConfigModel Default { get; } = new();
+    
     /// <summary>
     /// Web服务地址
     /// </summary>
@@ -38,72 +41,31 @@ public class ConfigModel
 #else
         DbType = "Quick.EntityFrameworkCore.Plus.MySql.MySqlDbContextConfigHandler",
 #endif
-    };    
+    };
 
     /// <summary>
-    /// 驱动接口密码
+    /// 接口配置
     /// </summary>
-    public string DriverInterfacePassword { get; set; } = "123456";
-    /// <summary>
-    /// 驱动接口是否启用WebSocket
-    /// </summary>
-    [JsonConverter(typeof(JsonBoolConverter))]
-    public bool DriverInterfaceWebSocketEnable { get; set; } = false;
-    /// <summary>
-    /// 驱动接口是否启用管道
-    /// </summary>
-    [JsonConverter(typeof(JsonBoolConverter))]
-    public bool DriverInterfacePipeEnable { get; set; } = true;
-    /// <summary>
-    /// 驱动接口管道名称
-    /// </summary>
-    public string DriverInterfacePipeName { get; set; } = "QuickNV.DriverInterface";
-    /// <summary>
-    /// 驱动接口是否启用TCP
-    /// </summary>
-    [JsonConverter(typeof(JsonBoolConverter))]
-    public bool DriverInterfaceTcpEnable { get; set; } = false;
-    /// <summary>
-    /// 驱动接口TCP监听地址
-    /// </summary>
-    public string DriverInterfaceTcpListenAddress { get; set; } = "0.0.0.0";
-    /// <summary>
-    /// 驱动接口TCP监听端口
-    /// </summary>
-    [JsonConverter(typeof(JsonInt32Converter))]
-    public int DriverInterfaceTcpListenPort { get; set; } = 8098;
-    /// <summary>
-    /// 北向接口密码
-    /// </summary>
-    public string NorthInterfacePassword { get; set; } = "123456";
-    /// <summary>
-    /// 北向接口是否启用WebSocket
-    /// </summary>
-    [JsonConverter(typeof(JsonBoolConverter))]
-    public bool NorthInterfaceWebSocketEnable { get; set; } = false;
-    /// <summary>
-    /// 北向接口是否启用管道
-    /// </summary>
-    [JsonConverter(typeof(JsonBoolConverter))]
-    public bool NorthInterfacePipeEnable { get; set; } = true;
-    /// <summary>
-    /// 北向接口管道名称
-    /// </summary>
-    public string NorthInterfacePipeName { get; set; } = "QuickNV.NorthInterface";
-    /// <summary>
-    /// 北向接口是否启用TCP
-    /// </summary>
-    [JsonConverter(typeof(JsonBoolConverter))]
-    public bool NorthInterfaceTcpEnable { get; set; } = false;
-    /// <summary>
-    /// 北向接口TCP监听地址
-    /// </summary>
-    public string NorthInterfaceTcpListenAddress { get; set; } = "0.0.0.0";
-    /// <summary>
-    /// 北向接口TCP监听端口
-    /// </summary>
-    [JsonConverter(typeof(JsonInt32Converter))]
-    public int NorthInterfaceTcpListenPort { get; set; } = 8098;
+    public QpInterfaceServiceConfig QpInterface { get; set; } = new()
+    {
+        EnableHttp = false,
+        PipelineServerOptions = new()
+        {
+            Password = "123456",
+            PipeName = $"{nameof(QuickNV)}.{nameof(QpInterface)}"
+        },
+        WebSocketServerOptions = new()
+        {
+            Password = "123456",
+            Path = "/qp/ws"
+        },
+        TcpServerOptions = new()
+        {
+            Password = "123456",
+            Port = 8098
+        }
+    };
+
     /// <summary>
     /// 易认证接口URL
     /// </summary>

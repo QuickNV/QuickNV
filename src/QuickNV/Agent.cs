@@ -7,7 +7,6 @@ using YiQiDong.Agent;
 using YiQiDong.Core;
 using QuickNV.Core;
 using QuickNV.Model;
-using QuickNV.Utils;
 using QuickNV.Components;
 using Quick.Utils;
 
@@ -178,8 +177,7 @@ public class Agent : AbstractAgent
             });
 #endif
             app.UseWebSockets();
-            Interfaces.Driver.Manager.Instance.Init(app, Config);
-            Interfaces.North.Manager.Instance.Init(app, Config);
+            Interfaces.Manager.Instance.Start(app);
             app.MapStaticAssets();
             app.MapReverseProxy();
 #if DEBUG
@@ -214,10 +212,6 @@ public class Agent : AbstractAgent
                     MediaServerManager.Instance.Start();
                     //启动驱动管理器
                     DriverManager.Instance.Start();
-                    //启动驱动接口
-                    Interfaces.Driver.Manager.Instance.Start();
-                    //启动北向接口
-                    Interfaces.North.Manager.Instance.Start();
                     break;
                 }
                 catch (Exception ex)
@@ -238,10 +232,8 @@ public class Agent : AbstractAgent
         cts?.Cancel();
         cts = null;
 
-        //停止北向接口
-        Interfaces.North.Manager.Instance.Stop();
-        //停止驱动接口
-        Interfaces.Driver.Manager.Instance.Stop();
+        //停止对外接口
+        Interfaces.Manager.Instance.Stop();
         //停止驱动管理器
         DriverManager.Instance.Stop();
         //停止媒体服务管理器
