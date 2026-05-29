@@ -23,7 +23,6 @@ namespace QuickNV.Driver.Agent.Functions
             var model = requestModel ?? Model;
             return new FieldForGet()
             {
-                Id = "QuickNVDriverInterface",
                 Type = FieldType.ContainerGroup,
                 Name = "QuickNV驱动接口",
                 Children =

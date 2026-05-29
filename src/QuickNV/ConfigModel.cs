@@ -48,7 +48,7 @@ public class ConfigModel
     /// </summary>
     public QpInterfaceServiceConfig QpInterface { get; set; } = new()
     {
-        EnableHttp = false,
+        EnablePipeline = true,
         PipelineServerOptions = new()
         {
             Password = "123456",

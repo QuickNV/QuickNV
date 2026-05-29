@@ -19,8 +19,7 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         return new List<FieldForGet>()
         {
             new FieldForGet()
-            {
-                Id="Tab",
+            {                
                 Type = FieldType.ContainerTab,
                 Children =
                 [

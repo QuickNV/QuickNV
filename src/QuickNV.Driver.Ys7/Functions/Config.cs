@@ -19,7 +19,6 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "DriverConfig",
             Type = FieldType.ContainerGroup,
             Name = "萤石开放平台",
             Children =
@@ -60,8 +59,7 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         return new List<FieldForGet>()
         {
             new FieldForGet()
-            {
-                Id="Tab",
+            {   
                 Type = FieldType.ContainerTab,
                 Children =
                 [

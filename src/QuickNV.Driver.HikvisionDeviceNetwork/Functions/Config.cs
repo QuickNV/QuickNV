@@ -20,7 +20,6 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         {
             new FieldForGet()
             {
-                Id="Tab",
                 Type = FieldType.ContainerTab,
                 Children =
                 [

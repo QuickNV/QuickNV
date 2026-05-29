@@ -19,7 +19,6 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "CmsService",
             Type = FieldType.ContainerGroup,
             Name = "ISUP中心服务",
             Children =
@@ -112,7 +111,6 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "SmsService",
             Type = FieldType.ContainerGroup,
             Name = "ISUP媒体转发服务",
             Children =
@@ -169,8 +167,7 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         return new List<FieldForGet>()
         {
             new FieldForGet()
-            {
-                Id="Tab",
+            {                
                 Type = FieldType.ContainerTab,
                 Children =
                 [

@@ -9,6 +9,7 @@ using QuickNV.Core;
 using QuickNV.Model;
 using QuickNV.Components;
 using Quick.Utils;
+using Quick.Protocol.InterfaceService;
 
 namespace QuickNV;
 
@@ -34,6 +35,8 @@ public class Agent : AbstractAgent
         Quick.Protocol.Pipeline.QpPipelineClientOptions.RegisterUriSchema();
         Quick.Protocol.Tcp.QpTcpClientOptions.RegisterUriSchema();
         Quick.Protocol.WebSocket.Client.QpWebSocketClientOptions.RegisterUriSchema();
+
+        QpInterfaceServiceConfig.CanEnableHttp = false;
 
         base.Init();
         //使用的数据库类型：SQLite、MySQL、达梦

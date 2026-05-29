@@ -19,7 +19,6 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         var model = requestModel ?? Model;
         return new FieldForGet()
         {
-            Id = "SipServiceConfig",
             Type = FieldType.ContainerGroup,
             Name = "SIP服务",
             Children =
@@ -99,7 +98,6 @@ public class Config : DriverModelJsonConfig<ConfigModel>
         {
             new FieldForGet()
             {
-                Id="Tab",
                 Type = FieldType.ContainerTab,
                 Children =
                 [

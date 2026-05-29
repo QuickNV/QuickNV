@@ -16,7 +16,7 @@ namespace QuickNV.Interfaces
             commandExecuterManager.Register(new Protocol.Driver.QpCommands.Register.Request(), Driver.Manager.Instance.ExecuteRegister);
             commandExecuterManager.Register(new Protocol.North.QpCommands.Register.Request(), North.Manager.Instance.ExecuteRegister);
         }
-        
+
         public void Start(IApplicationBuilder app)
         {
             var config = Agent.Instance.Config.QpInterface;
