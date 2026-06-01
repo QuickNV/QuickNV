@@ -57,7 +57,7 @@ namespace QuickNV.Driver.HikvisionISUP.Functions
                 {
                     Id = BTN_IMPORT_ALL,
                     Name = "导入全部",
-                    MarginLeft = 1,
+                    Margin = 1,
                     Type = FieldType.Button
                 });
                 var itemList = new List<FieldForGet>();

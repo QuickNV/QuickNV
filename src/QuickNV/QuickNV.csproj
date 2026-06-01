@@ -23,7 +23,7 @@
 		<PackageReference Include="Quick.Protocol.WebSocket.Server.AspNetCore" Version="2.6.11" />
 		<PackageReference Include="Quick.Protocol.InterfaceService" Version="2.6.11" />
 		<PackageReference Include="Quick.ZLMediaKit" Version="1.1.0" />
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Swashbuckle.AspNetCore" Version="10.2.0" />
 		<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
 		<PackageReference Include="YiQiDong.Core" Version="2026.16.507" />
 		<PackageReference Include="YiRenZheng.Protocol" Version="2.3.0" />
