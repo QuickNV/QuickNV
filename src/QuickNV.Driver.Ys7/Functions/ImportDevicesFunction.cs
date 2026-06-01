@@ -77,6 +77,7 @@ namespace QuickNV.Driver.Ys7.Functions
                 {
                     Id = BTN_IMPORT_ALL,
                     Name = "导入全部",
+                    MarginLeft = 1,
                     Type = FieldType.Button
                 });
                 var itemList = new List<FieldForGet>();
@@ -96,7 +97,7 @@ namespace QuickNV.Driver.Ys7.Functions
                         Type = FieldType.Button,
                         PostOnChanged = true,
                         Value = value,
-                        Html_Class = "btn-block"
+                        InputButton_IsBlock = true
                     });
                 }
                 list.Add(new FieldForGet()
