@@ -25,6 +25,8 @@ namespace QuickNV.Core.Web
         private static List<string> whiteUrlPrefixList = new List<string>(new[]
             {
                 "/ws/",
+                "/css/",
+                "/js/",
                 "/_blazor/",
                 "/_framework/",
                 "/api/zlhook/",
