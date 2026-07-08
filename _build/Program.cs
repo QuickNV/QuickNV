@@ -18,7 +18,7 @@ var baseFolder = Environment.CurrentDirectory;
 
 var productDict = new Dictionary<string, string>();
 
-foreach (var fi in new DirectoryInfo("src").GetDirectories())
+foreach (var fi in new DirectoryInfo(baseFolder).GetDirectories())
 {
     var yiqidongImageFile = Path.Combine(fi.FullName, "YiQiDong.Image.json");
     if (!File.Exists(yiqidongImageFile))
@@ -37,8 +37,8 @@ if (productDirs == null || productDirs.Length == 0)
 
 foreach (var productDir in productDirs)
 {
-    var publishFolder = $"src/{productDir}/bin/Release/publish";
-    var productName = QbJson.ReadString(Path.Combine($"src/{productDir}/YiQiDong.Image.json"), "Name");
+    var publishFolder = $"{productDir}/bin/Release/publish";
+    var productName = QbJson.ReadString(Path.Combine($"{productDir}/YiQiDong.Image.json"), "Name");
     var outFolder = Path.GetFullPath("bin");
     if (!Directory.Exists(outFolder))
         Directory.CreateDirectory(outFolder);
@@ -50,15 +50,15 @@ foreach (var productDir in productDirs)
     Console.WriteLine("----------------------------------");
     Console.WriteLine("正在删除Release目录...");
     //先删除Release目录
-    QbFolder.DeleteFolders("src", "Release", SearchOption.AllDirectories);
+    QbFolder.DeleteFolders(productDir, "Release", SearchOption.AllDirectories);
     //再删除ymg文件
     QbFile.DeleteFiles("bin", $"{productName}_{version}.ymg");
 
     Console.WriteLine($"正在发布{productName}项目...");
-    QbCommand.Run("dotnet", $"publish -c Release src/{productDir}");
+    QbCommand.Run("dotnet", $"publish -c Release {productDir}");
     QbDotNet.KeepPublishRuntimes(publishFolder, "win", "unix", "win-x64", "linux-x64", "linux-arm64");
     //复制文件
-    QbFile.CopyFiles($"src/{productDir}", publishFolder, "YiQiDong.Image.*", true);
+    QbFile.CopyFiles($"{productDir}", publishFolder, "YiQiDong.Image.*", true);
 
     //修改容器信息文件中的版本号
     QbJson.WriteString(Path.Combine(publishFolder, "YiQiDong.Image.json"), "Version", version);
