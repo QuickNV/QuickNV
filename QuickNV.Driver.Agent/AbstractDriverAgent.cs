@@ -323,7 +323,7 @@ namespace QuickNV.Driver.Agent
             if (client != null)
             {
                 client.Disconnected -= Client_Disconnected;
-                client.Close();
+                client.Dispose();
                 Client = null;
             }
         }

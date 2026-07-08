@@ -24,7 +24,7 @@ namespace QuickNV.Interfaces.Core
                 ServerProgram = config.InterfaceName,
                 InstructionSet = config.InstructionSet
             };
-            app.UseQuickProtocol(webSocketServerOptions, out webSocketServer);
+            app.UseQuickProtocolWebSocketServer(webSocketServerOptions, out webSocketServer);
         }
 
         public QpChannel[] GetAllChannels()
