@@ -6,5 +6,6 @@
   "Description": "[QuickNV驱动_海康设备网络]是连接为QuickNV提供海康设备网络驱动的程序。",
   "Platform": [ "win-x64", "linux-x64", "linux-arm64" ],
   "Runtime": [ "dotnet-10.0" ],
+  "AgentExecute": "dotnet",
   "AgentStartup": "QuickNV.Driver.HikvisionDeviceNetwork.dll"
 }

@@ -47,7 +47,7 @@ namespace QuickNV.North.Agent
             if (client != null)
             {
                 client.Disconnected -= Client_Disconnected;
-                client.Dispose();
+                client.Close();
                 Client = null;
             }
         }

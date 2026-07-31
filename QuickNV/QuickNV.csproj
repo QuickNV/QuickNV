@@ -12,20 +12,20 @@
 
 	<ItemGroup>
 		<PackageReference Include="DbContextBackup.Excel" Version="2026.6.523" />
-		<PackageReference Include="Quick.Blazor.Bootstrap.QuickFields" Version="2026.22.625" />
+		<PackageReference Include="Quick.Blazor.Bootstrap.QuickFields" Version="2026.24.731" />
 		<PackageReference Include="Quick.EntityFrameworkCore.Plus.Dm" Version="2026.10.523" />
 		<PackageReference Include="Quick.EntityFrameworkCore.Plus.MySql" Version="2026.10.523" />
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Quick.EntityFrameworkCore.Plus.SQLite" Version="2026.10.523" />
 		<PackageReference Include="Quick.Excel" Version="2026.1.522" />
-		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.7.0" />
-		<PackageReference Include="Quick.Protocol.Tcp" Version="2.7.0" />
-		<PackageReference Include="Quick.Protocol.WebSocket.Client" Version="2.7.0" />
-		<PackageReference Include="Quick.Protocol.WebSocket.Server.AspNetCore" Version="2.7.0" />
-		<PackageReference Include="Quick.Protocol.InterfaceService" Version="2.7.0" />
+		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.8.0" />
+		<PackageReference Include="Quick.Protocol.Tcp" Version="2.8.0" />
+		<PackageReference Include="Quick.Protocol.WebSocket.Client" Version="2.8.0" />
+		<PackageReference Include="Quick.Protocol.WebSocket.Server.AspNetCore" Version="2.8.0" />
+		<PackageReference Include="Quick.Protocol.InterfaceService" Version="2.8.0" />
 		<PackageReference Include="Quick.ZLMediaKit" Version="1.1.0" />
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Swashbuckle.AspNetCore" Version="10.2.3" />
 		<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
-		<PackageReference Include="YiQiDong.Core" Version="2026.19.707" />
+		<PackageReference Include="YiQiDong.Core" Version="2026.28.731" />
 		<PackageReference Include="YiRenZheng.Protocol" Version="2.3.0" />
 	</ItemGroup>
 

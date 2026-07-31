@@ -8,10 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.7.0" />
-		<PackageReference Include="Quick.Protocol.Tcp" Version="2.7.0" />
-		<PackageReference Include="Quick.Protocol.WebSocket.Client" Version="2.7.0" />
-		<PackageReference Include="YiQiDong.Core" Version="2026.19.707" />
+		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.8.0" />
+		<PackageReference Include="Quick.Protocol.Tcp" Version="2.8.0" />
+		<PackageReference Include="Quick.Protocol.WebSocket.Client" Version="2.8.0" />
+		<PackageReference Include="YiQiDong.Core" Version="2026.28.731" />
 	</ItemGroup>
 
 	<ItemGroup>

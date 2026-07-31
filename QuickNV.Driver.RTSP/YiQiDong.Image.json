@@ -6,5 +6,6 @@
   "Description": "[QuickNV驱动_RTSP]是连接为QuickNV提供RTSP驱动的程序。",
   "Platform": [ "any" ],
   "Runtime": [ "dotnet-10.0" ],
+  "AgentExecute": "dotnet",
   "AgentStartup": "QuickNV.Driver.RTSP.dll"
 }

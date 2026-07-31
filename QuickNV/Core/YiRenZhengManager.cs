@@ -48,7 +48,7 @@ namespace QuickNV.Core
             if (client != null)
             {
                 client.Disconnected -= Client_Disconnected;
-                client.Dispose();
+                client.Close();
                 client = null;
             }
         }

@@ -7,7 +7,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Quick.Fields" Version="2026.4.609" />
-		<PackageReference Include="Quick.Protocol" Version="2.7.0" />
+		<PackageReference Include="Quick.Protocol" Version="2.8.0" />
 	</ItemGroup>
 
 </Project>

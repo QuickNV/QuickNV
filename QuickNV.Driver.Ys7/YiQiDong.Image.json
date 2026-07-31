@@ -6,5 +6,6 @@
   "Description": "[QuickNV驱动_萤石开放平台]是连接为QuickNV提供萤石开放平台驱动的程序。",
   "Platform": [ "any" ],
   "Runtime": [ "dotnet-10.0" ],
+  "AgentExecute": "dotnet",
   "AgentStartup": "QuickNV.Driver.Ys7.dll"
 }
