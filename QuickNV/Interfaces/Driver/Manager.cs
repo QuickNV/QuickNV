@@ -194,8 +194,8 @@ namespace QuickNV.Interfaces.Driver
              };
             channel.Disconnected += channel_Disconnected_Hanlder;
             DriverManager.Instance.RegisterDriver(channel, driverInfo);
-            channel.AddCommandExecuterManager(commandExecuterManager);
-            channel.AddNoticeHandlerManager(noticeHandlerManager);
+            channel.RegisterCommandExecuterManagers([commandExecuterManager]);
+            channel.RegisterNoticeHandlerManagers([noticeHandlerManager]);
             AgentContext.LogInfo($"[驱动接口][{channel.ChannelName}]驱动[{driverInfo.Name}_{driverInfo.Version}]已经注册。");
 
             

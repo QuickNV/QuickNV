@@ -41,7 +41,7 @@ namespace QuickNV.Interfaces.North
                 AgentContext.LogInfo($"[北向接口][{channel.ChannelName}]名称为[{request.Name}]的北向程序已经断开。原因：{ExceptionUtils.GetExceptionMessage(channel.LastException)}");
             };
             channel.Disconnected += handler;
-            channel.AddCommandExecuterManager(commandExecuterManager);
+            channel.RegisterCommandExecuterManagers([commandExecuterManager]);
             lock (channelDict)
                 channelDict[request.Name] = channel;
             AgentContext.LogInfo($"[北向接口][{channel.ChannelName}]名称为[{request.Name}]的北向程序已经注册。");

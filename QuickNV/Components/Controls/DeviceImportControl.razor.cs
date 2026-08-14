@@ -41,7 +41,7 @@ namespace QuickNV.Components.Controls
         private FieldForGet[] fieldForGetArray;
 
 
-        private void travelFields(FieldForGet[] fields, Action<FieldForGet> action)
+        private void travelFields(IEnumerable<FieldForGet> fields, Action<FieldForGet> action)
         {
             if (fields == null)
                 return;
@@ -94,7 +94,7 @@ namespace QuickNV.Components.Controls
                 {
                     var rep = await driverContext.ImportDevices(
                         field.GetFullFieldIds().Where(t => t != null).ToArray(),
-                        fieldForGetArray.Select(t => t.ToPost()).ToArray()
+                        [..fieldForGetArray.Select(t => t.ToPost())]
                     );
                     if (rep.Devices != null)
                     {

@@ -105,7 +105,7 @@ namespace QuickNV.Driver.Ys7.Functions
                     Id = VAR_DEVICES,
                     Name = "设备列表",
                     Type = FieldType.ContainerGroup,
-                    Children = itemList.ToArray()
+                    Children = itemList
                 });
             }
             else

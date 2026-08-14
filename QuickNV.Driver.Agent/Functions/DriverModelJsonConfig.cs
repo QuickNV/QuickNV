@@ -71,10 +71,7 @@ namespace QuickNV.Driver.Agent.Functions
                     new FieldForGet()
                     {
                         Type = FieldType.ContainerTab,
-                        Children = new FieldForGet[]
-                        {
-                            getQuickNVDriverInterfaceGroup(request,requestModel,isReadOnly)
-                        }.Concat(otherGroups).ToArray()
+                        Children = [getQuickNVDriverInterfaceGroup(request,requestModel,isReadOnly),..otherGroups]
                     }
                 };
         }

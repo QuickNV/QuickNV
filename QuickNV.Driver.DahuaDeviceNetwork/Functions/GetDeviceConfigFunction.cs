@@ -115,7 +115,7 @@ namespace QuickNV.Driver.DahuaDeviceNetwork.Functions
             {
                 functionRequest = new FunctionRequest()
                 {
-                    Fields = list.Select(t => t.ToPost()).ToArray()
+                    Fields = [.. list.Select(t => t.ToPost())]
                 };
                 config = functionRequest.Convert(DeviceConfigSerializerContext.Default.DeviceConfig);
             }

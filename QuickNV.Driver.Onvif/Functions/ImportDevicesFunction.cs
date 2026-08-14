@@ -161,7 +161,7 @@ namespace QuickNV.Driver.Onvif.Functions
                     new FieldForPost() { Id = nameof(DeviceConfig.Password) },
                     new FieldForPost() { Id = nameof(DeviceConfig.Scheme), Value = uri.Scheme }
                 };
-                functionRequest.Fields = fieldList.ToArray();
+                functionRequest.Fields = fieldList;
             }
 
             var rep = GetDeviceConfigFunction.Invoke(null, new Protocol.Driver.QpCommands.GetDeviceConfig.Request()

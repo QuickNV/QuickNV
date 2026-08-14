@@ -90,7 +90,7 @@ namespace QuickNV.Driver.HikvisionISUP.Functions
                     Id = VAR_CHANNELS,
                     Name = "通道列表",
                     Type = FieldType.ContainerGroup,
-                    Children = itemList.ToArray()
+                    Children = itemList
                 });
             }
             else

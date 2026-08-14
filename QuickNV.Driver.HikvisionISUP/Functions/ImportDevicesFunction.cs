@@ -85,7 +85,7 @@ namespace QuickNV.Driver.HikvisionISUP.Functions
                     Id = VAR_DEVICES,
                     Name = "设备列表",
                     Type = FieldType.ContainerGroup,
-                    Children = itemList.ToArray()
+                    Children = itemList
                 });
             }
             else

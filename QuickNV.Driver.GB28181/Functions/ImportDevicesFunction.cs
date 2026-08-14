@@ -67,7 +67,7 @@ namespace QuickNV.Driver.GB28181.Functions
                     Id = VAR_DEVICES,
                     Name = "设备列表",
                     Type = FieldType.ContainerGroup,
-                    Children = itemList.ToArray()
+                    Children = itemList
                 });
             }
             else

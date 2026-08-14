@@ -24,6 +24,6 @@ namespace QuickNV.Protocol.Driver.QpCommands.GetChannelConfig
         /// <summary>
         /// 全部字段
         /// </summary>
-        public FieldForPost[] Fields { get; set; }
+        public List<FieldForPost> Fields { get; set; }
     }
 }

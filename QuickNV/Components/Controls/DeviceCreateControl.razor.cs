@@ -83,7 +83,7 @@ namespace QuickNV.Components.Controls
         private FieldForGet[] fieldForGetArray;
 
 
-        private void travelFields(FieldForGet[] fields, Action<FieldForGet> action)
+        private void travelFields(IEnumerable<FieldForGet> fields, Action<FieldForGet> action)
         {
             if (fields == null)
                 return;
@@ -137,7 +137,7 @@ namespace QuickNV.Components.Controls
                     var rep = await driverContext.Channel.SendCommand(new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
                     {
                         FieldIds = field.GetFullFieldIds().Where(t => t != null).ToArray(),
-                        Fields = fieldForGetArray.Select(t => t.ToPost()).ToArray()
+                        Fields = [..fieldForGetArray.Select(t => t.ToPost())]
                     });
                     createModel.DriverConfig = rep.Config;
                     setFields(rep.Fields);

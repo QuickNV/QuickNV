@@ -58,7 +58,7 @@ namespace QuickNV.Core
 
         public async Task<Protocol.Driver.QpCommands.ImportDevices.Response> ImportDevices(
             string[] fieldIds,
-            FieldForPost[] fields)
+            List<FieldForPost> fields)
         {
             return await Channel.SendCommand(new Protocol.Driver.QpCommands.ImportDevices.Request()
             {
@@ -67,7 +67,7 @@ namespace QuickNV.Core
             });
         }
 
-        public async Task<Protocol.Driver.QpCommands.ImportChannels.Response> ImportChannels(string deviceId, string[] fieldIds, FieldForPost[] fields)
+        public async Task<Protocol.Driver.QpCommands.ImportChannels.Response> ImportChannels(string deviceId, string[] fieldIds, List<FieldForPost> fields)
         {
             return await Channel.SendCommand(new Protocol.Driver.QpCommands.ImportChannels.Request()
             {
@@ -80,7 +80,7 @@ namespace QuickNV.Core
         public async Task<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(
             string config,
             string[] fieldIds,
-            FieldForPost[] fields)
+            List<FieldForPost> fields)
         {
             return await Channel.SendCommand(new Protocol.Driver.QpCommands.GetDeviceConfig.Request()
             {
@@ -94,7 +94,7 @@ namespace QuickNV.Core
             string deviceId,
             string config,
             string[] fieldIds,
-            FieldForPost[] fields)
+            List<FieldForPost> fields)
         {
             return await Channel.SendCommand(new Protocol.Driver.QpCommands.GetChannelConfig.Request()
             {
