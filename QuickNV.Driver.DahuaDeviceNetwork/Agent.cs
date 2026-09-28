@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using QuickNV.Driver.Agent;
 using QuickNV.Protocol.Driver.QpModels;
 using System.Text;
-using QuickNV.Protocol.Driver.QpCommands.CreateChannelPlaybackStream;
 using System.Text.Json.Serialization;
 
 namespace QuickNV.Driver.DahuaDeviceNetwork
@@ -65,21 +64,21 @@ namespace QuickNV.Driver.DahuaDeviceNetwork
             OnDriverDisconnected();
         }
 
-        protected override Protocol.Driver.QpCommands.ImportDevices.Response ImportDevices(QpChannel channel, Protocol.Driver.QpCommands.ImportDevices.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.ImportDevices.Response> ImportDevices(QpChannel channel, Protocol.Driver.QpCommands.ImportDevices.Request request)
             => Functions.ImportDevicesFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.GetDeviceConfig.Response GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
             => Functions.GetDeviceConfigFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.ImportChannels.Response ImportChannels(
+        protected override async ValueTask<Protocol.Driver.QpCommands.ImportChannels.Response> ImportChannels(
             QpChannel channel,
             Protocol.Driver.QpCommands.ImportChannels.Request request)
             => Functions.ImportChannelsFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.GetChannelConfig.Response GetChannelConfig(QpChannel channel, Protocol.Driver.QpCommands.GetChannelConfig.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.GetChannelConfig.Response> GetChannelConfig(QpChannel channel, Protocol.Driver.QpCommands.GetChannelConfig.Request request)
             => Functions.GetChannelConfigFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.CreateChannelLiveStream.Response CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelLiveStream.Response> CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
         {
             var deviceContext = GetDeviceContext(request.MediaInfo.Device.Id);
             var streamInfo = deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo).Result;
@@ -89,12 +88,12 @@ namespace QuickNV.Driver.DahuaDeviceNetwork
             };
         }
 
-        protected override Response CreateChannelPlaybackStream(QpChannel channel, Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response> CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request)
         {
             throw new NotImplementedException();
         }
 
-        protected override Protocol.Driver.QpCommands.DestoryChannelStream.Response DestoryChannelStream(QpChannel channel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.DestoryChannelStream.Response> DestoryChannelStream(QpChannel channel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request)
         {
             return new Protocol.Driver.QpCommands.DestoryChannelStream.Response();
         }
@@ -148,7 +147,7 @@ namespace QuickNV.Driver.DahuaDeviceNetwork
             }
         }
 
-        protected override Protocol.Driver.QpCommands.PtzControl.Response PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.PtzControl.Response> PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request)
         {
             var deviceContext = GetDeviceContext(request.DeviceId);
             if (deviceContext != null)

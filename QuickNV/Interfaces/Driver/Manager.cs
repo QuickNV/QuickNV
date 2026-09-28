@@ -1,5 +1,4 @@
 ﻿using Quick.Protocol;
-using QuickNV.Interfaces.Core;
 using YiQiDong.Agent;
 using QuickNV.Core;
 using Quick.EntityFrameworkCore.Plus;
@@ -99,7 +98,7 @@ namespace QuickNV.Interfaces.Driver
             }
         }
 
-        private void OnDeviceOnlineNotice(QpChannel channel, DeviceOnlineNotice package)
+        private async ValueTask OnDeviceOnlineNotice(QpChannel channel, DeviceOnlineNotice package)
         {
             var device = ConfigDbContext.CacheContext.Find(new Device(package.Device.Id));
             if (device == null)
@@ -107,7 +106,7 @@ namespace QuickNV.Interfaces.Driver
             NoticeDeviceOnline(device, package.Device);
         }
 
-        private void OnDeviceOfflineNotice(QpChannel channel, DeviceOfflineNotice package)
+        private async ValueTask OnDeviceOfflineNotice(QpChannel channel, DeviceOfflineNotice package)
         {
             var device = ConfigDbContext.CacheContext.Find(new Device(package.DeviceId));
             if (device == null)
@@ -115,14 +114,14 @@ namespace QuickNV.Interfaces.Driver
             NoticeDeviceOffline(device, package.Reason);
         }
 
-        private void OnDeviceLogNotice(QpChannel channel, DeviceLogNotice package)
+        private async ValueTask OnDeviceLogNotice(QpChannel channel, DeviceLogNotice package)
         {
             var device = ConfigDbContext.CacheContext.Find(new Device(package.DeviceId));
             device?.LogContext.PushLog(package.Message);
         }
 
 
-        private QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Response ChangeLiveStreamSSRC(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Request request)
+        private async ValueTask<QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Response> ChangeLiveStreamSSRC(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.ChangeLiveStreamSSRC.Request request)
         {
             var mediaServer = MediaServerManager.Instance.GetMediaServer(request.MediaServerId);
             if (mediaServer == null)
@@ -138,7 +137,7 @@ namespace QuickNV.Interfaces.Driver
             };
         }
 
-        private QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Response GetMediaServerStreamInfo(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Request request)
+        private async ValueTask<QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Response> GetMediaServerStreamInfo(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.GetMediaServerStreamInfo.Request request)
         {
             var mediaServer = MediaServerManager.Instance.GetMediaServer(request.MediaServerId);
             if (mediaServer == null)
@@ -159,7 +158,7 @@ namespace QuickNV.Interfaces.Driver
             };
         }
 
-        private QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Response MediaServerAddStreamProxy(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Request request)
+        private async ValueTask<QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Response> MediaServerAddStreamProxy(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.MediaServerAddStreamProxy.Request request)
         {
             var mediaServer = MediaServerManager.Instance.GetMediaServer(request.StreamInfo.MediaServerId);
             if (mediaServer == null)
@@ -182,7 +181,7 @@ namespace QuickNV.Interfaces.Driver
             };
         }
 
-        internal QuickNV.Protocol.Driver.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.Register.Request request)
+        internal async ValueTask<QuickNV.Protocol.Driver.QpCommands.Register.Response> ExecuteRegister(QpChannel channel, QuickNV.Protocol.Driver.QpCommands.Register.Request request)
         {
             var driverInfo = request.CurrentDriver;
             EventHandler channel_Disconnected_Hanlder = null;
@@ -194,8 +193,8 @@ namespace QuickNV.Interfaces.Driver
              };
             channel.Disconnected += channel_Disconnected_Hanlder;
             DriverManager.Instance.RegisterDriver(channel, driverInfo);
-            channel.RegisterCommandExecuterManagers([commandExecuterManager]);
-            channel.RegisterNoticeHandlerManagers([noticeHandlerManager]);
+            channel.RegisterCommandExecuterManager(commandExecuterManager);
+            channel.RegisterNoticeHandlerManager(noticeHandlerManager);
             AgentContext.LogInfo($"[驱动接口][{channel.ChannelName}]驱动[{driverInfo.Name}_{driverInfo.Version}]已经注册。");
 
             

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Quick.Build" Version="1.0.20" />
+    <PackageReference Include="Quick.Build" Version="1.0.21" />
     <PackageReference Include="SharpCompress" Version="0.50.4" />
   </ItemGroup>
 

@@ -1,12 +1,8 @@
-﻿using Quick.Fields.AppSettings;
-using Quick.Protocol;
+﻿using Quick.Protocol;
 using QuickNV.YS7;
-using System.Text;
 using System.Text.Json.Serialization;
 using YiQiDong.Agent;
-using YiQiDong.Core.Utils;
 using QuickNV.Driver.Agent;
-using QuickNV.Protocol.Driver.QpCommands.CreateChannelPlaybackStream;
 using QuickNV.Protocol.Driver.QpModels;
 using Quick.Utils;
 
@@ -74,18 +70,18 @@ namespace QuickNV.Driver.Ys7
             }
         }
 
-        protected override Protocol.Driver.QpCommands.ImportDevices.Response ImportDevices(QpChannel channel, Protocol.Driver.QpCommands.ImportDevices.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.ImportDevices.Response> ImportDevices(QpChannel channel, Protocol.Driver.QpCommands.ImportDevices.Request request)
             => Functions.ImportDevicesFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.GetDeviceConfig.Response GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
             => Functions.GetDeviceConfigFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.ImportChannels.Response ImportChannels(
+        protected override async ValueTask<Protocol.Driver.QpCommands.ImportChannels.Response> ImportChannels(
             QpChannel channel,
             Protocol.Driver.QpCommands.ImportChannels.Request request)
             => Functions.ImportChannelsFunction.Invoke(channel, request);
 
-        protected override Protocol.Driver.QpCommands.GetChannelConfig.Response GetChannelConfig(QpChannel channel, Protocol.Driver.QpCommands.GetChannelConfig.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.GetChannelConfig.Response> GetChannelConfig(QpChannel channel, Protocol.Driver.QpCommands.GetChannelConfig.Request request)
             => Functions.GetChannelConfigFunction.Invoke(channel, request);
 
         protected override byte[] Snapshot(string deviceId, string channelId, ImageParameter parameter)
@@ -95,7 +91,7 @@ namespace QuickNV.Driver.Ys7
             return deviceContext.Snapshot(channelInfo);
         }
 
-        protected override Protocol.Driver.QpCommands.CreateChannelLiveStream.Response CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelLiveStream.Response> CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
         {
             var deviceContext = GetDeviceContext(request.MediaInfo.Device.Id);
             if (!deviceContext.IsOnline)
@@ -107,12 +103,12 @@ namespace QuickNV.Driver.Ys7
             };
         }
 
-        protected override Response CreateChannelPlaybackStream(QpChannel channel, Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response> CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request)
         {
             throw new NotImplementedException();
         }
 
-        protected override Protocol.Driver.QpCommands.DestoryChannelStream.Response DestoryChannelStream(QpChannel qpChannel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.DestoryChannelStream.Response> DestoryChannelStream(QpChannel qpChannel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request)
         {
             var deviceContext = GetDeviceContext(request.DeviceId);
             deviceContext.DestoryChannelStream(request);
@@ -189,7 +185,7 @@ namespace QuickNV.Driver.Ys7
             }
         }
 
-        protected override Protocol.Driver.QpCommands.PtzControl.Response PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request)
+        protected override async ValueTask<Protocol.Driver.QpCommands.PtzControl.Response> PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request)
         {
             var deviceContext = GetDeviceContext(request.DeviceId);
             if (deviceContext != null)

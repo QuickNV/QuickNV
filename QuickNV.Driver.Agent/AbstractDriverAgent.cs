@@ -80,7 +80,7 @@ namespace QuickNV.Driver.Agent
         protected virtual void OnChannelAdded(DriverDevice<TDeviceConfig, TChannelConfig> device, DriverChannel<TChannelConfig> channel) { }
         protected virtual void OnChannelDeleted(DriverDevice<TDeviceConfig, TChannelConfig> device, DriverChannel<TChannelConfig> channel) { }
 
-        private void ChannelAdded(QpChannel channel, Protocol.Driver.QpNotices.ChannelAddedNotice package)
+        private async ValueTask ChannelAdded(QpChannel channel, Protocol.Driver.QpNotices.ChannelAddedNotice package)
         {
             var channelInfo = package.Channel;
             var device = GetDevice(channelInfo.DeviceId);
@@ -91,7 +91,7 @@ namespace QuickNV.Driver.Agent
             OnChannelAdded(device, channelModel);
         }
 
-        private void ChannelDeleted(QpChannel channel, Protocol.Driver.QpNotices.ChannelDeletedNotice package)
+        private async ValueTask ChannelDeleted(QpChannel channel, Protocol.Driver.QpNotices.ChannelDeletedNotice package)
         {
             var channelInfo = package.Channel;
             var device = GetDevice(channelInfo.DeviceId);
@@ -104,7 +104,7 @@ namespace QuickNV.Driver.Agent
             OnChannelDeleted(device, channelModel);
         }
 
-        private void DeviceAdded(QpChannel channel, Protocol.Driver.QpNotices.DeviceAddedNotice package)
+        private async ValueTask DeviceAdded(QpChannel channel, Protocol.Driver.QpNotices.DeviceAddedNotice package)
         {
             var deviceInfo = package.Device;
             var device = new DriverDevice<TDeviceConfig, TChannelConfig>(deviceInfo);
@@ -115,7 +115,7 @@ namespace QuickNV.Driver.Agent
             OnDeviceAdded(device);
         }
 
-        private void DeviceDeleted(QpChannel channel, Protocol.Driver.QpNotices.DeviceDeletedNotice package)
+        private async ValueTask DeviceDeleted(QpChannel channel, Protocol.Driver.QpNotices.DeviceDeletedNotice package)
         {
             var deviceInfo = package.Device;
             DriverDevice<TDeviceConfig, TChannelConfig> device = null;
@@ -128,7 +128,7 @@ namespace QuickNV.Driver.Agent
                 OnDeviceDeleted(device);
         }
 
-        protected virtual Protocol.Driver.QpCommands.ImportDevices.Response ImportDevices(QpChannel channel, Protocol.Driver.QpCommands.ImportDevices.Request request)
+        protected virtual async ValueTask<Protocol.Driver.QpCommands.ImportDevices.Response> ImportDevices(QpChannel channel, Protocol.Driver.QpCommands.ImportDevices.Request request)
         {
             return new Protocol.Driver.QpCommands.ImportDevices.Response()
             {
@@ -143,7 +143,7 @@ namespace QuickNV.Driver.Agent
             };
         }
 
-        protected virtual Protocol.Driver.QpCommands.ImportChannels.Response ImportChannels(QpChannel channel, Protocol.Driver.QpCommands.ImportChannels.Request request)
+        protected virtual async ValueTask<Protocol.Driver.QpCommands.ImportChannels.Response> ImportChannels(QpChannel channel, Protocol.Driver.QpCommands.ImportChannels.Request request)
         {
             return new Protocol.Driver.QpCommands.ImportChannels.Response()
             {
@@ -158,12 +158,12 @@ namespace QuickNV.Driver.Agent
             };
         }
 
-        protected abstract Protocol.Driver.QpCommands.GetDeviceConfig.Response GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request);
-        protected abstract Protocol.Driver.QpCommands.GetChannelConfig.Response GetChannelConfig(QpChannel channel, Protocol.Driver.QpCommands.GetChannelConfig.Request request);
-        protected abstract Protocol.Driver.QpCommands.CreateChannelLiveStream.Response CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request);
-        protected abstract Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request);
-        protected abstract Protocol.Driver.QpCommands.DestoryChannelStream.Response DestoryChannelStream(QpChannel channel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request);
-        protected abstract Protocol.Driver.QpCommands.PtzControl.Response PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request);
+        protected abstract ValueTask<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request);
+        protected abstract ValueTask<Protocol.Driver.QpCommands.GetChannelConfig.Response> GetChannelConfig(QpChannel channel, Protocol.Driver.QpCommands.GetChannelConfig.Request request);
+        protected abstract ValueTask<Protocol.Driver.QpCommands.CreateChannelLiveStream.Response> CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request);
+        protected abstract ValueTask<Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response> CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request);
+        protected abstract ValueTask<Protocol.Driver.QpCommands.DestoryChannelStream.Response> DestoryChannelStream(QpChannel channel, Protocol.Driver.QpCommands.DestoryChannelStream.Request request);
+        protected abstract ValueTask<Protocol.Driver.QpCommands.PtzControl.Response> PtzControl(QpChannel channel, Protocol.Driver.QpCommands.PtzControl.Request request);
         private Protocol.Driver.QpCommands.Snapshot.Response ConvertToSnapshotResponse(byte[] buffer, ImageParameter parameter = null)
         {
             var image = Image.Load(buffer);
@@ -224,7 +224,7 @@ namespace QuickNV.Driver.Agent
             throw new IOException("当前驱动不支持通道快照");
         }
 
-        private Protocol.Driver.QpCommands.Snapshot.Response Snapshot(QpChannel channel, Protocol.Driver.QpCommands.Snapshot.Request request)
+        private async ValueTask<Protocol.Driver.QpCommands.Snapshot.Response> Snapshot(QpChannel channel, Protocol.Driver.QpCommands.Snapshot.Request request)
         {
             var buffer = Snapshot(request.DeviceId, request.ChannelId, request.Parameter);
             if (buffer == null || buffer.Length == 0)
@@ -237,7 +237,7 @@ namespace QuickNV.Driver.Agent
             return new VideoFileInfo[0];
         }
 
-        protected Protocol.Driver.QpCommands.FindPlaybackFiles.Response FindPlaybackFiles(QpChannel channel, Protocol.Driver.QpCommands.FindPlaybackFiles.Request request)
+        protected async ValueTask<Protocol.Driver.QpCommands.FindPlaybackFiles.Response> FindPlaybackFiles(QpChannel channel, Protocol.Driver.QpCommands.FindPlaybackFiles.Request request)
         {
             return new Protocol.Driver.QpCommands.FindPlaybackFiles.Response()
             {

@@ -29,7 +29,7 @@ namespace QuickNV.Interfaces.North
             commandExecuterManager.Register(new QuickNV.Protocol.North.QpCommands.Sync.Request(), Sync);
         }
         
-        internal QuickNV.Protocol.North.QpCommands.Register.Response ExecuteRegister(QpChannel channel, QuickNV.Protocol.North.QpCommands.Register.Request request)
+        internal async ValueTask<QuickNV.Protocol.North.QpCommands.Register.Response> ExecuteRegister(QpChannel channel, QuickNV.Protocol.North.QpCommands.Register.Request request)
         {
             EventHandler handler = null;
             handler = (sender, e) =>
@@ -41,14 +41,14 @@ namespace QuickNV.Interfaces.North
                 AgentContext.LogInfo($"[北向接口][{channel.ChannelName}]名称为[{request.Name}]的北向程序已经断开。原因：{ExceptionUtils.GetExceptionMessage(channel.LastException)}");
             };
             channel.Disconnected += handler;
-            channel.RegisterCommandExecuterManagers([commandExecuterManager]);
+            channel.RegisterCommandExecuterManager(commandExecuterManager);
             lock (channelDict)
                 channelDict[request.Name] = channel;
             AgentContext.LogInfo($"[北向接口][{channel.ChannelName}]名称为[{request.Name}]的北向程序已经注册。");
             return new QuickNV.Protocol.North.QpCommands.Register.Response();
         }
 
-        private QuickNV.Protocol.North.QpCommands.GetAddressData.Response GetAddressData(QpChannel channel, QuickNV.Protocol.North.QpCommands.GetAddressData.Request request)
+        private async ValueTask<QuickNV.Protocol.North.QpCommands.GetAddressData.Response> GetAddressData(QpChannel channel, QuickNV.Protocol.North.QpCommands.GetAddressData.Request request)
         {
             var data = ConfigDbContext.CacheContext.Query<Address>()
                 .Select(t => new QuickNV.Protocol.North.QpModels.AddressInfo()
@@ -61,7 +61,7 @@ namespace QuickNV.Interfaces.North
             return new QuickNV.Protocol.North.QpCommands.GetAddressData.Response() { Data = data };
         }
 
-        private QuickNV.Protocol.North.QpCommands.GetDeviceData.Response GetDeviceData(QpChannel channel, QuickNV.Protocol.North.QpCommands.GetDeviceData.Request request)
+        private async ValueTask<QuickNV.Protocol.North.QpCommands.GetDeviceData.Response> GetDeviceData(QpChannel channel, QuickNV.Protocol.North.QpCommands.GetDeviceData.Request request)
         {
             var data = ConfigDbContext.CacheContext.Query<Device>()
                 .Select(t => new QuickNV.Protocol.North.QpModels.DeviceInfo()
@@ -84,7 +84,7 @@ namespace QuickNV.Interfaces.North
             return new QuickNV.Protocol.North.QpCommands.GetDeviceData.Response() { Data = data };
         }
 
-        private QuickNV.Protocol.North.QpCommands.GetChannelData.Response GetChannelData(QpChannel channel, QuickNV.Protocol.North.QpCommands.GetChannelData.Request request)
+        private async ValueTask<QuickNV.Protocol.North.QpCommands.GetChannelData.Response> GetChannelData(QpChannel channel, QuickNV.Protocol.North.QpCommands.GetChannelData.Request request)
         {
             var data = ConfigDbContext.CacheContext.Query<Channel>()
                 .Select(t => new QuickNV.Protocol.North.QpModels.ChannelInfo()
@@ -130,7 +130,7 @@ namespace QuickNV.Interfaces.North
             new ModelChecker<Channel>.PropertyInfo(t => t.AddressId, (t, v) => t.AddressId = (string)v)
         );
 
-        private QuickNV.Protocol.North.QpCommands.Sync.Response Sync(QpChannel channel, QuickNV.Protocol.North.QpCommands.Sync.Request request)
+        private async ValueTask<QuickNV.Protocol.North.QpCommands.Sync.Response> Sync(QpChannel channel, QuickNV.Protocol.North.QpCommands.Sync.Request request)
         {
             //同步地点
             if (request.Address != null)
