@@ -151,7 +151,7 @@ namespace QuickNV.Driver.GB28181
         protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelLiveStream.Response> CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
         {
             var channelContext = GetChannelContext(request.MediaInfo.Device.Id, request.MediaInfo.Channel.Id);
-            var streamInfo = channelContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo).Result;
+            var streamInfo = await channelContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo);
             return new Protocol.Driver.QpCommands.CreateChannelLiveStream.Response()
             {
                 LiveStreamInfo = streamInfo
@@ -161,7 +161,7 @@ namespace QuickNV.Driver.GB28181
         protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response> CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request)
         {
             var channelContext = GetChannelContext(request.MediaInfo.Device.Id, request.MediaInfo.Channel.Id);
-            var streamInfo = channelContext.CreatePlaybackStream(request.MediaServerInfo, request.MediaInfo, request.StartTime, request.EndTime).Result;
+            var streamInfo = await channelContext.CreatePlaybackStream(request.MediaServerInfo, request.MediaInfo, request.StartTime, request.EndTime);
             return new Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response()
             {
                 PlaybackStreamInfo = streamInfo

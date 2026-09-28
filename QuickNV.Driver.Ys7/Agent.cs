@@ -96,7 +96,7 @@ namespace QuickNV.Driver.Ys7
             var deviceContext = GetDeviceContext(request.MediaInfo.Device.Id);
             if (!deviceContext.IsOnline)
                 throw new IOException("设备不在线");
-            var liveStream_StreamInfo = deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo).Result;
+            var liveStream_StreamInfo = await deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo);
             return new Protocol.Driver.QpCommands.CreateChannelLiveStream.Response()
             {
                 LiveStreamInfo = liveStream_StreamInfo

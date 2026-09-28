@@ -254,7 +254,7 @@ namespace QuickNV.Driver.HikvisionISUP
             try
             {
                 //等待流注册
-                liveStream_StreamInfo = GetMediaServerStreamInfo(request.MediaServerInfo.Id, request.MediaInfo.MediaId).Result;
+                liveStream_StreamInfo = await GetMediaServerStreamInfo(request.MediaServerInfo.Id, request.MediaInfo.MediaId);
             }
             catch (TimeoutException)
             {

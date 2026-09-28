@@ -69,7 +69,7 @@ public class Agent : AbstractDriverAgent<ConfigModel, DeviceConfig, ChannelConfi
     protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelLiveStream.Response> CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
     {
         var deviceContext = GetDeviceContext(request.MediaInfo.Device.Id);
-        var streamInfo = deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo).Result;
+        var streamInfo = await deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo);
         return new Protocol.Driver.QpCommands.CreateChannelLiveStream.Response()
         {
             LiveStreamInfo = streamInfo
@@ -79,7 +79,7 @@ public class Agent : AbstractDriverAgent<ConfigModel, DeviceConfig, ChannelConfi
     protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response> CreateChannelPlaybackStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Request request)
     {
         var deviceContext = GetDeviceContext(request.MediaInfo.Device.Id);
-        var streamInfo = deviceContext.CreatePlaybackStream(request.MediaServerInfo, request.MediaInfo, request.StartTime, request.EndTime).Result;
+        var streamInfo = await deviceContext.CreatePlaybackStream(request.MediaServerInfo, request.MediaInfo, request.StartTime, request.EndTime);
         return new Protocol.Driver.QpCommands.CreateChannelPlaybackStream.Response()
         {
             PlaybackStreamInfo = streamInfo

@@ -165,7 +165,7 @@ namespace QuickNV.Interfaces.Driver
                 throw new ApplicationException($"未找到编号为[{request.StreamInfo.MediaServerId}]的媒体服务器");
 
             var task = mediaServer.GetStreamRegisteredTask(request.MediaId);
-            var streamProxyKey = mediaServer.AddStreamProxy(request.StreamInfo, request.StreamUrl).Result;
+            var streamProxyKey = await mediaServer.AddStreamProxy(request.StreamInfo, request.StreamUrl);
             if (!task.Wait(15 * 1000))
                 throw new TimeoutException("等待流注册超时");
             var liveStreamInfo = task.Result;

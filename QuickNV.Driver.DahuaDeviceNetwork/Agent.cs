@@ -81,7 +81,7 @@ namespace QuickNV.Driver.DahuaDeviceNetwork
         protected override async ValueTask<Protocol.Driver.QpCommands.CreateChannelLiveStream.Response> CreateChannelLiveStream(QpChannel channel, Protocol.Driver.QpCommands.CreateChannelLiveStream.Request request)
         {
             var deviceContext = GetDeviceContext(request.MediaInfo.Device.Id);
-            var streamInfo = deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo).Result;
+            var streamInfo = await deviceContext.CreateLiveStream(request.MediaServerInfo, request.MediaInfo);
             return new Protocol.Driver.QpCommands.CreateChannelLiveStream.Response()
             {
                 LiveStreamInfo = streamInfo
