@@ -47,6 +47,14 @@ public class Config : YiQiDong.Core.Functions.ModelJsonConfig<ConfigModel>
             [
                 new ()
                 {
+                    Id=nameof(model.Title),
+                    Name = "标题",
+                    Type = FieldType.InputText,
+                    Input_ReadOnly = isReadOnly,
+                    Value = model.Title
+                },
+                new ()
+                {
                     Id = nameof(ConfigModel.WebUrls),
                     Name = "Web服务地址",
                     Input_AllowBlank = false,
