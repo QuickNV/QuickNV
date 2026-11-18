@@ -11,7 +11,7 @@
 		<PackageReference Include="Quick.Protocol.Pipeline" Version="2.9.5" />
 		<PackageReference Include="Quick.Protocol.Tcp" Version="2.9.5" />
 		<PackageReference Include="Quick.Protocol.WebSocket.Client" Version="2.9.5" />
-		<PackageReference Include="YiQiDong.Core" Version="2026.41.902" />
+		<PackageReference Include="YiQiDong.Core" Version="2026.42.0" />
 	</ItemGroup>
 
 	<ItemGroup>
