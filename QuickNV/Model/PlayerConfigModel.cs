@@ -2,7 +2,7 @@
 {
     public class PlayerConfigModel
     {
-        public bool UseProxy { get; set; } = false;
+        public bool UseProxy { get; set; } = true;
         public int WaitFrameChangeSeconds { get; set; } = 60;
         public int FastRetryTimes { get; set; } = 3;
         public int FastRetryInterval { get; set; } = 1000;

@@ -13,7 +13,10 @@ internal partial class ConfigModelSerializerContext : JsonSerializerContext { }
 public class ConfigModel
 {
     public static ConfigModel Default { get; } = new();
-    
+    /// <summary>
+    /// 标题
+    /// </summary>
+    public string Title { get; set; } = "QuickNV";
     /// <summary>
     /// Web服务地址
     /// </summary>

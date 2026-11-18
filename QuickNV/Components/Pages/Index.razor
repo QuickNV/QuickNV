@@ -4,7 +4,7 @@
 <div class="sidebar">
     <NavMenu ActiveKey="Home">
         <Title>
-            @Title
+            @Agent.Instance.Config.Title
         </Title>
         <ChildContent>
             <NavMenuItem Key="Dashboard" OnClick="@(() => Show<Dashboard>())">

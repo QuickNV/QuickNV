@@ -11,7 +11,5 @@ namespace QuickNV.Components.Pages
         {
             Body = Quick.Blazor.Bootstrap.Utils.BlazorUtils.GetRenderFragment<T>();
         }
-
-        public string Title => "QuickNV";
     }
 }

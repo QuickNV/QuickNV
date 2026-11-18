@@ -12,7 +12,6 @@ namespace QuickNV.Components.Pages
         private NavigationManager NavigationManager { get; set; }
 
         public bool IsLogin { get; private set; } = false;
-        public string Title => "QuickNV";
         public string Message { get; private set; }
 
         [BindProperty]
