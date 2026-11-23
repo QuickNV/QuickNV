@@ -46,7 +46,7 @@ public class Agent : AbstractDriverAgent<ConfigModel, DeviceConfig, ChannelConfi
         AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
     }
 
-    public override void Stop()
+    protected override void Stop()
     {
         base.Stop();
         OnDriverDisconnected();

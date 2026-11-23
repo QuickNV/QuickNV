@@ -38,7 +38,7 @@ namespace QuickNV.Interfaces
 
         public void Stop()
         {
-            allInterface.Stop();
+            allInterface?.Stop();
         }
     }
 }

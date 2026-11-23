@@ -25,7 +25,6 @@ namespace QuickNV.Driver.Agent
         protected abstract JsonSerializerContext ConfigSerializerContext { get; }
         protected abstract TConfigModel ReadConfig();
 
-        private CancellationTokenSource cts;
         private CommandExecuterManager commandExecuterManager;
         private NoticeHandlerManager noticeHandlerManager;
 
@@ -232,10 +231,7 @@ namespace QuickNV.Driver.Agent
             return ConvertToSnapshotResponse(buffer, request.Parameter);
         }
 
-        protected virtual VideoFileInfo[] FindPlaybackFiles(string deviceId, string channelId, DateTime startTime, DateTime endTime)
-        {
-            return new VideoFileInfo[0];
-        }
+        protected virtual VideoFileInfo[] FindPlaybackFiles(string deviceId, string channelId, DateTime startTime, DateTime endTime)=>[];
 
         protected async ValueTask<Protocol.Driver.QpCommands.FindPlaybackFiles.Response> FindPlaybackFiles(QpChannel channel, Protocol.Driver.QpCommands.FindPlaybackFiles.Request request)
         {
@@ -245,18 +241,16 @@ namespace QuickNV.Driver.Agent
             };
         }
 
-        public override void Start()
+        protected override void Start()
         {
             Config = ReadConfig();
-            base.Start();
-            cts = new CancellationTokenSource();
 
             clientOptions = QpClientOptions.Parse(new Uri(Config.QuickNVDriverInterfaceUrl));
             clientOptions.Password = Config.QuickNVDriverInterfacePassword;
             clientOptions.InstructionSet = [Protocol.Driver.Instruction.Instance];
             clientOptions.RegisterCommandExecuterManager(commandExecuterManager);
             clientOptions.RegisterNoticeHandlerManager(noticeHandlerManager);
-            _ = beginConnect(cts.Token);
+            _ = beginConnect(AgentStartCancellationToken);
         }
 
         private void Client_Disconnected(object sender, EventArgs e)
@@ -273,7 +267,7 @@ namespace QuickNV.Driver.Agent
                 {
                     AgentContext.LogError(ExceptionUtils.GetExceptionString(ex));
                 }
-                delayToConnect(cts.Token);
+                delayToConnect(AgentStartCancellationToken);
             }
         }
 
@@ -378,13 +372,10 @@ namespace QuickNV.Driver.Agent
             }
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
-            cts?.Cancel();
-            cts = null;
             clean();
             IsConnected = false;
-            base.Stop();
         }
 
         public void SendDeviceLogNotice(string deviceId, string message)

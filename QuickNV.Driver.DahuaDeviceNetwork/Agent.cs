@@ -58,7 +58,7 @@ namespace QuickNV.Driver.DahuaDeviceNetwork
             AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
             base.Stop();
             OnDriverDisconnected();

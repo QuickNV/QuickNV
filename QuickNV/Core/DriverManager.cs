@@ -59,11 +59,14 @@ namespace QuickNV.Core
 
         public void Stop()
         {
-            lock (driverContextDict)
+            if (driverContextDict != null)
             {
-                driverContextDict.Clear();
+                lock (driverContextDict)
+                {
+                    driverContextDict.Clear();
+                }
+                RaiseDriverChanged();
             }
-            RaiseDriverChanged();
         }
     }
 }

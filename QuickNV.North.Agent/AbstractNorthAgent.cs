@@ -29,7 +29,7 @@ namespace QuickNV.North.Agent
             noticeHandlerManager = new NoticeHandlerManager();
         }
 
-        public override void Start()
+        protected override void Start()
         {
             base.Start();
             cts = new CancellationTokenSource();
@@ -118,7 +118,7 @@ namespace QuickNV.North.Agent
             }
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
             cts?.Cancel();
             cts = null;

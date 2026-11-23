@@ -53,7 +53,7 @@ namespace QuickNV.Driver.HikvisionISUP
             AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
-        public override void Start()
+        protected override void Start()
         {
             base.Start();
 
@@ -150,7 +150,7 @@ namespace QuickNV.Driver.HikvisionISUP
             }
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
             CmsContext.DeviceOnline -= CmsContext_DeviceOnline;
             CmsContext.DeviceOffline -= CmsContext_DeviceOffline;

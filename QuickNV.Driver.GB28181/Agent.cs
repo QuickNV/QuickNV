@@ -32,7 +32,7 @@ namespace QuickNV.Driver.GB28181
             AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
-        public override void Start()
+        protected override void Start()
         {
             base.Start();
 
@@ -64,7 +64,7 @@ namespace QuickNV.Driver.GB28181
             }
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
             foreach (var deviceContext in SipServer.GetDevices())
                 deviceContext.Unregister("驱动停止");

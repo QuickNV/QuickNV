@@ -40,11 +40,6 @@ namespace QuickNV.Driver.RTSP
             AddFunction(new YiQiDong.Core.Functions.QpChannelView(() => Client));
         }
 
-        public override void Stop()
-        {
-            base.Stop();
-        }
-
         protected override async ValueTask<Protocol.Driver.QpCommands.GetDeviceConfig.Response> GetDeviceConfig(QpChannel channel, Protocol.Driver.QpCommands.GetDeviceConfig.Request request)
         {
             return Functions.GetDeviceConfigFunction.Invoke(channel, request);
