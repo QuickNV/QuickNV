@@ -1,12 +1,6 @@
 ﻿using Quick.Protocol;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
 using YiQiDong.Agent;
 using YiQiDong.Core;
-using YiQiDong.Core.Utils;
-using System.Linq;
-using System.Collections.Generic;
 using Quick.Fields;
 using QuickNV.Protocol.Driver.QpModels;
 using SixLabors.ImageSharp;
@@ -146,14 +140,15 @@ namespace QuickNV.Driver.Agent
         {
             return new Protocol.Driver.QpCommands.ImportChannels.Response()
             {
-                Fields = new[] {
+                Fields = 
+                [
                         new FieldForGet()
                         {
                             Type = FieldType.Alert,
                             Name = "警告",
                             Description="当前驱动不支持导入功能"
                         }
-                }
+                ]
             };
         }
 
@@ -274,10 +269,10 @@ namespace QuickNV.Driver.Agent
         private void delayToConnect(CancellationToken token)
         {
             clean();
-            if (token.IsCancellationRequested)
+            if (token.IsCancellationRequested || AgentContext.Container.StartRetryInterval <= 0)
                 return;
-            AgentContext.LogDebug($"[QuickNV驱动接口]将在5秒后重试连接到[{Config.QuickNVDriverInterfaceUrl}]...");
-            Task.Delay(5000, token).ContinueWith(task =>
+            AgentContext.LogDebug($"[QuickNV驱动接口]将在{AgentContext.Container.StartRetryInterval}毫秒后重试连接到[{Config.QuickNVDriverInterfaceUrl}]...");
+            Task.Delay(AgentContext.Container.StartRetryInterval, token).ContinueWith(task =>
             {
                 if (task.IsCanceled)
                     return;
