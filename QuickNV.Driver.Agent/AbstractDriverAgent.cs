@@ -269,10 +269,10 @@ namespace QuickNV.Driver.Agent
         private void delayToConnect(CancellationToken token)
         {
             clean();
-            if (token.IsCancellationRequested || AgentContext.Container.StartRetryInterval <= 0)
+            if (token.IsCancellationRequested)
                 return;
-            AgentContext.LogDebug($"[QuickNV驱动接口]将在{AgentContext.Container.StartRetryInterval}毫秒后重试连接到[{Config.QuickNVDriverInterfaceUrl}]...");
-            Task.Delay(AgentContext.Container.StartRetryInterval, token).ContinueWith(task =>
+            AgentContext.LogDebug($"[QuickNV驱动接口]将在5秒后重试连接到[{Config.QuickNVDriverInterfaceUrl}]...");
+            Task.Delay(5000, token).ContinueWith(task =>
             {
                 if (task.IsCanceled)
                     return;

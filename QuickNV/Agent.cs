@@ -193,26 +193,27 @@ public class Agent : AbstractAgent
         //启动Web服务
         try
         {
-            //启动易认证管理器
-            YiRenZhengManager.Instance.Start();
-
             app.Start();
             AgentContext.LogInfo($"Web服务启动完成，地址：{string.Join(",", app.Urls)}");
-
-            WebServerPort = new Uri(app.Urls.First()).Port;
-            //启动媒体服务管理器
-            MediaServerManager.Instance.Start();
-            //启动驱动管理器
-            DriverManager.Instance.Start();
         }
         catch (Exception ex)
         {
             throw new IOException("启动Web服务时失败", ex);
         }
+
+        //启动易认证管理器
+        YiRenZhengManager.Instance.Start();
+        WebServerPort = new Uri(app.Urls.First()).Port;
+        //启动媒体服务管理器
+        MediaServerManager.Instance.Start();
+        //启动驱动管理器
+        DriverManager.Instance.Start();
     }
 
     protected override void Stop()
     {
+        //停止易认证管理器
+        YiRenZhengManager.Instance.Stop();
         //停止对外接口
         Interfaces.Manager.Instance.Stop();
         //停止驱动管理器
@@ -222,8 +223,5 @@ public class Agent : AbstractAgent
 
         app?.StopAsync();
         app = null;
-
-        //停止易认证管理器
-        YiRenZhengManager.Instance.Stop();
     }
 }
